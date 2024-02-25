@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'hello_screen.dart';
+import 'package:homework/screens/home_page_screen/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: const Size(218, 471),
       builder: (context, child) {
         ScreenUtil.init(context);
         return MaterialApp(
@@ -27,7 +26,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: const HelloScreen(),
+      child: const HomePage(),
     );
   }
 }

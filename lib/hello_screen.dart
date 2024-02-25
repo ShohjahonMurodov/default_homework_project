@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/utils/app_colors.dart';
+import 'package:homework/utils/colors/app_colors.dart';
 
 class HelloScreen extends StatefulWidget {
   const HelloScreen({super.key});
