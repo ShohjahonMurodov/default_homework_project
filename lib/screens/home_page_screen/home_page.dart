@@ -23,11 +23,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  OneCallDataModels? oneCallDataModels;
   final WeatherRepository weatherRepository = WeatherRepository();
   int activeIndex = 0;
   int activeHour = 0;
   bool activeTextField = false;
   String city = "Tashkent";
+  OneCallDataModels? oneCallData;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,78 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              24.getH(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: activeTextField
+                    ? Expanded(
+                        child: TextField(
+                          style: TextStyle(
+                            color: AppColors.black,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              city = value;
+                            });
+                          },
+                          onSubmitted: (value) {
+                            setState(() {
+                              if (value.isEmpty) {
+                                city = "Tashkent";
+                              }
+                              activeTextField = false;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Enter the city",
+                            hintStyle: TextStyle(
+                              color: AppColors.black,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(40.r),
+                              borderSide: BorderSide(
+                                color: AppColors.black,
+                                width: 1.w,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(40.r),
+                              borderSide: BorderSide(
+                                  color: AppColors.black, width: 1.w),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                activeTextField = !activeTextField;
+                              });
+                            },
+                            icon: SvgPicture.asset(
+                              AppImages.search,
+                              width: 20.w,
+                              height: 20.h,
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(
+                              AppImages.menu,
+                              width: 20.w,
+                              height: 20.h,
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
               FutureBuilder<MyResponse>(
                 future: weatherRepository.getSimpleDataInfo(city),
                 builder: (context, data) {
@@ -56,90 +130,26 @@ class _HomePageState extends State<HomePage> {
                   }
                   if (data.hasData) {
                     if (data.data!.data == null) {
-                      setState(() {
-                        city = "Tashkent";
-                      });
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          30.getH(),
+                          Text(
+                            "Not found the city!!!",
+                            style: TextStyle(
+                              color: AppColors.c_303345,
+                              fontSize: 30.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      );
                     }
+
                     WeatherModel weatherModel =
                         (data.data as MyResponse).data as WeatherModel;
                     return Column(
                       children: [
-                        24.getH(),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: activeTextField
-                              ? Expanded(
-                                  child: TextField(
-                                    style: TextStyle(
-                                      color: AppColors.black,
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    onChanged: (value) {
-                                      if (value.isEmpty) {
-                                        setState(() {
-                                          activeTextField = false;
-                                        });
-                                      }
-                                      setState(() {
-                                        city = value;
-                                      });
-                                    },
-                                    onSubmitted: (value){
-                                      setState(() {
-                                        activeTextField = false;
-                                      });
-                                    },
-                                    decoration: InputDecoration(
-                                      hintText: "Enter the city",
-                                      hintStyle: TextStyle(
-                                        color: AppColors.black,
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(40.r),
-                                        borderSide: BorderSide(
-                                          color: AppColors.black,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(40.r),
-                                        borderSide: BorderSide(
-                                            color: AppColors.black, width: 1.w),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          activeTextField = !activeTextField;
-                                        });
-                                      },
-                                      icon: SvgPicture.asset(
-                                        AppImages.search,
-                                        width: 20.w,
-                                        height: 20.h,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: SvgPicture.asset(
-                                        AppImages.menu,
-                                        width: 20.w,
-                                        height: 20.h,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 18.w),
                           child: Column(
@@ -259,18 +269,18 @@ class _HomePageState extends State<HomePage> {
                                   TextButtonItems(
                                     text: "Next 7 days",
                                     onTap: () {
-                                      setState(
-                                        () {
-                                          activeIndex = 2;
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const NextDaysScreen(),
+                                      if (oneCallData != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                NextDaysScreen(
+                                              dailyModels:
+                                                  oneCallData!.dailyModels,
                                             ),
-                                          );
-                                        },
-                                      );
+                                          ),
+                                        );
+                                      }
                                     },
                                     isActive: activeIndex == 2,
                                     isIcon: true,
@@ -281,6 +291,74 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
+                        FutureBuilder<MyResponse>(
+                          future: weatherRepository.getComplexWeatherInfo(),
+                          builder: (context, data) {
+                            if (data.hasError) {
+                              return Center(
+                                child: Text(data.error.toString()),
+                              );
+                            }
+                            if (data.hasData) {
+                              if (data.data!.data == null) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    30.getH(),
+                                    Text(
+                                      "Not found data info",
+                                      style: TextStyle(
+                                        color: AppColors.c_303345,
+                                        fontSize: 30.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
+                              oneCallData = (data.data as MyResponse).data
+                                  as OneCallDataModels;
+                              return Column(
+                                children: [
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        ...List.generate(
+                                          oneCallData!.hourlyModels.length,
+                                          (index) {
+                                            var hourData = oneCallData!
+                                                .hourlyModels[index];
+                                            return HourlyItems(
+                                              onTap: () {
+                                                setState(() {
+                                                  activeHour = index;
+                                                });
+                                              },
+                                              hour: hourData.dt
+                                                  .toInt()
+                                                  .getParsedHour(),
+                                              icon: hourData.inWeather[0].icon
+                                                  .getWeatherIconUrl(),
+                                              temp: hourData.temp
+                                                  .round()
+                                                  .toString(),
+                                              isActive: activeHour == index,
+                                            );
+                                          },
+                                        ),
+                                        10.getW(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        ),
                       ],
                     );
                   } else {
@@ -288,70 +366,6 @@ class _HomePageState extends State<HomePage> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                },
-              ),
-              FutureBuilder<MyResponse>(
-                future: weatherRepository.getComplexWeatherInfo(),
-                builder: (context, data) {
-                  if (data.hasError) {
-                    return Center(
-                      child: Text(data.error.toString()),
-                    );
-                  }
-                  if (data.hasData) {
-                    if (data.data!.data == null) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          30.getH(),
-                          Text(
-                            "Not found data info",
-                            style: TextStyle(
-                              color: AppColors.c_303345,
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                    OneCallDataModels oneCallData =
-                        (data.data as MyResponse).data as OneCallDataModels;
-                    return Column(
-                      children: [
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              ...List.generate(
-                                oneCallData.hourlyModels.length,
-                                (index) {
-                                  var hourData =
-                                      oneCallData.hourlyModels[index];
-                                  return HourlyItems(
-                                    onTap: () {
-                                      setState(() {
-                                        activeHour = index;
-                                      });
-                                    },
-                                    hour: hourData.dt.toInt().getParsedHour(),
-                                    icon: hourData.inWeather[0].icon
-                                        .getWeatherIconUrl(),
-                                    temp: hourData.temp.round().toString(),
-                                    isActive: activeHour == index,
-                                  );
-                                },
-                              ),
-                              10.getW(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
                 },
               ),
             ],

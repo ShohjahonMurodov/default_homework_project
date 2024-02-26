@@ -12,4 +12,5 @@ class AppImages{
   static const String sun = "assets/images/sun.png";
   static const String cludy = "assets/images/cloudy.png";
   static const String rain = "assets/images/rain.png";
+  static const String lotties = "assets/lotties/animation.json";
 }

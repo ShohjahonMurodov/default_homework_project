@@ -45,7 +45,7 @@ class DaysItems extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  "$text2 c",
+                  "$text2 ℃",
                   style: TextStyle(
                     color: AppColors.c_303345,
                     fontSize: 14.sp,

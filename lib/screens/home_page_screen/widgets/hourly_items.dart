@@ -55,7 +55,7 @@ class HourlyItems extends StatelessWidget {
                 height: 24.h,
               ),
               Text(
-                "$temp c",
+                "$temp ℃",
                 style: TextStyle(
                   color: AppColors.c_303345,
                   fontSize: 14.sp,
