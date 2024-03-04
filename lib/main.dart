@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:homework/screens/home/home_screen.dart';
 
 import 'hello_screen.dart';
 
@@ -27,7 +28,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: const HelloScreen(),
+      child: const HomeScreen(),
     );
   }
 }
