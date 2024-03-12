@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:homework/screens/custom_scroll_view.dart';
+import 'package:homework/screens/controller_page/controller_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: const CustomScrollViewScreen(),
+      child: const ControllerScreen(),
     );
   }
 }

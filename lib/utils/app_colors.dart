@@ -12,4 +12,13 @@ class AppColors {
   static const Color c_EEBB4D = Color(0xFFEEBB4D);
   static const Color c_FCF9E8 = Color(0xFFFCF9E8);
   static const Color c_3C3014 = Color(0xFF3C3014);
+  static const Color c_F5F6FA = Color(0xFFF5F6FA);
+  static const Color c_151940 = Color(0xFF151940);
+  static const Color c_8A959E = Color(0xFF8A959E);
+  static const Color c_898A8D = Color(0xFF898A8D);
+  static const Color c_5771F9 = Color(0xFF5771F9);
+  static const Color c_FCFCFD = Color(0xFFFCFCFD);
+  static const Color c_7A7AFD = Color(0xFF7A7AFD);
+  static const Color c_7F8192 = Color(0xFF7F8192);
+  static const Color c_020000 = Color(0xFF020000);
 }
