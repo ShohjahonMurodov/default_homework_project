@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:homework/screens/animation_eight.dart';
 import 'package:homework/screens/animation_fifth.dart';
 import 'package:homework/screens/animation_first.dart';
 import 'package:homework/screens/animation_fourth.dart';
+import 'package:homework/screens/animation_nineth.dart';
 import 'package:homework/screens/animation_second.dart';
 import 'package:homework/screens/animation_seventh.dart';
 import 'package:homework/screens/animation_sixth.dart';
@@ -141,6 +143,42 @@ class _AnimationsScreenState extends State<AnimationsScreen> {
             },
             title: Text(
               "Example 7",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AnimationEight(),
+                ),
+              );
+            },
+            title: Text(
+              "Example 8",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AnimationNineth(),
+                ),
+              );
+            },
+            title: Text(
+              "Example 9",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20.sp,

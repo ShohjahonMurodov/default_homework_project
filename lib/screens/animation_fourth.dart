@@ -1,91 +1,79 @@
 import 'package:flutter/material.dart';
 
 class AnimationFourth extends StatefulWidget {
-  const AnimationFourth({Key? key}) : super(key: key);
+  const AnimationFourth({super.key});
 
   @override
-  State<AnimationFourth> createState() => _AnimationFourthState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _AnimationFourthState extends State<AnimationFourth>
-    with TickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation<Color?> colorAnimation;
-  late Animation<String> textAnimation;
+class _MyHomePageState extends State<AnimationFourth> {
+  bool isTrue = true;
 
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    );
-
-    colorAnimation = ColorTween(begin: Colors.orange, end: Colors.green)
-        .animate(animationController);
-
-    textAnimation = Tween<String>(
-        begin: "This is first Widget", end: "This is second Widget")
-        .animate(animationController);
-
-    animationController.addListener(() {
-      setState(() {});
+  void _toggleText() {
+    setState(() {
+      isTrue = !isTrue;
     });
-
-    animationController.repeat();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Container(
-              color: colorAnimation.value,
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(seconds: 2),
               width: 200,
               height: 200,
-              child: AnimatedBuilder(
-                animation: textAnimation,
-                builder: (context, child) {
-                  return Text(
-                    textAnimation.value,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  );
-                },
+              color: isTrue ? Colors.orange : Colors.green,
+              child: Center(
+                child: AnimatedCrossFade(
+                  alignment: Alignment.center,
+                  duration: const Duration(seconds: 2),
+                  firstChild: const Text(
+                    "This is first Widget",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  secondChild: const Text(
+                    "This is second Widget",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  crossFadeState: isTrue
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.grey,
+            const SizedBox(
+              height: 20,
             ),
-            onPressed: () {},
-            child: const Text(
-              "Click here",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
-                fontSize: 15,
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.grey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              onPressed: _toggleText,
+              child: const Text(
+                "Click here",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
 }
+
+/// Tugagan :)
