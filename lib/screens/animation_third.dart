@@ -10,6 +10,7 @@ class AnimationThird extends StatefulWidget {
 class _AnimationThirdState extends State<AnimationThird> {
   Color borderColor = Colors.black;
   Color backgroundColor = Colors.white;
+  double borderRadius = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,17 @@ class _AnimationThirdState extends State<AnimationThird> {
                   height: 200,
                   decoration: BoxDecoration(
                     color: color,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(borderRadius),
                     border: Border.all(color: borderColor, width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: borderRadius == 0.0
+                            ? Colors.blueGrey
+                            : Colors.white,
+                        blurRadius: 40,
+                        spreadRadius: 0,
+                      ),
+                    ],
                   ),
                   child: const FlutterLogo(),
                 );
@@ -45,6 +55,7 @@ class _AnimationThirdState extends State<AnimationThird> {
               style: TextButton.styleFrom(backgroundColor: Colors.blue),
               onPressed: () {
                 setState(() {
+                  borderRadius = borderRadius == 16.0 ? 0.0 : 16.0;
                   backgroundColor = backgroundColor == Colors.white
                       ? Colors.black
                       : Colors.white;
