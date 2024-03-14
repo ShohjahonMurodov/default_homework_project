@@ -19,7 +19,7 @@ class _FlagScreenState extends State<FlagScreen> {
           color: Colors.white,
           child: CustomPaint(
             size: const Size(300, 200),
-            painter: FlagPainter(),
+            painter: FlagPainter(sweepAngle: 3.4 * pi / 4),
           ),
         ),
       ),
@@ -28,8 +28,16 @@ class _FlagScreenState extends State<FlagScreen> {
 }
 
 class FlagPainter extends CustomPainter {
+  FlagPainter({required this.sweepAngle});
+
+  final double sweepAngle;
+
   @override
   void paint(Canvas canvas, Size size) {
+    Rect rect =
+        Offset(size.width * 0.01, size.height / 20.0) & const Size(40, 50);
+    const startAngle = 8.1;
+
     final radius = min(size.width, size.height) / 2.5;
     final center = Offset(size.width / 2, size.height / 2);
 
@@ -93,6 +101,8 @@ class FlagPainter extends CustomPainter {
         5, Paint()..color = Colors.white);
     canvas.drawCircle(Offset(center.dx - radius / 5, center.dy - radius / 1.8),
         5, Paint()..color = Colors.white);
+    canvas.drawArc(
+        rect, startAngle, sweepAngle, false, Paint()..color = Colors.white);
   }
 
   @override

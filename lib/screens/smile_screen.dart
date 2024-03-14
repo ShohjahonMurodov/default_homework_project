@@ -168,7 +168,7 @@ class _SmileScreenState extends State<SmileScreen> {
                     ),
                     child: CustomPaint(
                       size: const Size(60, 60),
-                      painter: TooBadPainter(sweepAngle: 3 * pi / 3),
+                      painter: TooBadPainter(sweepAngle: pi),
                     ),
                   ),
                   const Positioned(

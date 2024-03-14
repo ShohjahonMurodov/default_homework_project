@@ -119,6 +119,20 @@ class SnowBallPainter extends CustomPainter {
       points,
       paint,
     );
+
+    canvas.drawCircle(Offset(size.width / 2, size.height / 3.5), 15,
+        Paint()..color = Colors.orange);
+
+    Paint nosePaint = Paint();
+    nosePaint.color = Colors.orange;
+    nosePaint.style = PaintingStyle.fill;
+
+    final Path path = Path()
+      ..moveTo(size.width / 2, size.height / 3.1)
+      ..lineTo(size.width / 2, size.height / 4.0)
+      ..lineTo(size.width / 1.4, size.height / 3.5);
+
+    canvas.drawPath(path, nosePaint);
   }
 
   @override
