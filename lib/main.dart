@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'hello_screen.dart';
+import 'package:homework/controller_screen.dart';
+import 'package:homework/data/network/api_provider.dart';
+import 'package:homework/data/repository/app_repository.dart';
+import 'package:homework/view_models/country_view_model.dart';
+import 'package:homework/view_models/people_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  ApiProvider apiProvider = ApiProvider();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => PeopleViewModel(
+            appRepository: AppRepository(apiProvider: apiProvider),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CountryViewModel(
+            appRepository: AppRepository(apiProvider: apiProvider),
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -27,7 +48,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: const HelloScreen(),
+      child: const ControllerScreen(),
     );
   }
 }
