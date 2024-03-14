@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/screens/flag_screen.dart';
+import 'package:homework/screens/smile_screen.dart';
 import 'package:homework/screens/snowball_screen.dart';
 import 'package:homework/screens/wave_screen.dart';
 import 'package:homework/utils/size_utils.dart';
@@ -102,6 +103,35 @@ class _ControllerScreenState extends State<ControllerScreen> {
                 },
                 child: Text(
                   "SnowBall painter",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
+            10.getH(),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 15.h),
+                  backgroundColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SmileScreen(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Smile painter",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.sp,
