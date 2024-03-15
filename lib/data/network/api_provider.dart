@@ -35,7 +35,7 @@ class ApiProvider {
             [];
       }
     } catch (error) {
-      return [];
+      rethrow;
     }
     return [];
   }

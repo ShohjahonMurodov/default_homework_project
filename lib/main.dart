@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   ApiProvider apiProvider = ApiProvider();
+
   runApp(
     MultiProvider(
       providers: [

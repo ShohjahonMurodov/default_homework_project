@@ -15,8 +15,7 @@ class PeopleViewModel extends ChangeNotifier {
     var people = await appRepository.getPeople();
     isLoading = false;
     notifyListeners();
-    if (people.isEmpty) {
-    } else {
+    if (people.isNotEmpty) {
       allPerson = people;
       notifyListeners();
     }
