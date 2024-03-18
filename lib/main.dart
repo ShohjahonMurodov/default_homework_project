@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'hello_screen.dart';
+import 'package:homework/auto_counter.dart';
+import 'package:homework/auto_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AutoViewModel(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -27,7 +37,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: const HelloScreen(),
+      child: const AutoCounterScreen(),
     );
   }
 }
