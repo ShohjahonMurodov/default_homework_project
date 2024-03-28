@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homework/screens/map/widgets/map_type_item.dart';
 import 'package:homework/utils/app_images.dart';
@@ -14,6 +17,9 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController bodyController = TextEditingController();
+
   late String icon;
 
   @override
@@ -33,12 +39,117 @@ class _MapScreenState extends State<MapScreen> {
               GoogleMap(
                 markers: viewModel.markers,
                 onCameraIdle: () {
-                  if (cameraPosition != null) {
-                    context
-                        .read<MapsViewModel>()
-                        .changeCurrentLocation(cameraPosition!);
-                    context.read<MapsViewModel>().addNewMarker(icon: icon);
-                  }
+                  showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.r),
+                        topRight: Radius.circular(20.r),
+                      ),
+                    ),
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24.w,
+                          vertical: 24.h,
+                        ),
+                        child: SizedBox(
+                          height: 400.h,
+                          child: Column(
+                            children: [
+                              TextField(
+                                decoration: InputDecoration(
+                                  hintText: "Shaharni kiriting",
+                                  hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              10.getH(),
+                              TextField(
+                                decoration: InputDecoration(
+                                  hintText: "Tumanni kiriting",
+                                  hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              10.getH(),
+                              SizedBox(
+                                width: double.infinity,
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 17.h),
+                                    backgroundColor: Colors.grey,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    if (cameraPosition != null) {
+                                      context
+                                          .read<MapsViewModel>()
+                                          .changeCurrentLocation(
+                                              cameraPosition!);
+                                      context
+                                          .read<MapsViewModel>()
+                                          .addNewMarker(
+                                            icon: icon,
+                                            title: titleController.text,
+                                            snippet: bodyController.text,
+                                          );
+                                    }
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Save",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
                 onCameraMove: (CameraPosition currentCameraPosition) {
                   cameraPosition = currentCameraPosition;

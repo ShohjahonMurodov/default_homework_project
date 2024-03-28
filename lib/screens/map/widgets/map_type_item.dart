@@ -50,7 +50,7 @@ class MapTypeItem extends StatelessWidget {
               ),
               splashRadius: 50,
               icon: Icon(
-                Icons.map,
+                isCategory ? Icons.more_vert : Icons.map,
                 color: Colors.black.withOpacity(.9),
               ),
               itemBuilder: (context) {
