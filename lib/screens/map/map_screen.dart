@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -40,6 +38,7 @@ class _MapScreenState extends State<MapScreen> {
                 markers: viewModel.markers,
                 onCameraIdle: () {
                   showModalBottomSheet(
+                    isScrollControlled: true,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20.r),
@@ -49,15 +48,26 @@ class _MapScreenState extends State<MapScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       return Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 24.h,
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
                         ),
-                        child: SizedBox(
-                          height: 400.h,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24.w,
+                            vertical: 16.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20.r),
+                              topRight: Radius.circular(20.r),
+                            ),
+                          ),
                           child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               TextField(
+                                controller: titleController,
                                 decoration: InputDecoration(
                                   hintText: "Shaharni kiriting",
                                   hintStyle: TextStyle(
@@ -83,6 +93,7 @@ class _MapScreenState extends State<MapScreen> {
                               ),
                               10.getH(),
                               TextField(
+                                controller: bodyController,
                                 decoration: InputDecoration(
                                   hintText: "Tumanni kiriting",
                                   hintStyle: TextStyle(

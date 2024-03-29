@@ -22,7 +22,7 @@ class MapsViewModel extends ChangeNotifier {
       zoom: 15,
     );
 
-    currentCameraPosition = initialCameraPosition!;
+    // currentCameraPosition = initialCameraPosition!;
     addNewMarker(icon: AppImages.location, title: "", snippet: "");
   }
 
@@ -51,7 +51,7 @@ class MapsViewModel extends ChangeNotifier {
       {required String icon,
       required String title,
       required String snippet}) async {
-    markers = {};
+    // markers = {};
     Uint8List markerImage = await getBytesFromAsset(
       icon,
       150,
@@ -59,8 +59,7 @@ class MapsViewModel extends ChangeNotifier {
     markers.add(
       Marker(
         position: currentCameraPosition.target,
-        infoWindow: const InfoWindow(title: "Tashkent", snippet: "Chilonzor"),
-        // icon: BitmapDescriptor.defaultMarker,
+        infoWindow: InfoWindow(title: title, snippet: snippet),
         icon: BitmapDescriptor.fromBytes(markerImage),
         markerId: MarkerId(DateTime.now().toString()),
       ),
