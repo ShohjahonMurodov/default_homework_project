@@ -43,6 +43,10 @@ dependencies:
   flutter_local_notifications: ^17.0.0
   flutter_timezone: ^1.0.4
   provider: ^6.1.2
+  sqflite: ^2.3.2
+  firebase_core: ^2.27.2
+  firebase_auth: ^4.18.0
+  cloud_firestore: ^4.15.9
 
 dev_dependencies:
   flutter_test:

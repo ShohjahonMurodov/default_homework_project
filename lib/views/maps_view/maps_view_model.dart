@@ -3,11 +3,14 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:homework/data/api_provider/api_provider.dart';
 import 'package:homework/utils/app_images.dart';
 
 class MapsViewModel extends ChangeNotifier {
   final Completer<GoogleMapController> controller =
       Completer<GoogleMapController>();
+
+  String currentPlaceName = "";
 
   MapType mapType = MapType.normal;
 
@@ -43,8 +46,11 @@ class MapsViewModel extends ChangeNotifier {
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
 
-  changeCurrentLocation(CameraPosition cameraPosition) {
+  changeCurrentLocation(CameraPosition cameraPosition) async {
     currentCameraPosition = cameraPosition;
+    currentPlaceName =
+        await ApiProvider.getPlaceNameByLocation(cameraPosition.target);
+    notifyListeners();
   }
 
   addNewMarker(
