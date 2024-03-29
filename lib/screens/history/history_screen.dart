@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homework/data/models/place/place_model.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:homework/views/maps_view/maps_view_model.dart';
@@ -90,7 +91,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           borderRadius:
                                               BorderRadius.circular(20.r),
                                         ),
-                                        onTap: () {},
+                                        onTap: () {
+                                          context
+                                              .read<MapsViewModel>()
+                                              .setLatInitialLong(
+                                                LatLng(
+                                                  placeModel.latLng,
+                                                  placeModel.latLong,
+                                                ),
+                                              );
+                                          context
+                                              .read<MapsViewModel>()
+                                              .moveToInitialPosition();
+                                          Navigator.pop(context);
+                                        },
                                         leading: Image.network(
                                           "https://i.pinimg.com/736x/77/3c/b0/773cb0b3023e4cde93dad0f1b5498487.jpg",
                                           width: 100.w,
