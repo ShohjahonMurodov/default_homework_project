@@ -129,6 +129,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
+                                        trailing: IconButton(
+                                          onPressed: () {
+                                            print(
+                                                "Place model id: ${placeModel.docId}----------------------------------");
+                                            context
+                                                .read<PlaceViewModel>()
+                                                .deleteProduct(
+                                                    placeModel, context);
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     15.getH(),
