@@ -284,7 +284,7 @@ class _MapScreenState extends State<MapScreen> {
                                                 .read<MapsViewModel>()
                                                 .currentPlaceName,
                                             stage: "",
-                                            placeCategory: "",
+                                            placeCategory: icon,
                                           ),
                                           context,
                                         );

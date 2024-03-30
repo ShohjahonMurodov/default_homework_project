@@ -8,6 +8,7 @@ import 'package:homework/utils/app_images.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:homework/views/location_view/location_view_model.dart';
 import 'package:homework/views/maps_view/maps_view_model.dart';
+import 'package:homework/views/update_view/update_view_model.dart';
 import 'package:provider/provider.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -79,6 +80,8 @@ class _LocationScreenState extends State<LocationScreen> {
                   LatLng? latLng = context.read<LocationViewModel>().latLng;
                   if (latLng != null) {
                     Provider.of<MapsViewModel>(context, listen: false)
+                        .setLatInitialLong(latLng);
+                    Provider.of<UpdateViewModel>(context, listen: false)
                         .setLatInitialLong(latLng);
                     LocalNotificationService().showNotification(
                       title: "Attention!",

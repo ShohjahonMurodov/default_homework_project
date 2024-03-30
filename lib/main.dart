@@ -8,6 +8,7 @@ import 'package:homework/services/local_notification_services.dart';
 import 'package:homework/views/location_view/location_view_model.dart';
 import 'package:homework/views/maps_view/maps_view_model.dart';
 import 'package:homework/views/place_view/place_view_model.dart';
+import 'package:homework/views/update_view/update_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'services/firebase_options.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => LocationViewModel()),
         ChangeNotifierProvider(create: (_) => MapsViewModel()),
         ChangeNotifierProvider(create: (_) => PlaceViewModel()..getProducts()),
+        ChangeNotifierProvider(create: (_) => UpdateViewModel()),
       ],
       child: const MyApp(),
     ),

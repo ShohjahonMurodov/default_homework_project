@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homework/data/models/place/place_model.dart';
+import 'package:homework/screens/update_map/update_map_screen.dart';
 import 'package:homework/utils/size_utils.dart';
-import 'package:homework/views/maps_view/maps_view_model.dart';
 import 'package:homework/views/place_view/place_view_model.dart';
+import 'package:homework/views/update_view/update_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -93,7 +94,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         ),
                                         onTap: () {
                                           context
-                                              .read<MapsViewModel>()
+                                              .read<UpdateViewModel>()
                                               .setLatInitialLong(
                                                 LatLng(
                                                   placeModel.latLng,
@@ -101,13 +102,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                 ),
                                               );
                                           context
-                                              .read<MapsViewModel>()
+                                              .read<UpdateViewModel>()
                                               .moveToInitialPosition();
-                                          Navigator.pop(context);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UpdateMapScreen(
+                                                placeModel: placeModel,
+                                              ),
+                                            ),
+                                          );
                                         },
-                                        leading: Image.network(
-                                          "https://i.pinimg.com/736x/77/3c/b0/773cb0b3023e4cde93dad0f1b5498487.jpg",
-                                          width: 100.w,
+                                        leading: Image.asset(
+                                          placeModel.placeCategory,
+                                          width: 50.w,
                                           height: 100.h,
                                           fit: BoxFit.cover,
                                         ),

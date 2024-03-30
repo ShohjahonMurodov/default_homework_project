@@ -6,9 +6,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homework/data/api_provider/api_provider.dart';
 import 'package:homework/utils/app_images.dart';
 
-class MapsViewModel extends ChangeNotifier {
+class UpdateViewModel extends ChangeNotifier {
   final Completer<GoogleMapController> controller =
-      Completer<GoogleMapController>();
+  Completer<GoogleMapController>();
 
   String currentPlaceName = "";
 
@@ -49,15 +49,15 @@ class MapsViewModel extends ChangeNotifier {
   changeCurrentLocation(CameraPosition cameraPosition) async {
     currentCameraPosition = cameraPosition;
     currentPlaceName =
-        await ApiProvider.getPlaceNameByLocation(cameraPosition.target);
+    await ApiProvider.getPlaceNameByLocation(cameraPosition.target);
     notifyListeners();
   }
 
   addNewMarker(
       {required String icon,
-      required String title,
-      required String snippet}) async {
-    // markers = {};
+        required String title,
+        required String snippet}) async {
+    markers = {};
     Uint8List markerImage = await getBytesFromAsset(
       icon,
       150,

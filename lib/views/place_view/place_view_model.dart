@@ -95,6 +95,8 @@ class PlaceViewModel extends ChangeNotifier {
           .doc(placeModel.docId)
           .delete();
 
+      getProducts();
+
       _notify(false);
     } on FirebaseException catch (error) {
       if (!context.mounted) return;
