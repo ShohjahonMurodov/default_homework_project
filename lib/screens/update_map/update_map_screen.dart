@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homework/data/models/place/place_model.dart';
 import 'package:homework/screens/map/widgets/map_type_item.dart';
 import 'package:homework/utils/size_utils.dart';
+import 'package:homework/views/place_view/place_view_model.dart';
 import 'package:homework/views/update_view/update_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +18,14 @@ class UpdateMapScreen extends StatefulWidget {
 }
 
 class _UpdateMapScreenState extends State<UpdateMapScreen> {
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController padizController = TextEditingController();
+  final TextEditingController etajController = TextEditingController();
+  final TextEditingController homeController = TextEditingController();
+  final TextEditingController orienterController = TextEditingController();
+
+  String address = "";
+
   @override
   Widget build(BuildContext context) {
     CameraPosition? cameraPosition;
@@ -35,6 +43,7 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
               GoogleMap(
                 markers: viewModel.markers,
                 onCameraIdle: () {
+                  address = viewModel.currentPlaceName;
                   if (cameraPosition != null) {
                     context
                         .read<UpdateViewModel>()
@@ -52,11 +61,13 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                   viewModel.controller.complete(googleMapController);
                 },
               ),
-              // Align(
-              //   child: SvgPicture.asset(
-              //     widget.placeModel.placeCategory,
-              //   ),
-              // ),
+              Align(
+                child: Image.asset(
+                  widget.placeModel.placeCategory,
+                  width: 50.w,
+                  height: 50.h,
+                ),
+              ),
               Positioned(
                 top: 100.h,
                 right: 0,
@@ -71,12 +82,6 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                   ),
                 ),
               ),
-              // Positioned(
-              //   bottom: 0,
-              //   child: Column(
-              //     children: [],
-              //   ),
-              // ),
             ],
           );
         },
@@ -100,7 +105,236 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
             ),
             child: FloatingActionButton(
               backgroundColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.r),
+                      topRight: Radius.circular(20.r),
+                    ),
+                  ),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24.w,
+                          vertical: 16.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.r),
+                            topRight: Radius.circular(20.r),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              controller: addressController,
+                              decoration: InputDecoration(
+                                hintText: address,
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            10.getH(),
+                            TextField(
+                              controller: padizController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: "Padizni kiriting",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            10.getH(),
+                            TextField(
+                              controller: etajController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: "Etajni kiriting",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            10.getH(),
+                            TextField(
+                              controller: homeController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: "Kvartirani kiriting",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            10.getH(),
+                            TextField(
+                              controller: orienterController,
+                              decoration: InputDecoration(
+                                hintText: "Tumanni kiriting",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            10.getH(),
+                            SizedBox(
+                              width: double.infinity,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(vertical: 17.h),
+                                  backgroundColor: Colors.grey,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  if (cameraPosition != null) {
+                                    context
+                                        .read<UpdateViewModel>()
+                                        .changeCurrentLocation(cameraPosition!);
+                                    context
+                                        .read<UpdateViewModel>()
+                                        .addNewMarker(
+                                          icon: widget.placeModel.placeCategory,
+                                          title: "",
+                                          snippet: "",
+                                        );
+                                  }
+                                  if (homeController.text.isNotEmpty &&
+                                      orienterController.text.isNotEmpty) {
+                                    print(
+                                        "DOc id: ${widget.placeModel.docId} ------------------------------");
+                                    await context
+                                        .read<PlaceViewModel>()
+                                        .updateProduct(
+                                          PlaceModel(
+                                            placeCategory:
+                                                widget.placeModel.placeCategory,
+                                            latLng:
+                                                cameraPosition!.target.latitude,
+                                            placeName: address,
+                                            entrance: etajController.text,
+                                            flatNumber: homeController.text,
+                                            orientAddress:
+                                                orienterController.text,
+                                            stage: padizController.text,
+                                            docId: widget.placeModel.docId,
+                                            latLong: cameraPosition!
+                                                .target.longitude,
+                                          ),
+                                          context,
+                                        );
+                                  }
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "Save",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
               child: Icon(
                 Icons.gps_fixed,
                 color: Colors.black.withOpacity(.9),

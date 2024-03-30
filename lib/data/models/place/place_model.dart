@@ -53,6 +53,7 @@ class PlaceModel {
     return {
       "place_category": placeCategory,
       "latLng": latLng,
+      "latLong": latLong,
       "place_name": placeName,
       "entrance": entrance,
       "flat_number": flatNumber,
