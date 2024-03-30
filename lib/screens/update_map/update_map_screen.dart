@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -61,6 +62,34 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                   viewModel.controller.complete(googleMapController);
                 },
               ),
+              Positioned(
+                top: 50.h,
+                left: 24.w,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 13.h,
+                    ),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.r),
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 1.w,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_back,
+                    size: 35,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
               Align(
                 child: Image.asset(
                   widget.placeModel.placeCategory,
@@ -69,7 +98,7 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                 ),
               ),
               Positioned(
-                top: 100.h,
+                top: 120.h,
                 right: 0,
                 left: 0,
                 child: Text(
@@ -136,6 +165,11 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             TextField(
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                               controller: addressController,
                               decoration: InputDecoration(
                                 hintText: address,
@@ -162,6 +196,11 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                             ),
                             10.getH(),
                             TextField(
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                               controller: padizController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
@@ -189,6 +228,11 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                             ),
                             10.getH(),
                             TextField(
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                               controller: etajController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
@@ -216,6 +260,11 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                             ),
                             10.getH(),
                             TextField(
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                               controller: homeController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
@@ -243,6 +292,11 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                             ),
                             10.getH(),
                             TextField(
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                               controller: orienterController,
                               decoration: InputDecoration(
                                 hintText: "Tumanni kiriting",
@@ -336,7 +390,7 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                 );
               },
               child: Icon(
-                Icons.gps_fixed,
+                Icons.change_circle,
                 color: Colors.black.withOpacity(.9),
                 size: 30,
               ),

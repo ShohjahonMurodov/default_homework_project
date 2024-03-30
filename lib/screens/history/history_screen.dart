@@ -140,16 +140,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {
-                                            print(
-                                                "Place model id: ${placeModel.docId}----------------------------------");
                                             context
                                                 .read<PlaceViewModel>()
                                                 .deleteProduct(
                                                     placeModel, context);
                                           },
                                           icon: const Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
+                                            Icons.cancel_outlined,
+                                            color: Colors.black,
                                           ),
                                         ),
                                       ),
