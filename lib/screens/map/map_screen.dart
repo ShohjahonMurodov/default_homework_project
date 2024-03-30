@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:homework/data/local/local_variables.dart';
 import 'package:homework/data/models/place/place_model.dart';
 import 'package:homework/screens/map/widgets/map_type_item.dart';
+import 'package:homework/services/local_notification_services.dart';
 import 'package:homework/utils/app_images.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:homework/views/maps_view/maps_view_model.dart';
@@ -21,7 +23,7 @@ class _MapScreenState extends State<MapScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController bodyController = TextEditingController();
 
-  late String icon;
+  String icon = AppImages.home;
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +188,13 @@ class _MapScreenState extends State<MapScreen> {
                               ),
                               context,
                             );
+                        LocalNotificationService.localNotificationService
+                            .showNotification(
+                          title: "Yangi address qo'shildi!",
+                          body: "Batafsil malumot olish uchun!",
+                          id: idContLocal,
+                        );
+                        idContLocal++;
                       },
                       child: Text(
                         "Save",

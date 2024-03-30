@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:homework/data/local/local_variables.dart';
 import 'package:homework/data/models/place/place_model.dart';
 import 'package:homework/screens/map/map_screen.dart';
 import 'package:homework/screens/update_map/update_map_screen.dart';
+import 'package:homework/services/local_notification_services.dart';
 import 'package:homework/utils/app_images.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:homework/views/place_view/place_view_model.dart';
@@ -163,6 +165,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               .read<PlaceViewModel>()
                                               .deleteProduct(
                                                   placeModel, context);
+                                          LocalNotificationService
+                                              .localNotificationService
+                                              .showNotification(
+                                            title: "Address ochirildi!",
+                                            body:
+                                                "Batafsil malumot olish uchun!",
+                                            id: idContLocal,
+                                          );
+                                          idContLocal++;
                                         },
                                         icon: const Icon(
                                           Icons.cancel_outlined,
