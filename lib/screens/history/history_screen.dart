@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homework/data/models/place/place_model.dart';
+import 'package:homework/screens/map/map_screen.dart';
 import 'package:homework/screens/update_map/update_map_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:homework/views/place_view/place_view_model.dart';
@@ -21,7 +22,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var providerListen = Provider.of<PlaceViewModel>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF2A323E),
+      backgroundColor: Colors.white,
       body: context.read<PlaceViewModel>().getLoader
           ? const Center(
               child: CircularProgressIndicator(),
@@ -50,14 +51,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           icon: const Icon(
                             Icons.arrow_back_ios,
                             size: 35,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                         Text(
                           "My addresses",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 27.sp,
+                            color: Colors.black,
+                            fontSize: 24.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -83,9 +84,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFF35B2E6),
+                                        color: Colors.white,
                                         borderRadius:
                                             BorderRadius.circular(20.r),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.grey,
+                                            blurRadius: 8,
+                                            spreadRadius: 0,
+                                          ),
+                                        ],
                                       ),
                                       child: ListTile(
                                         shape: RoundedRectangleBorder(
@@ -117,15 +125,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         leading: Image.asset(
                                           placeModel.placeCategory,
                                           width: 50.w,
-                                          height: 100.h,
                                           fit: BoxFit.cover,
                                         ),
                                         title: Text(
                                           "Home",
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             fontSize: 20.sp,
-                                            fontWeight: FontWeight.w400,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                         subtitle: Text(
@@ -133,7 +140,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.grey,
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w400,
                                           ),
@@ -152,13 +159,47 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         ),
                                       ),
                                     ),
-                                    15.getH(),
+                                    20.getH(),
                                   ],
                                 ),
                               );
                             },
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 18.h,
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.amber,
+                          padding: EdgeInsets.symmetric(vertical: 15.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.r),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MapScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Save new address",
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(.9),
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
                     ),
                   ),

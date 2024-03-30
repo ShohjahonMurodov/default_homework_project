@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homework/data/api_provider/api_provider.dart';
-import 'package:homework/utils/app_images.dart';
 
 class UpdateViewModel extends ChangeNotifier {
   final Completer<GoogleMapController> controller =
@@ -26,7 +25,7 @@ class UpdateViewModel extends ChangeNotifier {
     );
 
     currentCameraPosition = initialCameraPosition!;
-    addNewMarker(icon: AppImages.location, title: "", snippet: "");
+    // addNewMarker(icon: AppImages.location, title: "", snippet: "");
   }
 
   changeMapType(MapType newMapType) {

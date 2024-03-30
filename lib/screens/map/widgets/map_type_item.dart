@@ -20,12 +20,12 @@ class MapTypeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 64.h,
+      height: 48.h,
       child: Stack(
         children: [
           Container(
-            width: 64.w,
-            height: 64.h,
+            width: 48.w,
+            height: 48.h,
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
@@ -51,7 +51,8 @@ class MapTypeItem extends StatelessWidget {
               splashRadius: 50,
               icon: Icon(
                 isCategory ? Icons.more_vert : Icons.map,
-                color: Colors.black.withOpacity(.9),
+                color: Colors.black,
+                size: 30,
               ),
               itemBuilder: (context) {
                 return [

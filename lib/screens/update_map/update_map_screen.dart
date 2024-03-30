@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -20,12 +19,10 @@ class UpdateMapScreen extends StatefulWidget {
 
 class _UpdateMapScreenState extends State<UpdateMapScreen> {
   final TextEditingController addressController = TextEditingController();
-  final TextEditingController padizController = TextEditingController();
-  final TextEditingController etajController = TextEditingController();
-  final TextEditingController homeController = TextEditingController();
+  final TextEditingController enterController = TextEditingController();
+  final TextEditingController floorController = TextEditingController();
+  final TextEditingController apartmentController = TextEditingController();
   final TextEditingController orienterController = TextEditingController();
-
-  String address = "";
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +41,6 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
               GoogleMap(
                 markers: viewModel.markers,
                 onCameraIdle: () {
-                  address = viewModel.currentPlaceName;
                   if (cameraPosition != null) {
                     context
                         .read<UpdateViewModel>()
@@ -63,8 +59,8 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                 },
               ),
               Positioned(
-                top: 50.h,
-                left: 24.w,
+                top: 60.h,
+                left: 18.w,
                 child: TextButton(
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(
@@ -73,11 +69,7 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                     ),
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.r),
-                      side: BorderSide(
-                        color: Colors.black,
-                        width: 1.w,
-                      ),
+                      borderRadius: BorderRadius.circular(100.r),
                     ),
                   ),
                   onPressed: () {
@@ -88,6 +80,311 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                     size: 35,
                     color: Colors.black,
                   ),
+                ),
+              ),
+              Positioned(
+                bottom: 15,
+                child: Container(
+                  padding: EdgeInsets.only(
+                    left: 24.w,
+                    right: 70.w,
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.amber,
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.r),
+                      ),
+                    ),
+                    onPressed: () async {
+                      // await context.read<PlaceViewModel>().insertProducts(
+                      //   PlaceModel(
+                      //     docId: "",
+                      //     latLng: context
+                      //         .read<MapsViewModel>()
+                      //         .currentCameraPosition
+                      //         .target
+                      //         .latitude,
+                      //     latLong: context
+                      //         .read<MapsViewModel>()
+                      //         .currentCameraPosition
+                      //         .target
+                      //         .longitude,
+                      //     entrance: "",
+                      //     flatNumber: "",
+                      //     orientAddress: "",
+                      //     placeName: context
+                      //         .read<MapsViewModel>()
+                      //         .currentPlaceName,
+                      //     stage: "",
+                      //     placeCategory: AppImages.home,
+                      //   ),
+                      //   context,
+                      // );
+                    },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 15.w,
+                top: 430.h,
+                child: Container(
+                  width: 48.w,
+                  height: 48.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(.25),
+                        offset: Offset(0.w, 4.h),
+                        blurRadius: 4,
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          addressController.text = viewModel.currentPlaceName;
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 16.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20.r),
+                                  topRight: Radius.circular(20.r),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextField(
+                                    controller: addressController,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    decoration: InputDecoration(
+                                      label: Text(
+                                        "Current address",
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  10.getH(),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: 90.w,
+                                        child: TextField(
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          controller: enterController,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            hintText: "Enter",
+                                            hintStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 90.w,
+                                        child: TextField(
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          controller: floorController,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            hintText: "Floor",
+                                            hintStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 90.w,
+                                        child: TextField(
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          controller: apartmentController,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            hintText: "Apartment",
+                                            hintStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  10.getH(),
+                                  TextField(
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    controller: orienterController,
+                                    decoration: InputDecoration(
+                                      hintText: "Designated location",
+                                      hintStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                  10.getH(),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 12.h),
+                                        backgroundColor: Colors.amber,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        if (cameraPosition != null) {
+                                          context
+                                              .read<UpdateViewModel>()
+                                              .changeCurrentLocation(
+                                                  cameraPosition!);
+                                          context
+                                              .read<UpdateViewModel>()
+                                              .addNewMarker(
+                                                icon: widget
+                                                    .placeModel.placeCategory,
+                                                title: "",
+                                                snippet: "",
+                                              );
+                                        }
+                                        if (apartmentController
+                                                .text.isNotEmpty &&
+                                            orienterController
+                                                .text.isNotEmpty) {
+                                          await context
+                                              .read<PlaceViewModel>()
+                                              .updateProduct(
+                                                PlaceModel(
+                                                  placeCategory: widget
+                                                      .placeModel.placeCategory,
+                                                  latLng: cameraPosition!
+                                                      .target.latitude,
+                                                  placeName: viewModel
+                                                      .currentPlaceName,
+                                                  entrance:
+                                                      floorController.text,
+                                                  flatNumber:
+                                                      apartmentController.text,
+                                                  orientAddress:
+                                                      orienterController.text,
+                                                  stage: enterController.text,
+                                                  docId:
+                                                      widget.placeModel.docId,
+                                                  latLong: cameraPosition!
+                                                      .target.longitude,
+                                                ),
+                                                context,
+                                              );
+                                        }
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "Save",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Icon(
+                      Icons.send_sharp,
+                      color: Colors.black.withOpacity(.9),
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 370.h,
+                right: 15.w,
+                child: MapTypeItem(
+                  onTap1: () {
+                    context
+                        .read<UpdateViewModel>()
+                        .changeMapType(MapType.normal);
+                  },
+                  onTap2: () {
+                    context
+                        .read<UpdateViewModel>()
+                        .changeMapType(MapType.hybrid);
+                  },
+                  onTap3: () {
+                    context
+                        .read<UpdateViewModel>()
+                        .changeMapType(MapType.satellite);
+                  },
+                  isCategory: false,
                 ),
               ),
               Align(
@@ -114,302 +411,6 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
             ],
           );
         },
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 64.w,
-            height: 64.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(.25),
-                  offset: Offset(0.w, 4.h),
-                  blurRadius: 4,
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
-            child: FloatingActionButton(
-              backgroundColor: Colors.white,
-              onPressed: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.r),
-                      topRight: Radius.circular(20.r),
-                    ),
-                  ),
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 16.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.r),
-                            topRight: Radius.circular(20.r),
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextField(
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              controller: addressController,
-                              decoration: InputDecoration(
-                                hintText: address,
-                                hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            10.getH(),
-                            TextField(
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              controller: padizController,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                hintText: "Padizni kiriting",
-                                hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            10.getH(),
-                            TextField(
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              controller: etajController,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                hintText: "Etajni kiriting",
-                                hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            10.getH(),
-                            TextField(
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              controller: homeController,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                hintText: "Kvartirani kiriting",
-                                hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            10.getH(),
-                            TextField(
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              controller: orienterController,
-                              decoration: InputDecoration(
-                                hintText: "Tumanni kiriting",
-                                hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.w,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            10.getH(),
-                            SizedBox(
-                              width: double.infinity,
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(vertical: 17.h),
-                                  backgroundColor: Colors.grey,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.r),
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  if (cameraPosition != null) {
-                                    context
-                                        .read<UpdateViewModel>()
-                                        .changeCurrentLocation(cameraPosition!);
-                                    context
-                                        .read<UpdateViewModel>()
-                                        .addNewMarker(
-                                          icon: widget.placeModel.placeCategory,
-                                          title: "",
-                                          snippet: "",
-                                        );
-                                  }
-                                  if (homeController.text.isNotEmpty &&
-                                      orienterController.text.isNotEmpty) {
-                                    print(
-                                        "DOc id: ${widget.placeModel.docId} ------------------------------");
-                                    await context
-                                        .read<PlaceViewModel>()
-                                        .updateProduct(
-                                          PlaceModel(
-                                            placeCategory:
-                                                widget.placeModel.placeCategory,
-                                            latLng:
-                                                cameraPosition!.target.latitude,
-                                            placeName: address,
-                                            entrance: etajController.text,
-                                            flatNumber: homeController.text,
-                                            orientAddress:
-                                                orienterController.text,
-                                            stage: padizController.text,
-                                            docId: widget.placeModel.docId,
-                                            latLong: cameraPosition!
-                                                .target.longitude,
-                                          ),
-                                          context,
-                                        );
-                                  }
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "Save",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-              child: Icon(
-                Icons.change_circle,
-                color: Colors.black.withOpacity(.9),
-                size: 30,
-              ),
-            ),
-          ),
-          10.getH(),
-          MapTypeItem(
-            onTap1: () {
-              context.read<UpdateViewModel>().changeMapType(MapType.normal);
-            },
-            onTap2: () {
-              context.read<UpdateViewModel>().changeMapType(MapType.hybrid);
-            },
-            onTap3: () {
-              context.read<UpdateViewModel>().changeMapType(MapType.satellite);
-            },
-            isCategory: false,
-          ),
-        ],
       ),
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:homework/screens/map/map_screen.dart';
+import 'package:homework/screens/history/history_screen.dart';
 import 'package:homework/services/local_notification_services.dart';
 import 'package:homework/utils/app_images.dart';
 import 'package:homework/utils/size_utils.dart';
@@ -92,7 +92,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return const MapScreen();
+                          return const HistoryScreen();
                         },
                       ),
                     );
