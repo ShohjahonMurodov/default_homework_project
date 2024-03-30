@@ -4,4 +4,5 @@ class AppImages {
   static const String location = "assets/images/location.png";
   static const String pictures = "assets/images/pictures.png";
   static const String menu = "assets/icons/menu.svg";
+  static const String map = "assets/lotties/map.json";
 }

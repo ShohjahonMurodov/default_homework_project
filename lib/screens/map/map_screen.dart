@@ -7,6 +7,7 @@ import 'package:homework/utils/app_images.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:homework/views/maps_view/maps_view_model.dart';
 import 'package:homework/views/place_view/place_view_model.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
@@ -31,8 +32,8 @@ class _MapScreenState extends State<MapScreen> {
         body: Consumer<MapsViewModel>(
           builder: (context, viewModel, child) {
             if (viewModel.initialCameraPosition == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: Lottie.asset(AppImages.map),
               );
             }
             return Stack(

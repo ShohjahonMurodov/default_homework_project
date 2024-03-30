@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homework/data/models/place/place_model.dart';
 import 'package:homework/screens/map/widgets/map_type_item.dart';
+import 'package:homework/utils/app_images.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:homework/views/place_view/place_view_model.dart';
 import 'package:homework/views/update_view/update_view_model.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class UpdateMapScreen extends StatefulWidget {
@@ -32,8 +34,8 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
       body: Consumer<UpdateViewModel>(
         builder: (context, viewModel, child) {
           if (viewModel.initialCameraPosition == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: Lottie.asset(AppImages.map),
             );
           }
           return Stack(
@@ -79,59 +81,6 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                     Icons.arrow_back,
                     size: 35,
                     color: Colors.black,
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 15,
-                child: Container(
-                  padding: EdgeInsets.only(
-                    left: 24.w,
-                    right: 70.w,
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.r),
-                      ),
-                    ),
-                    onPressed: () async {
-                      // await context.read<PlaceViewModel>().insertProducts(
-                      //   PlaceModel(
-                      //     docId: "",
-                      //     latLng: context
-                      //         .read<MapsViewModel>()
-                      //         .currentCameraPosition
-                      //         .target
-                      //         .latitude,
-                      //     latLong: context
-                      //         .read<MapsViewModel>()
-                      //         .currentCameraPosition
-                      //         .target
-                      //         .longitude,
-                      //     entrance: "",
-                      //     flatNumber: "",
-                      //     orientAddress: "",
-                      //     placeName: context
-                      //         .read<MapsViewModel>()
-                      //         .currentPlaceName,
-                      //     stage: "",
-                      //     placeCategory: AppImages.home,
-                      //   ),
-                      //   context,
-                      // );
-                    },
-                    child: Text(
-                      "Save",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
                   ),
                 ),
               ),
