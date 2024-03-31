@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:homework/cubit/counter/counter_cubit.dart';
+import 'package:homework/screens/counter/counter_page.dart';
 
 import 'hello_screen.dart';
 
@@ -24,7 +27,10 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: false),
-          home: child,
+          home: BlocProvider(
+            create: (_) => CounterCubit(0),
+            child: const CounterPage(),
+          ),
         );
       },
       child: const HelloScreen(),
