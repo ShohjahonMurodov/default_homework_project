@@ -1,13 +1,26 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:homework/cubit/counter/counter_cubit.dart';
-import 'package:homework/screens/counter/counter_page.dart';
+import 'package:homework/cubit/country/country_cubit.dart';
+import 'package:homework/cubit/to_check/check_cubit.dart';
+import 'package:homework/data/local/storage_repository.dart';
+import 'package:homework/screens/pin/pin_screen.dart';
 
-import 'hello_screen.dart';
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
-  runApp(const MyApp());
+  StorageRepository.instance;
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => CheckCubit()),
+        BlocProvider(create: (_) => CountryCubit()..fetchCountries()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -27,13 +40,9 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: false),
-          home: BlocProvider(
-            create: (_) => CounterCubit(0),
-            child: const CounterPage(),
-          ),
+          home: const PinScreen(),
         );
       },
-      child: const HelloScreen(),
     );
   }
 }
