@@ -272,8 +272,8 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                                                       .placeModel.placeCategory,
                                                   latLng: cameraPosition!
                                                       .target.latitude,
-                                                  placeName: viewModel
-                                                      .currentPlaceName,
+                                                  placeName:
+                                                      addressController.text,
                                                   entrance:
                                                       floorController.text,
                                                   flatNumber:
