@@ -260,35 +260,28 @@ class _UpdateMapScreenState extends State<UpdateMapScreen> {
                                                 snippet: "",
                                               );
                                         }
-                                        if (apartmentController
-                                                .text.isNotEmpty &&
-                                            orienterController
-                                                .text.isNotEmpty) {
-                                          await context
-                                              .read<PlaceViewModel>()
-                                              .updateProduct(
-                                                PlaceModel(
-                                                  placeCategory: widget
-                                                      .placeModel.placeCategory,
-                                                  latLng: cameraPosition!
-                                                      .target.latitude,
-                                                  placeName:
-                                                      addressController.text,
-                                                  entrance:
-                                                      floorController.text,
-                                                  flatNumber:
-                                                      apartmentController.text,
-                                                  orientAddress:
-                                                      orienterController.text,
-                                                  stage: enterController.text,
-                                                  docId:
-                                                      widget.placeModel.docId,
-                                                  latLong: cameraPosition!
-                                                      .target.longitude,
-                                                ),
-                                                context,
-                                              );
-                                        }
+                                        await context
+                                            .read<PlaceViewModel>()
+                                            .updateProduct(
+                                              PlaceModel(
+                                                placeCategory: widget
+                                                    .placeModel.placeCategory,
+                                                latLng: cameraPosition!
+                                                    .target.latitude,
+                                                placeName:
+                                                    addressController.text,
+                                                entrance: floorController.text,
+                                                flatNumber:
+                                                    apartmentController.text,
+                                                orientAddress:
+                                                    orienterController.text,
+                                                stage: enterController.text,
+                                                docId: widget.placeModel.docId,
+                                                latLong: cameraPosition!
+                                                    .target.longitude,
+                                              ),
+                                              context,
+                                            );
                                         LocalNotificationService
                                             .localNotificationService
                                             .showNotification(

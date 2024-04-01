@@ -27,11 +27,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: context.read<PlaceViewModel>().getLoader
-          ? Center(
-              child: Lottie.asset(AppImages.map),
-            )
-          : Column(
+      body: StreamBuilder<List<PlaceModel>>(
+        stream: context.read<PlaceViewModel>().listenProducts(),
+        builder: (context, data) {
+          if (data.hasError) {
+            return Center(
+              child: Text(
+                data.error.toString(),
+              ),
+            );
+          }
+          if (data.hasData) {
+            List<PlaceModel> list = data.data as List<PlaceModel>;
+            return Column(
               children: [
                 60.getH(),
                 Padding(
@@ -82,7 +90,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     child: Column(
                       children: [
                         ...List.generate(
-                          providerListen.categoryProduct.length,
+                          list.length,
                           (index) {
                             PlaceModel placeModel =
                                 providerListen.categoryProduct[index];
@@ -131,15 +139,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         );
                                       },
                                       leading: Image.asset(
-                                        placeModel.placeCategory,
+                                        list[index].placeCategory,
                                         width: 50.w,
                                         fit: BoxFit.cover,
                                       ),
                                       title: Text(
-                                        placeModel.placeCategory ==
+                                        list[index].placeCategory ==
                                                 "assets/images/home.png"
                                             ? "Home"
-                                            : placeModel.placeCategory ==
+                                            : list[index].placeCategory ==
                                                     "assets/images/location.png"
                                                 ? "Location"
                                                 : "Work",
@@ -150,7 +158,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         ),
                                       ),
                                       subtitle: Text(
-                                        placeModel.placeName,
+                                        list[index].placeName,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -227,7 +235,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                 ),
               ],
-            ),
+            );
+          } else {
+            return Center(
+              child: Lottie.asset(AppImages.map),
+            );
+          }
+        },
+      ),
     );
   }
 }
