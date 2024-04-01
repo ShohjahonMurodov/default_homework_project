@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/cubit/to_check/check_cubit.dart';
-import 'package:homework/data/local/storage_repository.dart';
-import 'package:homework/screens/enter/enter_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 
 class PinScreen extends StatefulWidget {
@@ -30,33 +28,25 @@ class _PinScreenState extends State<PinScreen> {
             horizontal: 33.w,
             vertical: 25.h,
           ),
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.white10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100.r),
           ),
         ),
         onPressed: () {
-          if (StorageRepository.getBool(key: "saved")) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const EnterScreen(),
-              ),
-            );
-          } else {
-            pinCode += title;
-            if (isAgain) {
-              againCode = pinCode;
-            }
-            if (pinCode.length == 4) {
-              if (!isAgain) {
-                context.read<CheckCubit>().createPassword(pinCode);
-                pinCode = "";
-                isAgain = true;
-              }
-              context.read<CheckCubit>().toVerifyPinCode(againCode, context);
-            }
+          pinCode += title;
+          if (isAgain) {
+            againCode = pinCode;
           }
+          if (pinCode.length == 4) {
+            if (!isAgain) {
+              context.read<CheckCubit>().createPassword(pinCode);
+              pinCode = "";
+              isAgain = true;
+            }
+            context.read<CheckCubit>().toVerifyPinCode(againCode, context);
+          }
+          setState(() {});
         },
         child: Text(
           title,
@@ -145,7 +135,9 @@ class _PinScreenState extends State<PinScreen> {
                       50.getH(),
                       Center(
                         child: Text(
-                          "Enter your passcode",
+                          isAgain
+                              ? "Again your password"
+                              : "Enter your passcode",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,
@@ -164,7 +156,9 @@ class _PinScreenState extends State<PinScreen> {
                               width: 15.w,
                               height: 15.h,
                               decoration: BoxDecoration(
-                                color: index < pinCode.length ? Colors.green : Colors.grey,
+                                color: index < pinCode.length
+                                    ? Colors.green
+                                    : Colors.grey,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -242,27 +236,16 @@ class _PinScreenState extends State<PinScreen> {
                                 pinCode =
                                     pinCode.substring(0, pinCode.length - 1);
                               }
+                              setState(() {});
                             },
                             child: const Icon(
-                              Icons.cancel_presentation,
+                              Icons.backspace,
                               color: Colors.white,
                               size: 40,
                             ),
                           ),
                         ],
                       ),
-                      const Spacer(),
-                      Center(
-                        child: Text(
-                          "Forgot password?",
-                          style: TextStyle(
-                            color: Colors.grey.shade400,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                      50.getH(),
                     ],
                   ),
                 ),

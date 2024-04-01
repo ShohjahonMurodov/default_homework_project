@@ -61,6 +61,10 @@ class _ApiScreenState extends State<ApiScreen> {
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       onTap: () {},
+                      leading: Text(
+                        countries.emoji,
+                        style: TextStyle(fontSize: 35.sp),
+                      ),
                       title: Text(
                         countries.name,
                         style: TextStyle(

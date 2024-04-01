@@ -11,7 +11,6 @@ class CheckCubit extends Cubit<String> {
       key: "pin_code",
       value: pinCode,
     );
-    debugPrint("Yaratilgan pin code: ${pinCode}");
   }
 
   void toVerifyPinCode(String againPinCode, BuildContext context) {
@@ -20,7 +19,6 @@ class CheckCubit extends Cubit<String> {
         key: "saved",
         value: true,
       );
-      debugPrint("Pin code registerdan otdi: ${againPinCode}");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -37,7 +35,6 @@ class CheckCubit extends Cubit<String> {
 
   void toCheckPinCode(String pinCode, BuildContext context) {
     if (StorageRepository.getString(key: "pin_code") == pinCode) {
-      debugPrint("Login pin code: ${pinCode}");
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

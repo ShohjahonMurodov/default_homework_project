@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/cubit/country/country_cubit.dart';
 import 'package:homework/cubit/to_check/check_cubit.dart';
 import 'package:homework/data/local/storage_repository.dart';
-import 'package:homework/screens/pin/pin_screen.dart';
+import 'package:homework/screens/splash/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: false),
-          home: const PinScreen(),
+          home: const SplashScreen(),
         );
       },
     );

@@ -26,7 +26,7 @@ class _EnterScreenState extends State<EnterScreen> {
             horizontal: 33.w,
             vertical: 25.h,
           ),
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.white10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100.r),
           ),
@@ -228,7 +228,7 @@ class _EnterScreenState extends State<EnterScreen> {
                               setState(() {});
                             },
                             child: const Icon(
-                              Icons.cancel_presentation,
+                              Icons.backspace,
                               color: Colors.white,
                               size: 40,
                             ),
