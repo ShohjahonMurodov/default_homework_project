@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/cubit/country/country_cubit.dart';
 import 'package:homework/cubit/country/country_state.dart';
 import 'package:homework/data/models/country_models.dart';
@@ -37,10 +38,56 @@ class _ApiScreenState extends State<ApiScreen> {
                 state.countries.length,
                 (index) {
                   CountryModels countries = state.countries[index];
-                  return ListTile(
-                    title: Text(countries.name),
-                    subtitle: Text(countries.capital),
-                    trailing: Text(countries.code),
+                  return Container(
+                    margin: EdgeInsets.only(
+                      left: 24.w,
+                      right: 24.w,
+                      bottom: 15.h,
+                    ),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.r),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 8,
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      onTap: () {},
+                      title: Text(
+                        countries.name,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      subtitle: Text(
+                        countries.capital,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      trailing: Text(
+                        countries.code,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),

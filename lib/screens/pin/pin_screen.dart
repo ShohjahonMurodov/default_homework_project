@@ -73,137 +73,201 @@ class _PinScreenState extends State<PinScreen> {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.black,
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Column(
-              children: [
-                70.getH(),
-                Center(
-                  child: Text(
-                    "Security screen",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
+          body: Stack(
+            children: [
+              Positioned(
+                top: 100,
+                left: -50,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.yellow.withOpacity(0.4),
+                          spreadRadius: 40,
+                          blurRadius: 100)
+                    ],
                   ),
                 ),
-                50.getH(),
-                Center(
-                  child: Text(
-                    "Enter your passcode",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+              ),
+              Positioned(
+                bottom: 100,
+                left: -50,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.purple.withOpacity(0.4),
+                          spreadRadius: 60,
+                          blurRadius: 100)
+                    ],
                   ),
                 ),
-                25.getH(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ...List.generate(
-                      4,
-                      (index) => Container(
-                        margin: EdgeInsets.symmetric(horizontal: 12.w),
-                        width: 15.w,
-                        height: 15.h,
-                        decoration: const BoxDecoration(
-                          color: Colors.grey,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                80.getH(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    buttonItems(title: "1"),
-                    buttonItems(title: "2"),
-                    buttonItems(title: "3"),
-                  ],
-                ),
-                15.getH(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    buttonItems(title: "4"),
-                    buttonItems(title: "5"),
-                    buttonItems(title: "6"),
-                  ],
-                ),
-                15.getH(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    buttonItems(title: "7"),
-                    buttonItems(title: "8"),
-                    buttonItems(title: "9"),
-                  ],
-                ),
-                15.getH(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 33.w,
-                          vertical: 25.h,
-                        ),
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100.r),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        "",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    buttonItems(title: "0"),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 20.h,
-                        ),
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100.r),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: const Icon(
-                        Icons.cancel_presentation,
-                        color: Colors.white,
-                        size: 40,
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Center(
-                  child: Text(
-                    "Forgot password?",
-                    style: TextStyle(
-                      color: Colors.grey.shade400,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+              ),
+              Positioned(
+                bottom: 150,
+                right: -50,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.green.withOpacity(0.4),
+                          spreadRadius: 40,
+                          blurRadius: 100)
+                    ],
                   ),
                 ),
-                50.getH(),
-              ],
-            ),
+              ),
+              Positioned(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: Column(
+                    children: [
+                      70.getH(),
+                      Center(
+                        child: Text(
+                          "Security screen",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      50.getH(),
+                      Center(
+                        child: Text(
+                          "Enter your passcode",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      25.getH(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ...List.generate(
+                            4,
+                            (index) => Container(
+                              margin: EdgeInsets.symmetric(horizontal: 12.w),
+                              width: 15.w,
+                              height: 15.h,
+                              decoration: BoxDecoration(
+                                color: index < pinCode.length ? Colors.green : Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      80.getH(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          buttonItems(title: "1"),
+                          buttonItems(title: "2"),
+                          buttonItems(title: "3"),
+                        ],
+                      ),
+                      15.getH(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          buttonItems(title: "4"),
+                          buttonItems(title: "5"),
+                          buttonItems(title: "6"),
+                        ],
+                      ),
+                      15.getH(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          buttonItems(title: "7"),
+                          buttonItems(title: "8"),
+                          buttonItems(title: "9"),
+                        ],
+                      ),
+                      15.getH(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 42.w,
+                                vertical: 27.h,
+                              ),
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100.r),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              "",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          buttonItems(title: "0"),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 22.w,
+                                vertical: 22.h,
+                              ),
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100.r),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (pinCode.isEmpty) {
+                                pinCode = "";
+                              } else {
+                                pinCode =
+                                    pinCode.substring(0, pinCode.length - 1);
+                              }
+                            },
+                            child: const Icon(
+                              Icons.cancel_presentation,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Center(
+                        child: Text(
+                          "Forgot password?",
+                          style: TextStyle(
+                            color: Colors.grey.shade400,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      50.getH(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
