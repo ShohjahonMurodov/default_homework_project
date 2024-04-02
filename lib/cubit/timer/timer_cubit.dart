@@ -9,6 +9,7 @@ class TimerCubit extends Cubit<TimerState> {
 
   Future<void> timerLogic(int count) async {
     emit(TimerLinearState());
+    isTrue = false;
     for (int i = count; i > 0; i--) {
       emit(TimerResultState(i));
       await Future.delayed(const Duration(seconds: 1));

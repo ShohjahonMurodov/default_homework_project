@@ -51,7 +51,7 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          164.getH(),
+          100.getH(),
           BlocBuilder<TimerCubit, TimerState>(
             builder: (context, state) {
               switch (state.runtimeType) {
@@ -75,35 +75,48 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
                 case TimerResultState:
                   {
                     state as TimerResultState;
-                    return Center(
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                            width: 280.w,
-                            height: 280.h,
-                            child: CircularProgressIndicator(
-                              value: widget.minutes.toDouble(),
-                              backgroundColor: Colors.white,
-                              strokeWidth: 3.w,
-                              color: const Color(0xFF00696B),
-                            ),
+                    return Column(
+                      children: [
+                        Text(
+                          "Vaqt tugadi. Vazifani topshiring",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w400,
                           ),
-                          Positioned(
-                            top: 100.h,
-                            left: 38.w,
-                            child: Center(
-                              child: Text(
-                                getMinutelyText(state.result),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 57.sp,
-                                  fontWeight: FontWeight.w400,
+                        ),
+                        50.getH(),
+                        Center(
+                          child: Stack(
+                            children: [
+                              SizedBox(
+                                width: 280.w,
+                                height: 280.h,
+                                child: CircularProgressIndicator(
+                                  value: widget.minutes.toDouble(),
+                                  backgroundColor: Colors.white,
+                                  strokeWidth: 3.w,
+                                  color: const Color(0xFF00696B),
                                 ),
                               ),
-                            ),
+                              Positioned(
+                                top: 100.h,
+                                left: 38.w,
+                                child: Center(
+                                  child: Text(
+                                    getMinutelyText(state.result),
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 57.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     );
                   }
               }

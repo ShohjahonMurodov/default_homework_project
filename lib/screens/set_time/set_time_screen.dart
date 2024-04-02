@@ -21,6 +21,7 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 53.w),
         child: Column(
@@ -63,39 +64,36 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                     children: [
                       SizedBox(
                         width: 126.w,
-                        height: 72.h,
                         child: TextField(
                           maxLength: 2,
                           controller: hourController,
                           keyboardType: TextInputType.number,
                           style: TextStyle(
-                            color: const Color(0xFF002020),
+                            color: Colors.black,
                             fontSize: 45.sp,
                             fontWeight: FontWeight.w400,
                           ),
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 9.h),
-                            hintText: "00",
+                                horizontal: 32.w, vertical: 0.h),
+                            hintText: "hour",
                             hintStyle: TextStyle(
-                              color: const Color(0xFF002020),
+                              color: Colors.black,
                               fontSize: 45.sp,
                               fontWeight: FontWeight.w400,
                             ),
-                            filled: true,
-                            fillColor: const Color(0xFF9CF1F2),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.r),
                               borderSide: BorderSide(
-                                color: const Color(0xFFDDE4E3),
-                                width: 2.w,
+                                color: Colors.black,
+                                width: 3.w,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.r),
                               borderSide: BorderSide(
-                                color: const Color(0xFF00696B),
-                                width: 2.w,
+                                color: Colors.black,
+                                width: 3.w,
                               ),
                             ),
                           ),
@@ -111,39 +109,38 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                       ),
                       SizedBox(
                         width: 126.w,
-                        height: 72.h,
                         child: TextField(
                           maxLength: 2,
                           controller: minuteController,
                           keyboardType: TextInputType.number,
                           style: TextStyle(
-                            color: const Color(0xFF002020),
+                            color: Colors.black,
                             fontSize: 45.sp,
                             fontWeight: FontWeight.w400,
                           ),
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color(0xFFDDE4E3),
                             contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 9.h),
-                            hintText: "00",
+                                horizontal: 32.w, vertical: 0.h),
+                            hintText: "minute",
                             hintStyle: TextStyle(
-                              color: const Color(0xFF002020),
+                              color: Colors.black,
                               fontSize: 45.sp,
                               fontWeight: FontWeight.w400,
                             ),
-                            filled: true,
-                            fillColor: const Color(0xFF9CF1F2),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.r),
                               borderSide: BorderSide(
-                                color: const Color(0xFFDDE4E3),
-                                width: 2.w,
+                                color: Colors.black,
+                                width: 3.w,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.r),
                               borderSide: BorderSide(
-                                color: const Color(0xFF00696B),
-                                width: 2.w,
+                                color: Colors.black,
+                                width: 3.w,
                               ),
                             ),
                           ),
@@ -186,8 +183,6 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                     color: Colors.black,
                   ),
                 ),
-                filled: true,
-                fillColor: const Color(0xFFDDE4E3),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.r),
@@ -222,16 +217,25 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => StartTimeScreen(
-                        minutes: int.parse(hourController.text) * 60 +
-                            int.parse(minuteController.text),
-                        tag: tagController.text,
+                  if (hourController.text.isNotEmpty &&
+                      minuteController.text.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StartTimeScreen(
+                          minutes: int.parse(hourController.text) * 60 +
+                              int.parse(minuteController.text),
+                          tag: tagController.text,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Hour yoki minute ni kiritmadingiz :("),
+                      ),
+                    );
+                  }
                 },
                 child: Text(
                   "Save",
