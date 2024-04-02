@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/cubit/timer/timer_cubit.dart';
 import 'package:homework/cubit/timer/timer_state.dart';
 import 'package:homework/utils/size_utils.dart';
-
 import '../../data/local/local_variable.dart';
 
 class StartTimeScreen extends StatefulWidget {
@@ -43,7 +42,10 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
               Navigator.pop(context);
             }
           },
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
         ),
       ),
       body: Column(
@@ -74,26 +76,33 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
                   {
                     state as TimerResultState;
                     return Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(200.r),
-                          border: Border.all(
-                            color: Colors.black.withOpacity(.25),
-                            width: 3.w,
-                          ),
-                        ),
-                        width: 280.w,
-                        height: 280.h,
-                        child: Center(
-                          child: Text(
-                            getMinutelyText(state.result),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 57.sp,
-                              fontWeight: FontWeight.w400,
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: 280.w,
+                            height: 280.h,
+                            child: CircularProgressIndicator(
+                              value: widget.minutes.toDouble(),
+                              backgroundColor: Colors.white,
+                              strokeWidth: 3.w,
+                              color: const Color(0xFF00696B),
                             ),
                           ),
-                        ),
+                          Positioned(
+                            top: 100.h,
+                            left: 38.w,
+                            child: Center(
+                              child: Text(
+                                getMinutelyText(state.result),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 57.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }
@@ -107,6 +116,7 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 50.w),
             child: TextField(
+              readOnly: true,
               controller: tagController,
               decoration: InputDecoration(
                 suffixIcon: IconButton(

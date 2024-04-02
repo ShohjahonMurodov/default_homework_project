@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:homework/controller_screen.dart';
+import 'package:homework/cubit/banks/bank_cubit.dart';
 import 'package:homework/cubit/timer/timer_cubit.dart';
-import 'package:homework/screens/set_time/set_time_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,7 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => TimerCubit()),
+        BlocProvider(create: (_) => BankCubit()..fetchBanks()),
       ],
       child: const MyApp(),
     ),
@@ -40,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: false),
-          home: const SetTimeScreen(),
+          home: const ControllerScreen(),
         );
       },
     );
