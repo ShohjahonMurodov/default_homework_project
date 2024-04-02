@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/cubit/to_check/check_cubit.dart';
+import 'package:homework/screens/api/api_screen.dart';
+import 'package:homework/screens/services/local_auth.dart';
 import 'package:homework/utils/size_utils.dart';
 
 class EnterScreen extends StatefulWidget {
@@ -13,6 +15,26 @@ class EnterScreen extends StatefulWidget {
 
 class _EnterScreenState extends State<EnterScreen> {
   String pinCode = "";
+  bool auth = false;
+
+  _init() async {
+    final authenticated = await LocalAuth.authenticate();
+    setState(() {
+      auth = authenticated;
+    });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ApiScreen(),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    _init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +218,9 @@ class _EnterScreenState extends State<EnterScreen> {
                                 borderRadius: BorderRadius.circular(100.r),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              _init();
+                            },
                             child: Text(
                               "",
                               style: TextStyle(
