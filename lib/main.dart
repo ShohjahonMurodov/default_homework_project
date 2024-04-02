@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/cubit/country/country_cubit.dart';
-import 'package:homework/cubit/to_check/check_cubit.dart';
 import 'package:homework/data/local/storage_repository.dart';
+import 'package:homework/screens/pin/password_cubit.dart';
 import 'package:homework/screens/splash/splash_screen.dart';
 
 Future<void> main() async {
@@ -15,7 +15,7 @@ Future<void> main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => CheckCubit()),
+        BlocProvider(create: (_) => PasswordCubit()),
         BlocProvider(create: (_) => CountryCubit()..fetchCountries()),
       ],
       child: const MyApp(),

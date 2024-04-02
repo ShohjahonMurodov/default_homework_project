@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:homework/cubit/to_check/check_cubit.dart';
+import 'package:homework/screens/pin/password_cubit.dart';
+import 'package:homework/screens/pin/password_state.dart';
 import 'package:homework/utils/size_utils.dart';
 
 class PinScreen extends StatefulWidget {
@@ -12,10 +13,6 @@ class PinScreen extends StatefulWidget {
 }
 
 class _PinScreenState extends State<PinScreen> {
-  String pinCode = "";
-  String againCode = "";
-  bool isAgain = false;
-
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -34,19 +31,7 @@ class _PinScreenState extends State<PinScreen> {
           ),
         ),
         onPressed: () {
-          pinCode += title;
-          if (isAgain) {
-            againCode = pinCode;
-          }
-          if (pinCode.length == 4) {
-            if (!isAgain) {
-              context.read<CheckCubit>().createPassword(pinCode);
-              pinCode = "";
-              isAgain = true;
-            }
-            context.read<CheckCubit>().toVerifyPinCode(againCode, context);
-          }
-          setState(() {});
+          context.read<PasswordCubit>().insertPassword(title, context);
         },
         child: Text(
           title,
@@ -59,7 +44,7 @@ class _PinScreenState extends State<PinScreen> {
       );
     }
 
-    return BlocBuilder<CheckCubit, String>(
+    return BlocBuilder<PasswordCubit, PasswordState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.black,
@@ -135,9 +120,7 @@ class _PinScreenState extends State<PinScreen> {
                       50.getH(),
                       Center(
                         child: Text(
-                          isAgain
-                              ? "Again your password"
-                              : "Enter your passcode",
+                          "Enter your passcode",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,
@@ -156,9 +139,12 @@ class _PinScreenState extends State<PinScreen> {
                               width: 15.w,
                               height: 15.h,
                               decoration: BoxDecoration(
-                                color: index < pinCode.length
-                                    ? Colors.green
-                                    : Colors.grey,
+                                color: index < state.password.length
+                                    ? state.passwordStatus ==
+                                            PasswordStatus.error
+                                        ? Colors.red
+                                        : Colors.green
+                                    : Colors.white10,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -230,13 +216,7 @@ class _PinScreenState extends State<PinScreen> {
                               ),
                             ),
                             onPressed: () {
-                              if (pinCode.isEmpty) {
-                                pinCode = "";
-                              } else {
-                                pinCode =
-                                    pinCode.substring(0, pinCode.length - 1);
-                              }
-                              setState(() {});
+                              context.read<PasswordCubit>().remove();
                             },
                             child: const Icon(
                               Icons.backspace,
