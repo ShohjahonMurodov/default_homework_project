@@ -31,12 +31,6 @@ class _EnterScreenState extends State<EnterScreen> {
   }
 
   @override
-  void initState() {
-    _init();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
