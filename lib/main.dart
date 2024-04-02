@@ -1,22 +1,22 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:homework/cubit/country/country_cubit.dart';
-import 'package:homework/data/local/storage_repository.dart';
-import 'package:homework/screens/pin/password_cubit.dart';
-import 'package:homework/screens/splash/splash_screen.dart';
+import 'package:homework/cubit/timer/timer_cubit.dart';
+import 'package:homework/screens/set_time/set_time_screen.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  StorageRepository.instance;
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => PasswordCubit()),
-        BlocProvider(create: (_) => CountryCubit()..fetchCountries()),
+        BlocProvider(create: (_) => TimerCubit()),
       ],
       child: const MyApp(),
     ),
@@ -34,13 +34,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: const Size(430, 932),
       builder: (context, child) {
         ScreenUtil.init(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: false),
-          home: const SplashScreen(),
+          home: const SetTimeScreen(),
         );
       },
     );
