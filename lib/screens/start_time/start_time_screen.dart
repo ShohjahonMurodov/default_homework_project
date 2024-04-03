@@ -32,9 +32,9 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -44,14 +44,14 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          100.getH(),
+          164.getH(),
           BlocBuilder<TimerCubit, TimerState>(
             builder: (context, state) {
               switch (state.runtimeType) {
@@ -75,17 +75,13 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
                 case TimerResultState:
                   {
                     state as TimerResultState;
+                    double progressValue = 0.0;
+                    if (state.result > 0) {
+                      // Calculate the progress value based on the input number of minutes and the maximum duration
+                      progressValue = (state.result.toDouble() % widget.minutes.toDouble()) / widget.minutes.toDouble();
+                    }
                     return Column(
                       children: [
-                        Text(
-                          "Vaqt tugadi. Vazifani topshiring",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        50.getH(),
                         Center(
                           child: Stack(
                             children: [
@@ -93,10 +89,10 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
                                 width: 280.w,
                                 height: 280.h,
                                 child: CircularProgressIndicator(
-                                  value: widget.minutes.toDouble(),
-                                  backgroundColor: Colors.white,
+                                  value: progressValue,
+                                  backgroundColor: const Color(0xFF00696B),
                                   strokeWidth: 3.w,
-                                  color: const Color(0xFF00696B),
+                                  color: Colors.white,
                                 ),
                               ),
                               Positioned(
@@ -106,7 +102,7 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
                                   child: Text(
                                     getMinutelyText(state.result),
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                       fontSize: 57.sp,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -129,6 +125,11 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 50.w),
             child: TextField(
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w400,
+              ),
               readOnly: true,
               controller: tagController,
               decoration: InputDecoration(
@@ -142,26 +143,21 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
                 filled: true,
                 fillColor: const Color(0xFFDDE4E3),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(4.r),
-                    topRight: Radius.circular(4.r),
-                  ),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(4.r),
-                    topRight: Radius.circular(4.r),
-                  ),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
               ),
             ),
           ),
+          4.getH(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 66.w),
             child: Text(
               "What you are working on",
               style: TextStyle(
-                color: const Color(0xFF49454F),
+                color: Colors.white,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
               ),
@@ -174,20 +170,24 @@ class _StartTimeScreenState extends State<StartTimeScreen> {
               width: double.infinity,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
                   backgroundColor: const Color(0xFF00696B),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25.r),
                   ),
                 ),
                 onPressed: () {
-                  context.read<TimerCubit>().timerLogic(widget.minutes);
+                  if (!isStart) {
+                    context
+                        .read<TimerCubit>()
+                        .timerLogic(widget.minutes, context);
+                  }
                 },
                 child: Text(
                   "Start",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 14.sp,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

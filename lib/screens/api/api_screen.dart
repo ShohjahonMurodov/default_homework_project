@@ -97,6 +97,69 @@ class _ApiScreenState extends State<ApiScreen> {
                     );
                   },
                 ),
+                ...List.generate(
+                  state.transferModels.length,
+                  (index) {
+                    TransferModels bank = state.transferModels[index];
+                    return Container(
+                      margin: EdgeInsets.only(
+                        left: 24.w,
+                        right: 24.w,
+                        bottom: 15.h,
+                      ),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.r),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 8,
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        onTap: () {},
+                        leading: bank.data[0].sender.name == "Najot Ta'lim"
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(20.r),
+                                child: Image.network(
+                                    "https://api.logobank.uz/media/logos_png/Najot_Talim-01.png"),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(20.r),
+                                child: Image.network(
+                                    bank.data[1].sender.brandImage),
+                              ),
+                        title: Text(
+                          bank.data[1].sender.name,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        subtitle: Text(
+                          bank.data[0].sender.location,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        trailing: Text(
+                          bank.data[1].amount.toString(),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             );
           }
