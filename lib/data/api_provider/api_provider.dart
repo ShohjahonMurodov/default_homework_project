@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,7 +52,7 @@ class ApiProvider {
         ),
       );
       if (response.statusCode == 201) {
-        text = "Created model";
+        text = "Insert model";
       }
     } catch (error) {
       debugPrint("Error: $error");
@@ -86,7 +87,7 @@ class ApiProvider {
     return text;
   }
 
-  Future<String> updateBooks(BookModels bookModels) async {
+  Future<String> updateUserInfo(BookModels bookModels) async {
     Dio dio = Dio();
 
     String text = "";
@@ -98,15 +99,16 @@ class ApiProvider {
         options: Options(
           headers: {
             "Authorization": "Bearer ${AppConstants.token}",
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
         ),
       );
-      if (response.statusCode == 200) {
-        text = "Created model";
+      if (response.statusCode == HttpStatus.ok) {
+        text = "updated";
+        return text;
       }
     } catch (error) {
-      debugPrint("Error: $error");
+      debugPrint(error.toString());
     }
     return text;
   }

@@ -60,6 +60,7 @@ class _EditScreenState extends State<EditScreen> {
                 ),
                 onPressed: () {
                   BookModels book = BookModels(
+                    uuid: widget.bookModels.uuid,
                     description: descriptionController.text,
                     name: widget.bookModels.name,
                     price: double.parse(priceController.text),
@@ -69,6 +70,7 @@ class _EditScreenState extends State<EditScreen> {
                   context
                       .read<BookBloc>()
                       .add(UpdateBookEvent(bookModels: book));
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 },
                 child: Text(

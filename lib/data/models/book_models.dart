@@ -37,11 +37,11 @@ class BookModels {
 
   Map<String, dynamic> toJsonForUpdate() {
     return {
+      "_uuid": uuid,
       "name": name,
       "price": price,
       "description": description,
       "rate": rate,
-      "_uuid": uuid,
       "author": author,
     };
   }

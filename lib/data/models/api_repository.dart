@@ -14,5 +14,5 @@ class ApiRepository {
   Future<String> deleteBook(String uuid) => apiProvider.deleteBooks(uuid);
 
   Future<String> updateBook(BookModels bookModels) =>
-      apiProvider.updateBooks(bookModels);
+      apiProvider.updateUserInfo(bookModels);
 }
