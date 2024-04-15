@@ -1,10 +1,26 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:homework/blocs/countries_bloc.dart';
+import 'package:homework/blocs/countries_event.dart';
+import 'package:homework/data/api/api_client.dart';
+import 'package:homework/screens/controller/controller_screen.dart';
 
-import 'hello_screen.dart';
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
-  runApp(const MyApp());
+  final ApiClient apiClient =
+      ApiClient(graphQLClient: ApiClient.create().graphQLClient);
+
+  runApp(
+    MultiBlocProvider(providers: [
+      BlocProvider(
+        create: (_) =>
+            CountriesBloc(apiClient: apiClient)..add(FetchCountries()),
+      ),
+    ], child: const MyApp()),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -27,7 +43,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: const HelloScreen(),
+      child: const ControllerScreen(),
     );
   }
 }
