@@ -31,9 +31,9 @@ class ApiClient {
             errorText: result.exception!.graphqlErrors.toString());
       } else {
         List<CountryModel> countries = (result.data?['countries'] as List?)
-            ?.map((dynamic e) =>
-            CountryModel.fromJson(e as Map<String, dynamic>))
-            .toList() ??
+                ?.map((dynamic e) =>
+                    CountryModel.fromJson(e as Map<String, dynamic>))
+                .toList() ??
             [];
         debugPrint("LIST LENGTH:${countries.length}");
         return NetworkResponse(data: countries);
@@ -48,7 +48,6 @@ class ApiClient {
   Future<NetworkResponse> getCountriesByContinents(String continentCode) async {
     try {
       var result = await graphQLClient.query(
-        //MutationOptions(document: gql(""))
         QueryOptions(document: gql(getCountryQueryByContinent(continentCode))),
       );
 
@@ -57,9 +56,9 @@ class ApiClient {
             errorText: result.exception!.graphqlErrors.toString());
       } else {
         List<CountryModel> countries = (result.data?['countries'] as List?)
-            ?.map((dynamic e) =>
-            CountryModel.fromJson(e as Map<String, dynamic>))
-            .toList() ??
+                ?.map((dynamic e) =>
+                    CountryModel.fromJson(e as Map<String, dynamic>))
+                .toList() ??
             [];
         debugPrint("LIST LENGTH:${countries.length}");
         return NetworkResponse(data: countries);
@@ -67,7 +66,6 @@ class ApiClient {
     } catch (error) {
       debugPrint("ERROR:$error");
     }
-
     return NetworkResponse();
   }
 }

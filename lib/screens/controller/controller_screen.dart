@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework/screens/all/all_countries.dart';
 import 'package:homework/screens/controller/widgets/controller_items.dart';
+import 'package:homework/screens/countries/countries_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 
 class ControllerScreen extends StatelessWidget {
@@ -28,12 +29,68 @@ class ControllerScreen extends StatelessWidget {
                 );
               },
             ),
-            ControllerItems(title: "Asia", onTap: () {}),
-            ControllerItems(title: "Europe", onTap: () {}),
-            ControllerItems(title: "North America", onTap: () {}),
-            ControllerItems(title: "South America", onTap: () {}),
-            ControllerItems(title: "Africa", onTap: () {}),
-            ControllerItems(title: "Australia", onTap: () {}),
+            ControllerItems(
+                title: "Asia",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CountriesScreen(query: 'AS'),
+                    ),
+                  );
+                }),
+            ControllerItems(
+                title: "Europe",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CountriesScreen(
+                        query: 'EU',
+                      ),
+                    ),
+                  );
+                }),
+            ControllerItems(
+                title: "North America",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CountriesScreen(query: 'NA'),
+                    ),
+                  );
+                }),
+            ControllerItems(
+                title: "South America",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CountriesScreen(query: 'SA'),
+                    ),
+                  );
+                }),
+            ControllerItems(
+                title: "Africa",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CountriesScreen(query: 'AF'),
+                    ),
+                  );
+                }),
+            ControllerItems(
+                title: "Australia",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CountriesScreen(query: 'AU'),
+                    ),
+                  );
+                }),
           ],
         ),
       ),

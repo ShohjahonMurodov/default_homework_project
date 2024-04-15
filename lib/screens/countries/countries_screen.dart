@@ -4,17 +4,21 @@ import 'package:homework/blocs/countries_bloc.dart';
 import 'package:homework/blocs/countries_event.dart';
 import 'package:homework/blocs/countries_state.dart';
 
-class AllCountriesScreen extends StatefulWidget {
-  const AllCountriesScreen({super.key});
+class CountriesScreen extends StatefulWidget {
+  const CountriesScreen({super.key, required this.query});
+
+  final String query;
 
   @override
-  State<AllCountriesScreen> createState() => _AllCountriesScreenState();
+  State<CountriesScreen> createState() => _CountriesScreenState();
 }
 
-class _AllCountriesScreenState extends State<AllCountriesScreen> {
+class _CountriesScreenState extends State<CountriesScreen> {
   @override
   void initState() {
-    context.read<CountriesBloc>().add(FetchCountries());
+    context.read<CountriesBloc>().add(
+          FetchCountriesByContinent(query: widget.query),
+        );
     super.initState();
   }
 

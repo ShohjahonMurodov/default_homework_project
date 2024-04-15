@@ -7,20 +7,33 @@ import 'package:homework/data/models/network_response.dart';
 
 class CountriesBloc extends Bloc<CountriesEvent, CountriesState> {
   CountriesBloc({required this.apiClient}) : super(CountriesInitialState()) {
-    on<FetchCountries>(
-      (FetchCountries event, emit) async {
-        emit(CountriesLoadingState());
+    on<FetchCountries>((FetchCountries event, emit) async {
+      emit(CountriesLoadingState());
 
-        NetworkResponse networkResponse = await apiClient.getCountries();
+      NetworkResponse networkResponse = await apiClient.getCountries();
 
-        if (networkResponse.errorText.isEmpty) {
-          emit(CountriesSuccessState(
-              countries: networkResponse.data as List<CountryModel>));
-        } else {
-          emit(CountriesErrorState(errorText: networkResponse.errorText));
-        }
-      },
-    );
+      if (networkResponse.errorText.isEmpty) {
+        emit(CountriesSuccessState(
+            countries: networkResponse.data as List<CountryModel>));
+      } else {
+        emit(CountriesErrorState(errorText: networkResponse.errorText));
+      }
+    });
+
+    on<FetchCountriesByContinent>(
+        (FetchCountriesByContinent event, emit) async {
+      emit(CountriesLoadingState());
+
+      NetworkResponse networkResponse =
+          await apiClient.getCountriesByContinents(event.query);
+
+      if (networkResponse.errorText.isEmpty) {
+        emit(CountriesSuccessState(
+            countries: networkResponse.data as List<CountryModel>));
+      } else {
+        emit(CountriesErrorState(errorText: networkResponse.errorText));
+      }
+    });
   }
 
   final ApiClient apiClient;
