@@ -41,7 +41,6 @@ class ApiClient {
     } catch (error) {
       debugPrint("ERROR:$error");
     }
-
     return NetworkResponse();
   }
 
@@ -66,6 +65,33 @@ class ApiClient {
     } catch (error) {
       debugPrint("ERROR:$error");
     }
+    return NetworkResponse();
+  }
+
+  Future<NetworkResponse> getCountriesBySearch(String name) async {
+    try {
+      var result = await graphQLClient.query(
+        QueryOptions(document: gql(getCountryQueryBySearch(name))),
+      );
+
+      if (result.hasException) {
+        return NetworkResponse(
+            errorText: result.exception!.graphqlErrors.toString());
+      } else {
+        List<CountryModel> countries = (result.data?['countries'] as List?)
+                ?.map((dynamic e) =>
+                    CountryModel.fromJson(e as Map<String, dynamic>))
+                .toList() ??
+            [];
+
+        debugPrint("LIST LENGTH:${countries.length}");
+
+        return NetworkResponse(data: countries);
+      }
+    } catch (error) {
+      debugPrint("ERROR:$error");
+    }
+
     return NetworkResponse();
   }
 }

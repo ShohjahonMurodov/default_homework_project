@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/blocs/countries_bloc.dart';
 import 'package:homework/blocs/countries_event.dart';
 import 'package:homework/blocs/countries_state.dart';
@@ -43,9 +44,30 @@ class _CountriesScreenState extends State<CountriesScreen> {
                 ...List.generate(
                   state.countries.length,
                   (index) => ListTile(
-                    title: Text(state.countries[index].name),
-                    trailing: Text(state.countries[index].emoji),
-                    subtitle: Text(state.countries[index].continentName),
+                    title: Text(
+                      state.countries[index].name,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    trailing: Text(
+                      state.countries[index].emoji,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    subtitle: Text(
+                      state.countries[index].continentName,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
                 ),
               ],

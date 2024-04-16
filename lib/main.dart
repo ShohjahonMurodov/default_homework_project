@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/blocs/countries_bloc.dart';
@@ -33,17 +34,24 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      builder: (context, child) {
-        ScreenUtil.init(context);
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(useMaterial3: false),
-          home: child,
-        );
-      },
-      child: const ControllerScreen(),
+    return AnnotatedRegion(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        builder: (context, child) {
+          ScreenUtil.init(context);
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(useMaterial3: false),
+            home: child,
+          );
+        },
+        child: const ControllerScreen(),
+      ),
     );
   }
 }

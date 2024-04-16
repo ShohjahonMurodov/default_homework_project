@@ -7,3 +7,9 @@ class FetchCountriesByContinent extends CountriesEvent {
 
   final String query;
 }
+
+class FetchCountriesBySearch extends CountriesEvent {
+  FetchCountriesBySearch({required this.name});
+
+  final String name;
+}

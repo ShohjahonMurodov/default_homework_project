@@ -34,6 +34,22 @@ class CountriesBloc extends Bloc<CountriesEvent, CountriesState> {
         emit(CountriesErrorState(errorText: networkResponse.errorText));
       }
     });
+
+    on<FetchCountriesBySearch>(
+      (FetchCountriesBySearch event, emit) async {
+        emit(CountriesLoadingState());
+
+        NetworkResponse networkResponse =
+            await apiClient.getCountriesBySearch(event.name);
+
+        if (networkResponse.errorText.isEmpty) {
+          emit(CountriesSuccessState(
+              countries: networkResponse.data as List<CountryModel>));
+        } else {
+          emit(CountriesErrorState(errorText: networkResponse.errorText));
+        }
+      },
+    );
   }
 
   final ApiClient apiClient;
