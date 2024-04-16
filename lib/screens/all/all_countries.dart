@@ -15,6 +15,12 @@ class AllCountriesScreen extends StatefulWidget {
 
 class _AllCountriesScreenState extends State<AllCountriesScreen> {
   @override
+  void initState() {
+    context.read<CountriesBloc>().add(FetchCountries());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;

@@ -94,4 +94,41 @@ class ApiClient {
 
     return NetworkResponse();
   }
+
+  Future<NetworkResponse> searchForLocationCounties(
+      {required String name, required String location}) async {
+    NetworkResponse networkResponse = NetworkResponse();
+
+    try {
+      var result = await graphQLClient.query(
+        QueryOptions(
+          document: gql("""query ListCountriesInNAFTA {
+  countries(filter: { name: { in: ["$name"] },continent:  {  in: ["$location"] } }) {
+    code
+    name
+    emoji
+    continent{
+      name
+    }
+  }
+}"""),
+        ),
+      );
+
+      if (result.hasException) {
+        networkResponse.errorText = "result.hasException Error";
+      } else {
+        List<CountryModel> countries = (result.data?["countries"] as List?)
+                ?.map((e) => CountryModel.fromJson(e))
+                .toList() ??
+            [];
+
+        countries.removeWhere((element) => element.name == "Israel");
+        networkResponse.data = countries;
+      }
+    } catch (error) {
+      debugPrint("ERROR: $error");
+    }
+    return networkResponse;
+  }
 }

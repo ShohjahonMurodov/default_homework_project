@@ -13,3 +13,10 @@ class FetchCountriesBySearch extends CountriesEvent {
 
   final String name;
 }
+
+class FetchCountriesBySearchContinent extends CountriesEvent {
+  FetchCountriesBySearchContinent({required this.name, required this.location});
+
+  final String name;
+  final String location;
+}
