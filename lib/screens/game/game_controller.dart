@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:homework/data/models/game_models.dart';
+import 'package:homework/screens/game/view/game_screen.dart';
 
 class GameController extends GetxController {
   final questions = <GameModels>[
@@ -15,7 +16,7 @@ class GameController extends GetxController {
       result: "suhrob",
     ),
     GameModels(
-      riddle: "Shohjahonning ismi nima?",
+      riddle: "Mehrojning ismi nima?",
       result: "shohjahon",
     ),
     GameModels(
@@ -32,6 +33,7 @@ class GameController extends GetxController {
   List<String> alphabet = [
     "a",
     "b",
+    "c",
     "d",
     "e",
     "f",
@@ -42,6 +44,17 @@ class GameController extends GetxController {
     "k",
     "l",
     "m",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "x",
+    "y",
+    "z",
   ];
 
   @override
@@ -50,17 +63,26 @@ class GameController extends GetxController {
     shuffleLetters();
   }
 
-  void shuffleLetters() {
-    shuffledLetters = currentAnswer.split('')..shuffle();
+  void shuffleLetters() async {
+    shuffledLetters.clear();
+
+    for (int i = 0; i < currentAnswer.length; i++) {
+      shuffledLetters.add(currentAnswer[i]);
+      print(currentAnswer[i]);
+    }
 
     Random random = Random();
 
     for (int i = 0; i < 5; i++) {
       int randomIndex = random.nextInt(alphabet.length);
       String randomLetter = alphabet[randomIndex];
+      print(randomLetter);
       shuffledLetters.add(randomLetter);
     }
+    print(currentAnswer);
+    print(shuffledLetters);
     shuffledLetters.shuffle();
+    print(shuffledLetters.length);
     inputAnswer.value = "";
     errorMessage.value = "";
   }
@@ -89,11 +111,21 @@ class GameController extends GetxController {
     }
   }
 
-  void checkAnswer() {
+  void checkAnswer() async {
     if (inputAnswer.value == currentAnswer) {
       errorMessage.value = "True answer!";
       nextQuestion();
     } else if (inputAnswer.value.length == currentAnswer.length) {
+      shuffleLetters();
+      if (isStartAnimation) {
+        globalAnimationController.reverse();
+        isStartAnimation = false;
+      } else {
+        globalAnimationController.forward();
+        isStartAnimation = true;
+        await Future.delayed(const Duration(milliseconds: 500));
+        isStartAnimation = false;
+      }
       errorMessage.value = "False answer";
       inputAnswer.value = "";
     }
