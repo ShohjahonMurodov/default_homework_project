@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:homework/data/local/local_database.dart';
-import 'package:homework/data/models/puzzle_model.dart';
 import 'package:homework/screens/records/records_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 
@@ -37,12 +35,14 @@ class _PuzzlePageState extends State<PuzzlePage> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const RecordsScreen(),
-                ),
-              );
+              if (!controller.isGame) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RecordsScreen(),
+                  ),
+                );
+              }
             },
             child: Text(
               "RECORDS",
@@ -127,14 +127,9 @@ class _PuzzlePageState extends State<PuzzlePage> {
                 itemCount: 16,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () async {
+                    onTap: () {
                       controller.moveTile(index);
                       if (controller.isSorted()) {
-                        await LocalDatabase.insertNote(
-                          PuzzleModel(
-                              count: controller.counter.value,
-                              dateTime: controller.datetime.value),
-                        );
                         Get.dialog(
                           AlertDialog(
                             title: const Text('Congratulations!'),
@@ -155,10 +150,13 @@ class _PuzzlePageState extends State<PuzzlePage> {
                       }
                     },
                     child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.r),
+                        color: controller.tiles[index] == 15
+                            ? Colors.transparent
+                            : Colors.blueGrey,
+                      ),
                       margin: const EdgeInsets.all(4.0),
-                      color: controller.tiles[index] == 15
-                          ? Colors.transparent
-                          : Colors.blueGrey,
                       child: Center(
                         child: Text(
                           '${controller.tiles[index] == 15 ? '' : controller.tiles[index] + 1}',
@@ -174,6 +172,22 @@ class _PuzzlePageState extends State<PuzzlePage> {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueGrey,
+        onPressed: () {
+          if (!controller.isGame) {
+            controller.isTrue = true;
+            controller.timerLogic();
+            controller.tiles.shuffle();
+            Get.back();
+          }
+        },
+        child: Icon(
+          Icons.gamepad_outlined,
+          size: 30.sp,
+          color: Colors.white,
         ),
       ),
     );

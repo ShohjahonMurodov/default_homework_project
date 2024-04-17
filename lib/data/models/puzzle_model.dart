@@ -33,12 +33,4 @@ class PuzzleModel {
       AppConstants.datetime: dateTime,
     };
   }
-
-  Map<String, dynamic> toUpdateJson() {
-    return {
-      AppConstants.id: id,
-      AppConstants.count: count,
-      AppConstants.datetime: dateTime,
-    };
-  }
 }

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:homework/data/local/local_database.dart';
-import 'package:homework/data/models/puzzle_model.dart';
 
 class PuzzleController extends GetxController {
   var tiles = List<int>.generate(16, (index) => index).obs;
@@ -8,6 +7,8 @@ class PuzzleController extends GetxController {
   RxInt counter = 0.obs;
   RxInt datetime = 0.obs;
   bool isTrue = true;
+
+  bool isGame = true;
 
   @override
   void onInit() {
@@ -21,6 +22,8 @@ class PuzzleController extends GetxController {
         return false;
       }
     }
+    LocalDatabaseHelper().saveGameData(counter.value, datetime.value);
+    isGame = false;
     isTrue = false;
     datetime = 0.obs;
     counter = 0.obs;
