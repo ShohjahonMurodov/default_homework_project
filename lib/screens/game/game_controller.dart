@@ -33,8 +33,6 @@ class GameController extends GetxController {
       randomWords.add(randomLetter);
     }
     randomWords.shuffle();
-
-    return randomWords;
   }
 
   toCheck(String riddleAnswer, String answer) {
