@@ -76,6 +76,12 @@ class GameController extends GetxController {
     }
   }
 
+  void removeLastLetter() {
+    if (inputAnswer.value.isNotEmpty) {
+      inputAnswer.value = inputAnswer.value.substring(0, inputAnswer.value.length - 1);
+    }
+  }
+
   void checkAnswer() {
     if (inputAnswer.value == currentAnswer) {
       errorMessage.value = "To'g'ri!";
@@ -114,7 +120,7 @@ class GameController extends GetxController {
               child: TextButton(
                 style: TextButton.styleFrom(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 30.w, vertical: 11.h),
+                    EdgeInsets.symmetric(horizontal: 30.w, vertical: 11.h),
                     backgroundColor: Colors.blueAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.r),

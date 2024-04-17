@@ -1,8 +1,8 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:homework/screens/game/game_controller.dart';
 import 'package:homework/utils/app_images.dart';
+import 'package:homework/screens/game/game_controller.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({Key? key}) : super(key: key);
@@ -92,10 +92,22 @@ class GameScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: SizedBox(
+        width: 60.w,
+        height: 60.h,
+        child: FloatingActionButton(
+          backgroundColor: Colors.deepPurple,
+          onPressed: controller.removeLastLetter,
+          child: Icon(
+            Icons.backspace,
+            color: Colors.white,
+            size: 25.sp,
+          ),
+        ),
+      ),
     );
   }
 
-  // Widget for alphabet buttons
   Widget alphabetButton({
     required String title,
     required VoidCallback onPressed,
