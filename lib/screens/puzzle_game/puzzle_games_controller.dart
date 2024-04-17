@@ -7,17 +7,11 @@ class PuzzleController extends GetxController {
 
   RxInt counter = 0.obs;
   RxInt datetime = 0.obs;
-
-  String dateTime = "";
   bool isTrue = true;
 
   @override
   void onInit() {
     super.onInit();
-    shuffleTiles();
-  }
-
-  void shuffleTiles() {
     tiles.shuffle();
   }
 
@@ -27,9 +21,6 @@ class PuzzleController extends GetxController {
         return false;
       }
     }
-    LocalDatabase.insertNote(
-      PuzzleModel(count: counter.value, dateTime: datetime.value),
-    );
     isTrue = false;
     datetime = 0.obs;
     counter = 0.obs;
@@ -37,19 +28,22 @@ class PuzzleController extends GetxController {
   }
 
   void moveTile(int index) {
-    isTrue = true;
-    counter++;
     if (index - 1 >= 0 && (index - 1) % 4 != 3 && tiles[index - 1] == 15) {
+      counter++;
       swap(index, index - 1);
     } else if (index + 1 < 16 && index % 4 != 3 && tiles[index + 1] == 15) {
+      counter++;
       swap(index, index + 1);
     } else if (index - 4 >= 0 && tiles[index - 4] == 15) {
+      counter++;
       swap(index, index - 4);
     } else if (index + 4 < 16 && tiles[index + 4] == 15) {
+      counter++;
       swap(index, index + 4);
     } else if (index - 1 >= 0 &&
         (index - 1) % 4 != 3 &&
         tiles[index - 1] == 15) {
+      counter++;
       swap(index, index - 1);
     }
   }

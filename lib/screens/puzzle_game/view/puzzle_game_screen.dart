@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:homework/data/local/local_database.dart';
+import 'package:homework/data/models/puzzle_model.dart';
 import 'package:homework/screens/records/records_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 
@@ -125,9 +127,14 @@ class _PuzzlePageState extends State<PuzzlePage> {
                 itemCount: 16,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       controller.moveTile(index);
                       if (controller.isSorted()) {
+                        await LocalDatabase.insertNote(
+                          PuzzleModel(
+                              count: controller.counter.value,
+                              dateTime: controller.datetime.value),
+                        );
                         Get.dialog(
                           AlertDialog(
                             title: const Text('Congratulations!'),
@@ -135,7 +142,9 @@ class _PuzzlePageState extends State<PuzzlePage> {
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  controller.shuffleTiles();
+                                  controller.isTrue = true;
+                                  controller.timerLogic();
+                                  controller.tiles.shuffle();
                                   Get.back();
                                 },
                                 child: const Text('Play Again'),
