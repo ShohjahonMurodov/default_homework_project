@@ -18,7 +18,7 @@ class PuzzleModel {
   PuzzleModel copyWith({
     int? id,
     int? count,
-    int? datetime,
+    int? dateTime,
   }) {
     return PuzzleModel(
       id: id ?? this.id,

@@ -37,6 +37,7 @@ class PuzzleController extends GetxController {
   }
 
   void moveTile(int index) {
+    isTrue = true;
     counter++;
     if (index - 1 >= 0 && (index - 1) % 4 != 3 && tiles[index - 1] == 15) {
       swap(index, index - 1);

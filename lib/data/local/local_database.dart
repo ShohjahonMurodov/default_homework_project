@@ -2,7 +2,6 @@ import 'package:homework/data/models/puzzle_model.dart';
 import 'package:homework/utils/app_constants.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 
 class LocalDatabase {
   static final databaseInstance = LocalDatabase._();
@@ -32,7 +31,6 @@ class LocalDatabase {
 
   Future<void> _onCreate(Database db, int version) async {
     const idType = "INTEGER PRIMARY KEY AUTOINCREMENT";
-    const textType = "TEXT NOT NULL";
     const intType = "INTEGER DEFAULT 0";
 
     await db.execute('''
@@ -57,32 +55,6 @@ class LocalDatabase {
     final db = await databaseInstance.database;
     String orderBy = "${AppConstants.id} DESC";
     List json = await db.query(AppConstants.tableName, orderBy: orderBy);
-    return json.map((e) => PuzzleModel.fromJson(e)).toList();
-  }
-
-  static Future<int> deleteNoteId(int id) async {
-    final db = await databaseInstance.database;
-    int deleteId = await db.delete(AppConstants.tableName,
-        where: "${AppConstants.id} = ?", whereArgs: [id]);
-    return deleteId;
-  }
-
-  static Future<int> updateNoteId(PuzzleModel puzzleModel) async {
-    final db = await databaseInstance.database;
-
-    int updateNoteId = await db.update(
-        AppConstants.tableName, puzzleModel.toUpdateJson(),
-        where: "${AppConstants.id} = ?", whereArgs: [puzzleModel.id]);
-
-    return updateNoteId;
-  }
-
-  static Future<List<PuzzleModel>> searchNotes(String query) async {
-    final db = await databaseInstance.database;
-
-    var json = await db.query(AppConstants.tableName,
-        where: "${AppConstants.count} LIKE ?", whereArgs: ["$query%"]);
-
     return json.map((e) => PuzzleModel.fromJson(e)).toList();
   }
 }
