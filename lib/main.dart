@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'hello_screen.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:homework/screens/game/view/game_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,13 +21,13 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(375, 812),
       builder: (context, child) {
         ScreenUtil.init(context);
-        return MaterialApp(
+        return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: false),
           home: child,
         );
       },
-      child: const HelloScreen(),
+      child: const GameScreen(),
     );
   }
 }
