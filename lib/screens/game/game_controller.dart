@@ -76,18 +76,25 @@ class GameController extends GetxController {
     }
   }
 
+  void removeAlphabet(String alphabet) {
+    shuffledLetters.remove(alphabet);
+  }
+
   void removeLastLetter() {
     if (inputAnswer.value.isNotEmpty) {
-      inputAnswer.value = inputAnswer.value.substring(0, inputAnswer.value.length - 1);
+      String lastAlphabet = inputAnswer.substring(inputAnswer.value.length - 1);
+      inputAnswer.value =
+          inputAnswer.value.substring(0, inputAnswer.value.length - 1);
+      shuffledLetters.add(lastAlphabet);
     }
   }
 
   void checkAnswer() {
     if (inputAnswer.value == currentAnswer) {
-      errorMessage.value = "To'g'ri!";
+      errorMessage.value = "True answer!";
       nextQuestion();
     } else if (inputAnswer.value.length == currentAnswer.length) {
-      errorMessage.value = "Xato javob";
+      errorMessage.value = "False answer";
       inputAnswer.value = "";
     }
   }
@@ -100,7 +107,7 @@ class GameController extends GetxController {
       Get.dialog(
         AlertDialog(
           title: Text(
-            'GetX Dialog',
+            "Natija 😎",
             style: TextStyle(
               color: Colors.black,
               fontSize: 30.sp,
@@ -108,7 +115,7 @@ class GameController extends GetxController {
             ),
           ),
           content: Text(
-            'This is a GetX dialog.',
+            "Siz uddaladingiz😀😀😀",
             style: TextStyle(
               color: Colors.black,
               fontSize: 24.sp,
@@ -120,7 +127,7 @@ class GameController extends GetxController {
               child: TextButton(
                 style: TextButton.styleFrom(
                     padding:
-                    EdgeInsets.symmetric(horizontal: 30.w, vertical: 11.h),
+                        EdgeInsets.symmetric(horizontal: 30.w, vertical: 11.h),
                     backgroundColor: Colors.blueAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.r),

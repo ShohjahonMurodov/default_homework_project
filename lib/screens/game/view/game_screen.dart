@@ -81,8 +81,12 @@ class GameScreen extends StatelessWidget {
                       controller.shuffledLetters.length,
                       (index) => alphabetButton(
                         title: controller.shuffledLetters[index],
-                        onPressed: () => controller
-                            .addLetter(controller.shuffledLetters[index]),
+                        onPressed: () {
+                          controller
+                              .addLetter(controller.shuffledLetters[index]);
+                          controller.removeAlphabet(
+                              controller.shuffledLetters[index]);
+                        },
                       ),
                     ),
                   ),
