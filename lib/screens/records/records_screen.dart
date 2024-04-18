@@ -56,42 +56,62 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 itemCount: gameDataList.length,
                 itemBuilder: (context, index) {
                   final gameData = gameDataList[index];
-                  return Column(
-                    children: [
-                      ListTile(
-                        title: Row(
+                  return Padding(
+                    padding: EdgeInsets.only(top: 15.h),
+                    child: ListTile(
+                      leading: Text(
+                        "${index + 1}",
+                        style: TextStyle(
+                          fontSize: 32.sp,
+                          color: Colors.white54,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      title: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 5.h),
+                        height: 50.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.grey.shade900,
+                        ),
+                        child: Row(
                           children: [
-                            Text(
-                              "${index + 1}",
-                              style: TextStyle(
-                                color: Colors.white54,
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            const Icon(
+                              Icons.move_down,
+                              color: Colors.white54,
                             ),
-                            15.getW(),
+                            SizedBox(
+                              width: 10.w,
+                            ),
                             Text(
                               "Move: ${gameData['moves']}",
                               style: TextStyle(
-                                color: Colors.white54,
-                                fontSize: 22.sp,
-                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                            40.getW(),
+                            const Spacer(),
+                            const Icon(
+                              Icons.timer,
+                              color: Colors.white54,
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
                             Text(
                               "Timer: ${getMinutelyText(gameData['timer'])}",
                               style: TextStyle(
-                                color: Colors.white54,
-                                fontSize: 22.sp,
-                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      10.getH(),
-                    ],
+                    ),
                   );
                 },
               );

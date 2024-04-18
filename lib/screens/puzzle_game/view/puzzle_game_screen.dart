@@ -38,6 +38,7 @@ class _PuzzlePageState extends State<PuzzlePage> {
               controller.isTrue = true;
               controller.timerLogic();
               controller.tiles.shuffle();
+              controller.datetime.value = 0;
               Get.back();
             }
           },
