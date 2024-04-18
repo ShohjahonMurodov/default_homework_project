@@ -32,6 +32,21 @@ class _PuzzlePageState extends State<PuzzlePage> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            if (!controller.isGame) {
+              controller.isTrue = true;
+              controller.timerLogic();
+              controller.tiles.shuffle();
+              Get.back();
+            }
+          },
+          icon: Icon(
+            Icons.gamepad_outlined,
+            size: 30.sp,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
         title: Text(
           "15 PUZZLE",
@@ -212,22 +227,6 @@ class _PuzzlePageState extends State<PuzzlePage> {
               ),
             ),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueGrey,
-        onPressed: () {
-          if (!controller.isGame) {
-            controller.isTrue = true;
-            controller.timerLogic();
-            controller.tiles.shuffle();
-            Get.back();
-          }
-        },
-        child: Icon(
-          Icons.gamepad_outlined,
-          size: 30.sp,
-          color: Colors.white,
         ),
       ),
     );
