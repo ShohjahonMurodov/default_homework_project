@@ -68,21 +68,16 @@ class GameController extends GetxController {
 
     for (int i = 0; i < currentAnswer.length; i++) {
       shuffledLetters.add(currentAnswer[i]);
-      print(currentAnswer[i]);
     }
 
     Random random = Random();
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < (12 - currentAnswer.length); i++) {
       int randomIndex = random.nextInt(alphabet.length);
       String randomLetter = alphabet[randomIndex];
-      print(randomLetter);
       shuffledLetters.add(randomLetter);
     }
-    print(currentAnswer);
-    print(shuffledLetters);
     shuffledLetters.shuffle();
-    print(shuffledLetters.length);
     inputAnswer.value = "";
     errorMessage.value = "";
   }
@@ -116,15 +111,15 @@ class GameController extends GetxController {
       errorMessage.value = "True answer!";
       nextQuestion();
     } else if (inputAnswer.value.length == currentAnswer.length) {
-      shuffleLetters();
       if (isStartAnimation) {
         globalAnimationController.reverse();
         isStartAnimation = false;
       } else {
         globalAnimationController.forward();
         isStartAnimation = true;
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(seconds: 1));
         isStartAnimation = false;
+        shuffleLetters();
       }
       errorMessage.value = "False answer";
       inputAnswer.value = "";
