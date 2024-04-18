@@ -32,8 +32,17 @@ class _PuzzlePageState extends State<PuzzlePage> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "15 PUZZLE",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24.sp,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         actions: [
-          TextButton(
+          IconButton(
             onPressed: () {
               if (!controller.isGame) {
                 Navigator.push(
@@ -44,13 +53,10 @@ class _PuzzlePageState extends State<PuzzlePage> {
                 );
               }
             },
-            child: Text(
-              "RECORDS",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w500,
-              ),
+            icon: Icon(
+              Icons.history,
+              size: 30.sp,
+              color: Colors.white,
             ),
           ),
         ],
@@ -60,8 +66,12 @@ class _PuzzlePageState extends State<PuzzlePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.r),
+                color: Colors.grey.shade900,
+              ),
               width: double.infinity,
-              color: Colors.grey.shade900,
               padding: EdgeInsets.symmetric(
                 horizontal: 24.w,
                 vertical: 20.h,
@@ -116,8 +126,11 @@ class _PuzzlePageState extends State<PuzzlePage> {
             ),
             Container(
               width: double.infinity,
-              color: Colors.grey.shade900,
               height: 390.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.r),
+                color: Colors.grey.shade900,
+              ),
               child: GridView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
                 physics: const NeverScrollableScrollPhysics(),
