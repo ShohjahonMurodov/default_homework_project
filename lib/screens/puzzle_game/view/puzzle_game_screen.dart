@@ -131,18 +131,45 @@ class _PuzzlePageState extends State<PuzzlePage> {
                       controller.moveTile(index);
                       if (controller.isSorted()) {
                         Get.dialog(
-                          AlertDialog(
-                            title: const Text('Congratulations!'),
-                            content: const Text('You solved the puzzle!'),
+                          AlertDialog.adaptive(
+                            backgroundColor: Colors.grey.shade800,
+                            title: Text(
+                              'Congratulations!',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            content: Text(
+                              'You solved the puzzle!',
+                              style: TextStyle(
+                                color: Colors.white54,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                             actions: [
                               TextButton(
+                                style: TextButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                  ),
+                                ),
                                 onPressed: () {
                                   controller.isTrue = true;
                                   controller.timerLogic();
                                   controller.tiles.shuffle();
                                   Get.back();
                                 },
-                                child: const Text('Play Again'),
+                                child: Text(
+                                  'Play Again',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
