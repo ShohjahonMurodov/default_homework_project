@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/game_bloc.dart';
+import 'package:homework/bloc/game_event.dart';
 import 'package:homework/bloc/game_state.dart';
+import 'package:homework/screens/game/widgets/letter_items.dart';
+import 'package:homework/screens/widgets/image_items.dart';
 import 'package:homework/utils/size_utils.dart';
-
-import '../../utils/app_images.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -30,9 +32,8 @@ class _GameScreenState extends State<GameScreen> {
         builder: (context, state) {
           return Stack(
             children: [
-              // Background image
-              Image.asset(
-                AppImages.image,
+              Image.network(
+                "https://w0.peakpx.com/wallpaper/728/790/HD-wallpaper-nature-animation-amoled-anime-landscape-thumbnail.jpg",
                 height: double.infinity,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -41,83 +42,100 @@ class _GameScreenState extends State<GameScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Row(
-                    //   children: [
-                    //     Container(
-                    //       width: 50.w,
-                    //       height: 50.h,
-                    //       child: Image.network(
-                    //         state.allQuestions[state.currentQuestionIndex]
-                    //             .images[0],
-                    //       ),
-                    //     ),
-                    //     Container(
-                    //       width: 50.w,
-                    //       height: 50.h,
-                    //       child: Image.network(
-                    //         state.allQuestions[state.currentQuestionIndex]
-                    //             .images[1],
-                    //       ),
-                    //     ),
-                    //     Container(
-                    //       width: 50.w,
-                    //       height: 50.h,
-                    //       child: Image.network(
-                    //         state.allQuestions[state.currentQuestionIndex]
-                    //             .images[2],
-                    //       ),
-                    //     ),
-                    //     Container(
-                    //       width: 50.w,
-                    //       height: 50.h,
-                    //       child: Image.network(
-                    //         state.allQuestions[state.currentQuestionIndex]
-                    //             .images[3],
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    const SizedBox(height: 50),
+                    70.getH(),
                     Wrap(
                       alignment: WrapAlignment.center,
                       children: [
                         ...List.generate(
-                          state.allQuestions.length,
-                          (index) => Container(
-                            margin: EdgeInsets.only(right: 10.w, bottom: 10.h),
-                            width: 50,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.deepPurple,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                "",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
+                          state.allQuestions[state.currentQuestionIndex].images
+                              .length,
+                          (index) {
+                            return ImageItems(
+                              image: state
+                                  .allQuestions[state.currentQuestionIndex]
+                                  .images[index],
+                            );
+                          },
                         ),
                       ],
                     ),
-                    Text(state.enteredAnswer),
-                    const SizedBox(height: 20),
+                    20.getH(),
                     Wrap(
                       alignment: WrapAlignment.center,
-                      children: List.generate(
-                        state.letterList.length,
-                        (index) {
-                          print(state.letterList.length);
-                          return alphabetButton(
-                            title: state.letterList[index],
-                            onPressed: () {},
-                          );
-                        },
+                      children: [
+                        ...List.generate(
+                          state.allQuestions[state.currentQuestionIndex]
+                              .trueAnswer.length,
+                          (index) {
+                            return InkWell(
+                              onTap: () {
+                                context.read<GameBloc>().add(
+                                      RemoveEvent(
+                                        state.enteredAnswer[index],
+                                      ),
+                                    );
+                              },
+                              child: Container(
+                                margin:
+                                    EdgeInsets.only(right: 10.w, bottom: 10.h),
+                                width: 50,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: index < state.enteredAnswer.length
+                                      ? Colors.orange
+                                      : Colors.grey.shade400,
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(
+                                    width: 5.w,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    index < state.enteredAnswer.length
+                                        ? state.enteredAnswer[index]
+                                        : "",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: EdgeInsets.only(top: 20.h),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15.r),
+                          topRight: Radius.circular(15.r),
+                        ),
+                      ),
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        children: List.generate(
+                          state.letterList.length,
+                          (index) {
+                            return alphabetButton(
+                              title: state.letterList[index],
+                              onPressed: () {
+                                context.read<GameBloc>().add(
+                                      CollectEnteredLetterEvent(
+                                        state.letterList[index],
+                                      ),
+                                    );
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -129,34 +147,4 @@ class _GameScreenState extends State<GameScreen> {
       ),
     );
   }
-}
-
-Widget alphabetButton({
-  required String title,
-  required VoidCallback onPressed,
-}) {
-  return Container(
-    margin: const EdgeInsets.only(right: 10, bottom: 10),
-    width: 50,
-    height: 60,
-    child: TextButton(
-      style: TextButton.styleFrom(
-        backgroundColor: Colors.deepPurple,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-      onPressed: onPressed,
-      child: Center(
-        child: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    ),
-  );
 }

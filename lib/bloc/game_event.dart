@@ -24,3 +24,12 @@ class CollectEnteredLetterEvent extends GameEvent {
   @override
   List<Object?> get props => [letter];
 }
+
+class RemoveEvent extends GameEvent {
+  const RemoveEvent(this.alphabet);
+
+  final String alphabet;
+
+  @override
+  List<Object?> get props => [alphabet];
+}

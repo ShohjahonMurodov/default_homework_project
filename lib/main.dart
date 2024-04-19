@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/game_bloc.dart';
 import 'package:homework/bloc/game_event.dart';
-import 'package:homework/screens/game/game_screen.dart';
+import 'package:homework/screens/play/play_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           ),
         );
       },
-      child: const GameScreen(),
+      child: const PlayScreen(),
     );
   }
 }
