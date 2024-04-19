@@ -2,13 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:homework/data/models/game_models.dart';
 
 class GameState extends Equatable {
-  const GameState(
-      {required this.currentQuestionIndex,
-      required this.allQuestions,
-      required this.trueCount,
-      required this.enteredAnswer,
-      required this.letterList,
-      required this.isStartAnimation});
+  const GameState({
+    required this.currentQuestionIndex,
+    required this.allQuestions,
+    required this.trueCount,
+    required this.enteredAnswer,
+    required this.letterList,
+    required this.isStartAnimation,
+  });
 
   final int currentQuestionIndex;
   final List<GameModels> allQuestions;
