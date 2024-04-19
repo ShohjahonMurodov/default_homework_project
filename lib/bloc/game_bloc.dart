@@ -1,10 +1,11 @@
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework/bloc/game_event.dart';
 import 'package:homework/bloc/game_state.dart';
 import 'package:homework/data/models/game_models.dart';
+import 'package:homework/screens/game/game_screen.dart';
+import 'package:homework/screens/lottie/lottie_screen.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc()
@@ -14,7 +15,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             allQuestions: questions,
             trueCount: 0,
             enteredAnswer: "",
-            letterList: [],
+            letterList: const [],
+            isStartAnimation: false,
           ),
         ) {
     on<LoadQuestionsEvent>(onInit);
@@ -56,19 +58,35 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         ),
       );
     } else {
-      print("6546565654");
+      Navigator.push(
+        event.context,
+        MaterialPageRoute(
+          builder: (context) => const LottieScreen(),
+        ),
+      );
     }
   }
 
-  onCollect(CollectEnteredLetterEvent event, emit) {
+  onCollect(CollectEnteredLetterEvent event, emit) async {
     String text = state.enteredAnswer;
     text += event.letter;
     emit(state.copyWith(enteredAnswer: text));
     if (state.enteredAnswer ==
         state.allQuestions[state.currentQuestionIndex].trueAnswer) {
-      add(const NextQuestionsEvent());
+      add(NextQuestionsEvent(event.context));
     } else if (state.enteredAnswer.length ==
         state.allQuestions[state.currentQuestionIndex].trueAnswer.length) {
+      if (isStartAnimation) {
+        globalAnimationController.reverse();
+        emit(
+          state.copyWith(isStartAnimation: false),
+        );
+      } else {
+        globalAnimationController.forward();
+        emit(state.copyWith(isStartAnimation: true));
+        await Future.delayed(const Duration(seconds: 1));
+        emit(state.copyWith(isStartAnimation: false));
+      }
       emit(
         state.copyWith(
           enteredAnswer: "",
@@ -90,7 +108,6 @@ List<String> getOptionLetters(String answerText) {
   }
   List<String> letterList = answerText.split('');
   letterList.shuffle();
-  debugPrint("LENGTH:${letterList.length}:$letterList");
   return letterList;
 }
 
