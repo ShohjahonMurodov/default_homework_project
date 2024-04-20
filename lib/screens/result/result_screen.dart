@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/data/models/scaner_model.dart';
+import 'package:homework/services/widget_save_sirvice.dart';
 import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/size_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key, required this.scannerModel});
@@ -14,6 +16,8 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  final GlobalKey _globalKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -21,7 +25,7 @@ class _ResultScreenState extends State<ResultScreen> {
     return Scaffold(
       backgroundColor: AppColors.c_333333.withOpacity(.84),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 46.w, vertical: 38.h),
+        padding: EdgeInsets.only(left: 46.w, right: 46.w, top: 38.h),
         child: Column(
           children: [
             Row(
@@ -57,7 +61,6 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             35.getH(),
             Container(
-              height: 300.h,
               width: double.infinity,
               padding: EdgeInsets.symmetric(
                 horizontal: 24.w,
@@ -104,7 +107,15 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                   13.getH(),
                   TextButton(
-                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6.r),
+                      ),
+                    ),
+                    onPressed: () async {
+                      Uri uri = Uri.parse(widget.scannerModel.qrCode);
+                      await launchUrl(uri);
+                    },
                     child: Text(
                       "Show QR Code",
                       style: TextStyle(
@@ -116,6 +127,77 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ],
               ),
+            ),
+            42.getH(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.w, vertical: 18.h),
+                        backgroundColor: AppColors.c_FDB623,
+                      ),
+                      onPressed: () {
+                        WidgetSaverService.openWidgetAsImage(
+                          context: context,
+                          widgetKey: _globalKey,
+                          fileId: widget.scannerModel.qrCode,
+                        );
+                      },
+                      child: Icon(
+                        Icons.share,
+                        size: 30.sp,
+                        color: AppColors.c_333333,
+                      ),
+                    ),
+                    8.getH(),
+                    Text(
+                      "Share",
+                      style: TextStyle(
+                        color: AppColors.c_D9D9D9,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+                43.getW(),
+                Column(
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.w, vertical: 18.h),
+                        backgroundColor: AppColors.c_FDB623,
+                      ),
+                      onPressed: () {
+                        WidgetSaverService.openWidgetAsImage(
+                          context: context,
+                          widgetKey: _globalKey,
+                          fileId: widget.scannerModel.qrCode,
+                        );
+                      },
+                      child: Icon(
+                        Icons.copy,
+                        size: 30.sp,
+                        color: AppColors.c_333333,
+                      ),
+                    ),
+                    8.getH(),
+                    Text(
+                      "Copy",
+                      style: TextStyle(
+                        color: AppColors.c_D9D9D9,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

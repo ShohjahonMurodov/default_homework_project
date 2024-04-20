@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/scanner_bloc.dart';
 import 'package:homework/bloc/scanner_event.dart';
 import 'package:homework/data/models/scaner_model.dart';
+import 'package:homework/screens/show/show_screen.dart';
 import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/app_images.dart';
 import 'package:homework/utils/size_utils.dart';

@@ -5,11 +5,14 @@ import 'package:homework/bloc/scanner_bloc.dart';
 import 'package:homework/bloc/scanner_event.dart';
 import 'package:homework/bloc/scanner_state.dart';
 import 'package:homework/data/models/form_status.dart';
+import 'package:homework/data/models/scaner_model.dart';
 import 'package:homework/services/widget_save_sirvice.dart';
 import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../show/show_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -87,105 +90,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         margin: EdgeInsets.symmetric(
                             horizontal: 46.w, vertical: 10.h),
                         child: ListTile(
-                          onTap: () async {
-                            Uri uri = Uri.parse(state.products[index].qrCode);
-                            await launchUrl(uri);
-                          },
-                          onLongPress: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      20.r,
-                                    ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => InfoScreen(
+                                  scannerModel: ScannerModel(
+                                    name: state.products[index].name,
+                                    qrCode: state.products[index].qrCode,
                                   ),
-                                  backgroundColor: const Color(0xFF252525),
-                                  title: Text(
-                                    "Do you want to install or save?",
-                                    style: TextStyle(
-                                      color: const Color(0xFFCFCFCF),
-                                      fontSize: 23.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  actions: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        SizedBox(
-                                          width: 112.w,
-                                          child: TextButton(
-                                            style: TextButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0xFFFF0000),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  5.r,
-                                                ),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              WidgetSaverService
-                                                  .openWidgetAsImage(
-                                                context: context,
-                                                widgetKey: _globalKey,
-                                                fileId: state
-                                                    .products[index].qrCode,
-                                              );
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              "Share",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 112.w,
-                                          child: TextButton(
-                                            style: TextButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0xFF30BE71),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  5.r,
-                                                ),
-                                              ),
-                                            ),
-                                            onPressed: () async {
-                                              WidgetSaverService
-                                                  .saveWidgetToGallery(
-                                                context: context,
-                                                widgetKey: _globalKey,
-                                                fileId: state
-                                                    .products[index].qrCode,
-                                              );
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              "Download",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              },
+                                ),
+                              ),
                             );
                           },
                           leading: SizedBox(
