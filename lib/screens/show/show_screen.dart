@@ -159,7 +159,7 @@ class _InfoScreenState extends State<InfoScreen> {
                       backgroundColor: AppColors.c_FDB623,
                     ),
                     onPressed: () {
-                      WidgetSaverService.openWidgetAsImage(
+                      WidgetSaverService.saveWidgetToGallery(
                         context: context,
                         widgetKey: _globalKey,
                         fileId: widget.scannerModel.qrCode,

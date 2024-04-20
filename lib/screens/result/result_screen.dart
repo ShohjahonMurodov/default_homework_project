@@ -174,7 +174,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         backgroundColor: AppColors.c_FDB623,
                       ),
                       onPressed: () {
-                        WidgetSaverService.openWidgetAsImage(
+                        WidgetSaverService.saveWidgetToGallery(
                           context: context,
                           widgetKey: _globalKey,
                           fileId: widget.scannerModel.qrCode,

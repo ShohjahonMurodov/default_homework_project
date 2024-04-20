@@ -6,11 +6,9 @@ import 'package:homework/bloc/scanner_event.dart';
 import 'package:homework/bloc/scanner_state.dart';
 import 'package:homework/data/models/form_status.dart';
 import 'package:homework/data/models/scaner_model.dart';
-import 'package:homework/services/widget_save_sirvice.dart';
 import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../show/show_screen.dart';
 
