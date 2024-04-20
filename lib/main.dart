@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:homework/bloc/scanner_bloc.dart';
+import 'package:homework/bloc/scanner_event.dart';
+import 'package:homework/screens/tab_box/tab_box_screen.dart';
 
-import 'hello_screen.dart';
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -21,13 +25,20 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(375, 812),
       builder: (context, child) {
         ScreenUtil.init(context);
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(useMaterial3: false),
-          home: child,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => ScannerBloc()..add(LoadScannerEvent()),
+            ),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(useMaterial3: false),
+            home: child,
+          ),
         );
       },
-      child: const HelloScreen(),
+      child: const TabBox1(),
     );
   }
 }
