@@ -40,8 +40,7 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   Future<void> deleteScanner(RemoveScannerEvent event, emit) async {
     emit(state.copyWith(status: FormStatus.loading));
     await LocalDatabase.deleteScannerId(event.scannerId);
-    emit(state.copyWith(
-        status: FormStatus.success,
-        products: await LocalDatabase.getAllScanners()));
+    add(LoadScannerEvent());
+    emit(state.copyWith(status: FormStatus.success));
   }
 }

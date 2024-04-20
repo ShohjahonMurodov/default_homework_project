@@ -46,55 +46,78 @@ class _TabBox1State extends State<TabBox1> {
         items: const [
           BottomNavigationBarItem(
             activeIcon: Icon(
-              Icons.home,
-              color: Colors.blue,
+              Icons.qr_code_scanner,
+              color: AppColors.c_FDB623,
+              size: 40,
             ),
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.qr_code_scanner,
+              color: AppColors.white,
+              size: 40,
+            ),
             label: "Generate",
           ),
           BottomNavigationBarItem(
             activeIcon: Icon(
-              Icons.search,
-              color: Colors.blue,
+              Icons.history,
+              color: AppColors.c_FDB623,
+              size: 40,
             ),
-            icon: Icon(Icons.history),
+            icon: Icon(
+              Icons.history,
+              color: AppColors.white,
+              size: 40,
+            ),
             label: "History",
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return QrScannerScreen(
-                  barcode: (barcode) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(barcode.code.toString()),
-                      ),
-                    );
-                    context.read<ScannerBloc>().add(
-                          AddScannerEvent(
-                            scannerModel: ScannerModel(
-                              name: "Data",
-                              qrCode: barcode.code.toString(),
-                            ),
-                          ),
-                        );
-                  },
-                );
-              },
+      floatingActionButton: Container(
+        width: 70.w,
+        height: 70.h,
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.c_FDB623,
+              blurRadius: 30,
+              spreadRadius: 0,
             ),
-          );
-        },
-        child: Icon(
-          Icons.document_scanner_outlined,
-          size: 30.sp,
-          color: Colors.white,
+          ],
+        ),
+        child: FloatingActionButton(
+          backgroundColor: AppColors.c_FDB623,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return QrScannerScreen(
+                    barcode: (barcode) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(barcode.code.toString()),
+                        ),
+                      );
+                      context.read<ScannerBloc>().add(
+                            AddScannerEvent(
+                              scannerModel: ScannerModel(
+                                name: "Data",
+                                qrCode: barcode.code.toString(),
+                              ),
+                            ),
+                          );
+                    },
+                  );
+                },
+              ),
+            );
+          },
+          child: Icon(
+            Icons.document_scanner_outlined,
+            size: 30.sp,
+            color: Colors.white,
+          ),
         ),
       ),
     );

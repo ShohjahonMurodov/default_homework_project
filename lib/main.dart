@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: const Size(428, 926),
       builder: (context, child) {
         ScreenUtil.init(context);
         return MultiBlocProvider(
