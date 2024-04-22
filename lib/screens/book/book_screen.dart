@@ -136,7 +136,20 @@ class _BookScreenState extends State<BookScreen> {
                                 .searchBooks[index]
                                 .bookName,
                             newFileLocation: state.newFileLocation,
-                            onTap: () {},
+                            onTap: () async {
+                              if (state.newFileLocation.isEmpty) {
+                                fileManagerBloc.add(
+                                  DownLoadEvent(
+                                    bookModel: context
+                                        .read<BookBloc>()
+                                        .state
+                                        .searchBooks[index],
+                                  ),
+                                );
+                              } else {
+                                await OpenFilex.open(state.newFileLocation);
+                              }
+                            },
                           );
                         },
                       ),
