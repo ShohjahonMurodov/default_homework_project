@@ -5,7 +5,6 @@ import 'package:homework/data/models/scaner_model.dart';
 class ScannerState extends Equatable {
   final FormStatus status;
   final String statusText;
-
   final List<ScannerModel> products;
 
   const ScannerState({
