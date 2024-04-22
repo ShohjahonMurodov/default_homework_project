@@ -20,191 +20,178 @@ class BookScreen extends StatefulWidget {
 }
 
 class _BookScreenState extends State<BookScreen> {
+  String categoryString = "all";
+
   @override
   Widget build(BuildContext context) {
     BookBloc fileManagerBloc = BookBloc();
 
     return Scaffold(
       backgroundColor: AppColors.c_F9F9F9,
-      body: BlocProvider.value(
-        value: fileManagerBloc,
-        child: BlocBuilder<BookBloc, BookState>(
-          builder: (context, state) {
-            debugPrint("CURRENT MB: ${state.progress}");
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                30.getH(),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 5.h, horizontal: 29.w),
-                  child: Text(
-                    "Hush kelibsiz",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: AppColors.c_6B6B6B,
-                      fontWeight: FontWeight.w400,
-                    ),
+      body: SingleChildScrollView(
+        child: BlocProvider.value(
+          value: fileManagerBloc,
+          child: BlocBuilder<BookBloc, BookState>(
+            builder: (context, state) {
+              debugPrint("CURRENT MB: ${state.progress}");
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  30.getH(),
+                  const SizedBox(
+                    height: 30,
                   ),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 29.w, vertical: 5.h),
-                  child: Text(
-                    "Kitoblar olamiga",
-                    style: TextStyle(
-                      color: AppColors.c_263238,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                22.getH(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.w),
-                  child: TextField(
-                    style: TextStyle(
-                      color: AppColors.c_979797,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    textInputAction: TextInputAction.next,
-                    onChanged: (v) {
-                      context
-                          .read<BookBloc>()
-                          .add(SearchBooksEvent(searchBooks: books, value: v));
-                    },
-                    onTap: () {},
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      prefixIcon: const Padding(
-                        padding: EdgeInsets.all(7.0),
-                        child: Icon(
-                          Icons.search,
-                          color: AppColors.c_29BB89,
-                        ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 5.h, horizontal: 29.w),
+                    child: Text(
+                      "Welcome",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: AppColors.c_6B6B6B,
+                        fontWeight: FontWeight.w400,
                       ),
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 12.w, vertical: 14.h),
-                      hintText: "Qidirish",
-                      hintStyle: TextStyle(
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 29.w, vertical: 5.h),
+                    child: Text(
+                      "The World of books",
+                      style: TextStyle(
+                        color: AppColors.c_263238,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  22.getH(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.w),
+                    child: TextField(
+                      style: TextStyle(
                         color: AppColors.c_979797,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w400,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: AppColors.white,
+                      textInputAction: TextInputAction.next,
+                      onChanged: (v) {
+                        context.read<BookBloc>().add(
+                            SearchBooksEvent(searchBooks: books, value: v));
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.all(7.0),
+                          child: Icon(
+                            Icons.search,
+                            color: AppColors.c_29BB89,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: AppColors.white,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12.w, vertical: 14.h),
+                        hintText: "Search",
+                        hintStyle: TextStyle(
+                          color: AppColors.c_979797,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
                         ),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: AppColors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: AppColors.white,
+                          ),
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
-                        borderRadius: BorderRadius.circular(12.r),
+                        disabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: AppColors.white,
+                          ),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: AppColors.white,
+                          ),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                // 15.getH(),
-                // SizedBox(
-                //   height: 150.h,
-                //   child: ListView(
-                //     scrollDirection: Axis.horizontal,
-                //     children: [
-                //       Row(
-                //         children: [
-                //           29.getW(),
-                //           ...List.generate(
-                //             context.read<BookBloc>().state.searchBooks.length,
-                //             (index) {
-                //               return Row(
-                //                 children: [
-                //                   BookItem(
-                //                     image: context
-                //                         .read<BookBloc>()
-                //                         .state
-                //                         .searchBooks[index]
-                //                         .imagePath,
-                //                     bookName: context
-                //                         .read<BookBloc>()
-                //                         .state
-                //                         .searchBooks[index]
-                //                         .bookName,
-                //                     newFileLocation: state.newFileLocation,
-                //                     onTap: () {},
-                //                   ),
-                //                   15.getW(),
-                //                 ],
-                //               );
-                //             },
-                //           ),
-                //           14.getW(),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                29.getH(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 33.w),
-                  child: Text(
-                    "Category",
-                    style: TextStyle(
-                      color: AppColors.c_263238,
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                11.getH(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.h),
-                  child: Wrap(
-                    spacing: 11,
+                  15.getH(),
+                  Column(
                     children: [
                       ...List.generate(
-                        CategoryModel.values.length,
-                        (index) => WrapItem(
-                          title: CategoryModel.values[index].name,
-                          onTap: () {
-                            context.read<BookBloc>().add(
-                                  CategoryBooksEvent(
-                                    categoryModel: CategoryModel.values[index],
-                                    books: books,
-                                  ),
-                                );
-                          },
-                        ),
+                        context.read<BookBloc>().state.searchBooks.length,
+                        (index) {
+                          return BookItem(
+                            image: context
+                                .read<BookBloc>()
+                                .state
+                                .searchBooks[index]
+                                .imagePath,
+                            bookName: context
+                                .read<BookBloc>()
+                                .state
+                                .searchBooks[index]
+                                .bookName,
+                            newFileLocation: state.newFileLocation,
+                            onTap: () {},
+                          );
+                        },
                       ),
                     ],
                   ),
-                ),
-                30.getH(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 29.w),
-                  child: Text(
-                    "All books",
-                    style: TextStyle(
-                      color: AppColors.c_263238,
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w700,
+                  29.getH(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 33.w),
+                    child: Text(
+                      "Category",
+                      style: TextStyle(
+                        color: AppColors.c_263238,
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
+                  11.getH(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.h),
+                    child: Wrap(
+                      spacing: 11,
+                      children: [
+                        ...List.generate(
+                          CategoryModel.values.length,
+                          (index) => WrapItem(
+                            title: CategoryModel.values[index].name,
+                            onTap: () {
+                              context.read<BookBloc>().add(
+                                    CategoryBooksEvent(
+                                      categoryModel:
+                                          CategoryModel.values[index],
+                                      books: books,
+                                    ),
+                                  );
+                              categoryString = CategoryModel.values[index].name;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  30.getH(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 29.w),
+                    child: Text(
+                      "$categoryString books",
+                      style: TextStyle(
+                        color: AppColors.c_263238,
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: GridView.count(
@@ -252,11 +239,11 @@ class _BookScreenState extends State<BookScreen> {
                         ],
                       ),
                     ),
-                  ),
-                )
-              ],
-            );
-          },
+                  )
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

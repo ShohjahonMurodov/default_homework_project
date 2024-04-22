@@ -70,7 +70,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(state.copyWith(searchBooks: books));
     } else {
       searchBooks = books
-          .where((element) => element.bookName.contains(event.value))
+          .where((element) => element.bookName
+              .toLowerCase()
+              .contains(event.value.toLowerCase()))
           .toList();
       emit(state.copyWith(searchBooks: searchBooks));
     }
