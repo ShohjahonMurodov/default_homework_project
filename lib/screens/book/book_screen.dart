@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/book_bloc.dart';
 import 'package:homework/bloc/book_event.dart';
 import 'package:homework/bloc/book_state.dart';
+import 'package:homework/data/model/book_model.dart';
 import 'package:homework/data/model/category_model.dart';
 import 'package:homework/screens/book/widgets/book_widget.dart';
 import 'package:homework/screens/book/widgets/wrap_item.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:open_filex/open_filex.dart';
 import '../../data/local/local_variables.dart';
+import '../../services/book_manager_services.dart';
 import '../../utils/app_colors.dart';
 
 class BookScreen extends StatefulWidget {
@@ -130,6 +132,7 @@ class _BookScreenState extends State<BookScreen> {
                             margin: EdgeInsets.only(right: 20.w),
                             width: 150.w,
                             child: BookItem(
+                              newFileLocation: state.newFileLocation,
                               image: context
                                   .read<BookBloc>()
                                   .state
@@ -140,7 +143,6 @@ class _BookScreenState extends State<BookScreen> {
                                   .state
                                   .searchBooks[index]
                                   .bookName,
-                              newFileLocation: state.newFileLocation,
                               onTap: () async {
                                 if (state.newFileLocation.isEmpty) {
                                   fileManagerBloc.add(
@@ -210,6 +212,13 @@ class _BookScreenState extends State<BookScreen> {
                     ),
                   ),
                 ),
+                Visibility(
+                  visible: state.progress != 0,
+                  child: LinearProgressIndicator(
+                    value: state.progress,
+                    backgroundColor: Colors.grey,
+                  ),
+                ),
                 SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -226,29 +235,38 @@ class _BookScreenState extends State<BookScreen> {
                         ...List.generate(
                           context.read<BookBloc>().state.books.length,
                           (index) {
+                            BookModel fileDataModel =
+                                context.read<BookBloc>().state.books[index];
+
                             BookBloc fileManagerBloc = BookBloc();
-                            return BookItem(
-                              image: context
-                                  .read<BookBloc>()
-                                  .state
-                                  .books[index]
-                                  .imagePath,
-                              bookName: context
-                                  .read<BookBloc>()
-                                  .state
-                                  .books[index]
-                                  .bookName,
-                              newFileLocation: state.newFileLocation,
-                              onTap: () async {
-                                fileManagerBloc.add(
-                                  DownLoadEvent(
-                                    bookModel: context
-                                        .read<BookBloc>()
-                                        .state
-                                        .books[index],
-                                  ),
-                                );
-                              },
+
+                            return BlocProvider.value(
+                              value: fileManagerBloc,
+                              child: BlocBuilder<BookBloc, BookState>(
+                                builder: (context, state) {
+                                  debugPrint("CURRENT MB: ${state.progress}");
+                                  String filePath = FileManagerService.isExist(
+                                    fileDataModel.bookUrl,
+                                    fileDataModel.bookName,
+                                  );
+                                  return BookItem(
+                                    newFileLocation: filePath,
+                                    image: fileDataModel.imagePath,
+                                    bookName: fileDataModel.bookName,
+                                    onTap: () async {
+                                      if (filePath.isNotEmpty) {
+                                        await OpenFilex.open(filePath);
+                                      } else {
+                                        fileManagerBloc.add(
+                                          DownLoadEvent(
+                                            bookModel: fileDataModel,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
                             );
                           },
                         ),

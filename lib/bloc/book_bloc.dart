@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,45 +23,33 @@ class BookBloc extends Bloc<BookEvent, BookState> {
           books: books,
           searchBooks: books,
         )) {
-    on<DownLoadEvent>(downloadBook);
+    on<DownLoadEvent>(_downloadFile);
     on<CategoryBooksEvent>(categoryBook);
     on<SearchBooksEvent>(searchBooks);
   }
 
-  Future<void> downloadBook(DownLoadEvent event, emit) async {
+  Future<void> _downloadFile(DownLoadEvent event, emit) async {
     Dio dio = Dio();
 
-    BookStatusModel bookStatusModel =
-        await FileManagerService().checkFile(event.bookModel);
+    BookStatusModel fileStatusModel = await getStatus(event.bookModel);
 
-    if (bookStatusModel.isExist) {
-      OpenFilex.open(bookStatusModel.newFileLocation);
+    if (fileStatusModel.isExist) {
+      OpenFilex.open(fileStatusModel.newFileLocation);
     } else {
       await dio.download(
         event.bookModel.bookUrl,
-        bookStatusModel.newFileLocation,
+        fileStatusModel.newFileLocation,
         onReceiveProgress: (count, total) async {
           emit(state.copyWith(progress: count / total));
         },
       );
-      emit(state.copyWith(
-        progress: 1,
-        newFileLocation: bookStatusModel.newFileLocation,
-      ));
-    }
-  }
-
-  Future<void> categoryBook(CategoryBooksEvent event, emit) async {
-    List<BookModel> booksModel = [];
-
-    if (event.categoryModel == CategoryModel.all) {
-      emit(state.copyWith(books: books));
-    } else {
-      booksModel = books
-          .where((element) =>
-              element.categoryModel.name == event.categoryModel.name)
-          .toList();
-      emit(state.copyWith(books: booksModel));
+      await FileManagerService.init();
+      emit(
+        state.copyWith(
+          progress: 1,
+          newFileLocation: fileStatusModel.newFileLocation,
+        ),
+      );
     }
   }
 
@@ -100,5 +89,27 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       debugPrint("Cannot get download folder path");
     }
     return directory;
+  }
+
+  Future<BookStatusModel> getStatus(BookModel fileDataModel) async {
+    final BookStatusModel fileStatusModel =
+        await Isolate.run<BookStatusModel>(() async {
+      return await FileManagerService.checkFile(fileDataModel);
+    });
+    return fileStatusModel;
+  }
+
+  Future<void> categoryBook(CategoryBooksEvent event, emit) async {
+    List<BookModel> booksModel = [];
+
+    if (event.categoryModel == CategoryModel.all) {
+      emit(state.copyWith(books: books));
+    } else {
+      booksModel = books
+          .where((element) =>
+              element.categoryModel.name == event.categoryModel.name)
+          .toList();
+      emit(state.copyWith(books: booksModel));
+    }
   }
 }
