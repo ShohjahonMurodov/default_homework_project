@@ -37,24 +37,27 @@ class BookItem extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
-                  top: 70.h,
-                  left: 45.w,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.grey.withOpacity(.4),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100.r),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: Icon(
-                      newFileLocation.isEmpty ? Icons.download : Icons.check,
-                      color: Colors.grey,
-                      size: 50.sp,
-                    ),
-                  ),
-                ),
+                newFileLocation.isEmpty
+                    ? Positioned(
+                        top: 70.h,
+                        left: 45.w,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 10.h,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100.r),
+                            color: Colors.grey.withOpacity(.4),
+                          ),
+                          child: Icon(
+                            Icons.download,
+                            color: Colors.grey,
+                            size: 50.sp,
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

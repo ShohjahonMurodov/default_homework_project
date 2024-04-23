@@ -7,11 +7,12 @@ import 'package:homework/bloc/book_state.dart';
 import 'package:homework/data/model/book_model.dart';
 import 'package:homework/data/model/book_status_model.dart';
 import 'package:homework/data/model/category_model.dart';
-import 'package:homework/data/repositories/book_repository.dart';
 import 'package:homework/services/book_manager_services.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../data/local/local_variables.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
   BookBloc()
