@@ -72,8 +72,9 @@ class _BookScreenState extends State<BookScreen> {
                     ),
                     textInputAction: TextInputAction.next,
                     onChanged: (v) {
-                      context.read<BookBloc>().add(
-                          SearchBooksEvent(searchBooks: books, value: v));
+                      context
+                          .read<BookBloc>()
+                          .add(SearchBooksEvent(searchBooks: books, value: v));
                     },
                     decoration: InputDecoration(
                       filled: true,
@@ -115,42 +116,51 @@ class _BookScreenState extends State<BookScreen> {
                   ),
                 ),
                 15.getH(),
-                Column(
-                  children: [
-                    ...List.generate(
-                      context.read<BookBloc>().state.searchBooks.length,
-                      (index) {
-                        BookBloc fileManagerBloc = BookBloc();
-                        return BookItem(
-                          image: context
-                              .read<BookBloc>()
-                              .state
-                              .searchBooks[index]
-                              .imagePath,
-                          bookName: context
-                              .read<BookBloc>()
-                              .state
-                              .searchBooks[index]
-                              .bookName,
-                          newFileLocation: state.newFileLocation,
-                          onTap: () async {
-                            if (state.newFileLocation.isEmpty) {
-                              fileManagerBloc.add(
-                                DownLoadEvent(
-                                  bookModel: context
-                                      .read<BookBloc>()
-                                      .state
-                                      .searchBooks[index],
-                                ),
-                              );
-                            } else {
-                              await OpenFilex.open(state.newFileLocation);
-                            }
-                          },
-                        );
-                      },
-                    ),
-                  ],
+                SizedBox(
+                  height: 242,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      29.getW(),
+                      ...List.generate(
+                        state.searchBooks.length,
+                        (index) {
+                          BookBloc fileManagerBloc = BookBloc();
+                          return Container(
+                            margin: EdgeInsets.only(right: 20.w),
+                            width: 150.w,
+                            child: BookItem(
+                              image: context
+                                  .read<BookBloc>()
+                                  .state
+                                  .searchBooks[index]
+                                  .imagePath,
+                              bookName: context
+                                  .read<BookBloc>()
+                                  .state
+                                  .searchBooks[index]
+                                  .bookName,
+                              newFileLocation: state.newFileLocation,
+                              onTap: () async {
+                                if (state.newFileLocation.isEmpty) {
+                                  fileManagerBloc.add(
+                                    DownLoadEvent(
+                                      bookModel: context
+                                          .read<BookBloc>()
+                                          .state
+                                          .searchBooks[index],
+                                    ),
+                                  );
+                                } else {
+                                  await OpenFilex.open(state.newFileLocation);
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 29.getH(),
                 Padding(
@@ -177,8 +187,7 @@ class _BookScreenState extends State<BookScreen> {
                           onTap: () {
                             context.read<BookBloc>().add(
                                   CategoryBooksEvent(
-                                    categoryModel:
-                                        CategoryModel.values[index],
+                                    categoryModel: CategoryModel.values[index],
                                     books: books,
                                   ),
                                 );
@@ -231,18 +240,14 @@ class _BookScreenState extends State<BookScreen> {
                                   .bookName,
                               newFileLocation: state.newFileLocation,
                               onTap: () async {
-                                if (state.newFileLocation.isEmpty) {
-                                  fileManagerBloc.add(
-                                    DownLoadEvent(
-                                      bookModel: context
-                                          .read<BookBloc>()
-                                          .state
-                                          .books[index],
-                                    ),
-                                  );
-                                } else {
-                                  await OpenFilex.open(state.newFileLocation);
-                                }
+                                fileManagerBloc.add(
+                                  DownLoadEvent(
+                                    bookModel: context
+                                        .read<BookBloc>()
+                                        .state
+                                        .books[index],
+                                  ),
+                                );
                               },
                             );
                           },
@@ -250,7 +255,7 @@ class _BookScreenState extends State<BookScreen> {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             );
           },
