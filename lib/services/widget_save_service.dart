@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -26,15 +27,15 @@ class WidgetSaverService {
     }
 
     String dir = (Platform.isAndroid
-            ? await getExternalStorageDirectory()
-            : await getApplicationSupportDirectory())!
+        ? await getExternalStorageDirectory()
+        : await getApplicationSupportDirectory())!
         .path;
     if (!context.mounted) return;
     RenderRepaintBoundary boundary =
-        widgetKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    widgetKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image = await boundary.toImage();
     ByteData byteData =
-        (await image.toByteData(format: ui.ImageByteFormat.png)) as ByteData;
+    (await image.toByteData(format: ui.ImageByteFormat.png)) as ByteData;
     Uint8List pngBytes = byteData.buffer.asUint8List();
     File file = File('$dir/cheque-$fileId.png');
     debugPrint('$dir/cheque-$fileId.png');
@@ -73,15 +74,15 @@ class WidgetSaverService {
     }
 
     String dir = (Platform.isAndroid
-            ? await getExternalStorageDirectory()
-            : await getApplicationSupportDirectory())!
+        ? await getExternalStorageDirectory()
+        : await getApplicationSupportDirectory())!
         .path;
     if (!context.mounted) return;
     RenderRepaintBoundary boundary =
-        widgetKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    widgetKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image = await boundary.toImage();
     ByteData byteData =
-        (await image.toByteData(format: ui.ImageByteFormat.png)) as ByteData;
+    (await image.toByteData(format: ui.ImageByteFormat.png)) as ByteData;
     Uint8List pngBytes = byteData.buffer.asUint8List();
     File file = File('$dir/cheque-$fileId.png');
     debugPrint('$dir/cheque-$fileId.png');
@@ -104,4 +105,5 @@ class WidgetSaverService {
       );
     }
   }
+
 }

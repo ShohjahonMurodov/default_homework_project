@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -58,4 +60,15 @@ void showSuccessMessage({
       ],
     ),
   );
+}
+
+String getRandomLetter() {
+  Random random = Random();
+  String alphabet = 'abc3de22fghij33kl9mn5opq3rs32tuv45wx8yz';
+  String randomLetter = "";
+  for(int i = 0; i<5; i++) {
+    int randomNumber = random.nextInt(26);
+    randomLetter += alphabet[randomNumber];
+  }
+  return randomLetter;
 }

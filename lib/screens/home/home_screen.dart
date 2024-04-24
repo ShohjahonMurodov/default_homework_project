@@ -9,6 +9,7 @@ import 'package:homework/utils/size_utils.dart';
 import 'package:screenshot/screenshot.dart';
 
 import '../../services/widget_save_service.dart';
+import '../../utils/ui_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,62 +41,66 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () async {
               String base64Image =
                   await screenshotControllerToString(screenshotController);
+              String randomKey = getRandomLetter();
               WidgetSaverService.openWidgetAsImage(
                 context: context,
                 widgetKey: _globalKey,
-                fileId: base64Image,
+                fileId: randomKey,
               );
             },
             icon: SvgPicture.asset(AppImages.pdf),
           ),
         ],
       ),
-      body: Screenshot(
-        controller: screenshotController,
-        child: Column(
-          children: [
-            36.getH(),
-            Center(
-              child: Image.asset(AppImages.avatar),
-            ),
-            36.getH(),
-            Text(
-              textAlign: TextAlign.center,
-              "Shohjahon Murodov",
-              style: TextStyle(
-                color: AppColors.c_000072,
-                fontSize: 30.sp,
-                fontWeight: FontWeight.w400,
+      body: RepaintBoundary(
+        key: _globalKey,
+        child: Screenshot(
+          controller: screenshotController,
+          child: Column(
+            children: [
+              36.getH(),
+              Center(
+                child: Image.asset(AppImages.avatar),
               ),
-            ),
-            16.getH(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50.w),
-              child: Column(
-                children: [
-                  Text(
-                    textAlign: TextAlign.center,
-                    "UX/UI Mobile Developer",
-                    style: TextStyle(
-                      color: AppColors.black.withOpacity(.95),
-                      fontSize: 19.sp,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  16.getH(),
-                  Text(
-                    textAlign: TextAlign.center,
-                    "+0 years experience",
-                    style: TextStyle(
-                      color: AppColors.c_000072,
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+              36.getH(),
+              Text(
+                textAlign: TextAlign.center,
+                "Shohjahon Murodov",
+                style: TextStyle(
+                  color: AppColors.c_000072,
+                  fontSize: 30.sp,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            ),
-          ],
+              16.getH(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50.w),
+                child: Column(
+                  children: [
+                    Text(
+                      textAlign: TextAlign.center,
+                      "UX/UI Mobile Developer",
+                      style: TextStyle(
+                        color: AppColors.black.withOpacity(.95),
+                        fontSize: 19.sp,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    16.getH(),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "+0 years experience",
+                      style: TextStyle(
+                        color: AppColors.c_000072,
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
