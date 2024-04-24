@@ -14,4 +14,18 @@ class AppImages{
   static const String japan = "assets/icons/japan.svg";
   static const String france = "assets/icons/france.svg";
   static const String save = "assets/icons/save.svg";
+  static const callSvg = "assets/icons/call.svg";
+  static const messegSvg = "assets/icons/messeg.svg";
+  static const globusSvg = "assets/icons/globus.svg";
+  static const linkSvg = "assets/icons/link.svg";
+  static const instagramSvg = "assets/icons/instagram.svg";
+  static const watsapSvg = "assets/icons/watsap.svg";
+  static const beSvg = "assets/icons/be.svg";
+  static const String bag = "assets/icons/bag.svg";
+  static const String closet = "assets/icons/closet.svg";
+  static const String messageIcon = "assets/icons/message_icon.svg";
+  static const String pdfIcon = "assets/icons/pdf_icon.svg";
+  static const String smileIcon = "assets/icons/smile_icon.svg";
+  static const String saved = "assets/icons/saved.svg";
+  static const String cat = "assets/images/cat.png";
 }

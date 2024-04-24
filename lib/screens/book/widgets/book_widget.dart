@@ -28,15 +28,15 @@ class BookItem extends StatelessWidget {
           Center(
             child: Stack(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20.w),
-                  child: Image.network(
-                    image,
-                    width: double.infinity,
-                    height: 200.h,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(20.w),
+                //   child: Image.network(
+                //     image,
+                //     width: double.infinity,
+                //     height: 200.h,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 newFileLocation.isEmpty
                     ? Positioned(
                         top: 70.h,

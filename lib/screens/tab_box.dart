@@ -6,6 +6,7 @@ import 'package:homework/screens/contact/contact_screen.dart';
 import 'package:homework/screens/languages/languages_screen.dart';
 import 'package:homework/screens/settings/settings_screen.dart';
 import 'package:homework/screens/study/study_screen.dart';
+import 'package:homework/services/book_manager_services.dart';
 import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/app_images.dart';
 
@@ -28,7 +29,7 @@ class _TabBox1State extends State<TabBox1> {
       HomeScreen(),
       StudyScreen(),
       ArrowScreen(),
-      SettingsScreen(),
+      FileManagerScreen(),
       LanguagesScreen(),
       ContactScreen(),
     ];

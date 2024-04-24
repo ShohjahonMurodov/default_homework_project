@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => BookBloc()),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(376, 815),
+        designSize: const Size(360, 800),
         builder: (context, child) {
           ScreenUtil.init(context);
           return MaterialApp(
