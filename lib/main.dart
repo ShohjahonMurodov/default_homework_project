@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/book_bloc.dart';
-import 'package:homework/screens/splash/splash_screen.dart';
+import 'package:homework/screens/tab_box.dart';
 import 'package:homework/services/book_manager_services.dart';
 
 void main() {
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
             home: child,
           );
         },
-        child: const SplashScreen(),
+        child: const TabBox1(),
       ),
     );
   }
