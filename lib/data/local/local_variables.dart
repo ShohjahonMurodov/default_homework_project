@@ -17,12 +17,4 @@ List<BookModel> books = [
         "https://cdn.pixabay.com/video/2020/09/02/48873-457671829_large.mp4",
     categoryModel: CategoryModel.action,
   ),
-  BookModel(
-    imagePath:
-        "https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg",
-    bookName: "Mountains7",
-    bookUrl:
-        "https://github.com/ShohjahonMurodov/default_homework_project/archive/refs/heads/puzzle_game.zip",
-    categoryModel: CategoryModel.comedy,
-  ),
 ];

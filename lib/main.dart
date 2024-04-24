@@ -5,7 +5,7 @@ import 'package:homework/bloc/book_bloc.dart';
 import 'package:homework/screens/tab_box.dart';
 import 'package:homework/services/book_manager_services.dart';
 
-void main() {
+void main(){
   WidgetsFlutterBinding.ensureInitialized();
   FileManagerService();
 
