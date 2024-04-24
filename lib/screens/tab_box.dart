@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:homework/screens/arrow/arrow_screen.dart';
 import 'package:homework/screens/contact/contact_screen.dart';
+import 'package:homework/screens/languages/languages_screen.dart';
 import 'package:homework/screens/settings/settings_screen.dart';
 import 'package:homework/screens/study/study_screen.dart';
 import 'package:homework/utils/app_colors.dart';
@@ -27,6 +29,7 @@ class _TabBox1State extends State<TabBox1> {
       StudyScreen(),
       ArrowScreen(),
       SettingsScreen(),
+      LanguagesScreen(),
       ContactScreen(),
     ];
     super.initState();
@@ -65,6 +68,19 @@ class _TabBox1State extends State<TabBox1> {
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(AppImages.settings),
             icon: SvgPicture.asset(AppImages.settings),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.language,
+              size: 25.sp,
+              color: AppColors.white,
+            ),
+            icon: Icon(
+              Icons.language,
+              size: 25.sp,
+              color: AppColors.white,
+            ),
             label: "",
           ),
           BottomNavigationBarItem(
