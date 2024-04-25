@@ -18,10 +18,6 @@ class _InfoAndroidScreenState extends State<InfoAndroidScreen> {
   String _batteryLevel = "-";
 
   String deviceInfo = "";
-  String version = "";
-  String model = "";
-  String serialNumber = "";
-  String device = "";
 
   Future<void> _getBatteryLevel() async {
     String batteryLevel;
@@ -90,114 +86,13 @@ class _InfoAndroidScreenState extends State<InfoAndroidScreen> {
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "Device info: ",
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      deviceInfo,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                5.getH(),
-                Row(
-                  children: [
-                    Text(
-                      "Version: ",
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      version,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                5.getH(),
-                Row(
-                  children: [
-                    Text(
-                      "Model: ",
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      model,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                5.getH(),
-                Row(
-                  children: [
-                    Text(
-                      "Serial number: ",
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      serialNumber,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                5.getH(),
-                Row(
-                  children: [
-                    Text(
-                      "Device: ",
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      device,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
+                Text(
+                  deviceInfo,
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ],
             ),
@@ -212,11 +107,15 @@ class _InfoAndroidScreenState extends State<InfoAndroidScreen> {
                   await deviceInfoPlugin.androidInfo;
 
               setState(() {
-                deviceInfo += androidDeviceInfo.id;
-                version += "${androidDeviceInfo.version.sdkInt}";
-                model += androidDeviceInfo.model;
-                serialNumber += androidDeviceInfo.serialNumber;
-                device += androidDeviceInfo.device;
+                deviceInfo += "ID: ${androidDeviceInfo.id}\n";
+                deviceInfo += "VERSION: ${androidDeviceInfo.version.sdkInt}\n";
+                deviceInfo += "TYPE: ${androidDeviceInfo.type}\n";
+                deviceInfo += "MODEL: ${androidDeviceInfo.model}\n";
+                deviceInfo +=
+                    "MANUFACTURER: ${androidDeviceInfo.manufacturer}\n";
+                deviceInfo +=
+                    "SERIAL NUMBER: ${androidDeviceInfo.serialNumber}\n";
+                deviceInfo += "DEVICE: ${androidDeviceInfo.device}\n";
               });
             },
           ),
