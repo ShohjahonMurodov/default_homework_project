@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'hello_screen.dart';
+import 'package:homework/screens/android/info_android_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +26,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: const HelloScreen(),
+      child: const InfoAndroidScreen(),
     );
   }
 }
