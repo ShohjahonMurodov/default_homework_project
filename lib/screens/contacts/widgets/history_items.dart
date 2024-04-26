@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/utils/size_utils.dart';
 
 class HistoryItems extends StatelessWidget {
-  const HistoryItems({super.key, required this.title});
+  const HistoryItems({super.key, required this.title, required this.image});
 
   final String title;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class HistoryItems extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(18.r),
               child: Image.network(
-                "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?cs=srgb&dl=pexels-italo-melo-881954-2379004.jpg&fm=jpg",
+                image,
                 width: 48.w,
                 height: 48.h,
                 fit: BoxFit.cover,

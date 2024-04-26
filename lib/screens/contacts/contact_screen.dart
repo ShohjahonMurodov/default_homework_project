@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/data/local/local_variables.dart';
+import 'package:homework/screens/contacts/widgets/contact_items.dart';
 import 'package:homework/screens/contacts/widgets/history_items.dart';
 import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/size_utils.dart';
@@ -54,6 +55,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   allContacts.length,
                   (index) => HistoryItems(
                     title: allContacts[index].contactName,
+                    image: allContacts[index].imageUrl,
                   ),
                 ),
               ],
@@ -64,6 +66,55 @@ class _ContactScreenState extends State<ContactScreen> {
             width: double.infinity,
             height: 1.h,
             color: const Color(0xFFEDEDED),
+          ),
+          16.getH(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: Color(0xFFADB5BD),
+                ),
+                hintText: "Search",
+                hintStyle: TextStyle(
+                  color: const Color(0xFFADB5BD),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+                filled: true,
+                fillColor: const Color(0xFFF7F7FC),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.r),
+                  borderSide: BorderSide(
+                    width: 0.w,
+                    color: const Color(0xFFF7F7FC),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.r),
+                  borderSide: BorderSide(
+                    width: 0.w,
+                    color: const Color(0xFFF7F7FC),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          16.getH(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: Column(
+              children: [
+                ...List.generate(
+                  allContacts.length,
+                  (index) => ContactItems(
+                    contactModel: allContacts[index],
+                    onTap: () {},
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -26,7 +26,15 @@ List<ContactModel> allContacts = [
     contactLasName: "Alisher",
     contactName: "Falonchiyev",
     isOnline: true,
-    imageUrl: "",
+    imageUrl: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?cs=srgb&dl=pexels-italo-melo-881954-2379004.jpg&fm=jpg",
     lastOnlineTime: DateTime.now(),
-  )
+  ),
+  ContactModel(
+    contactId: 4,
+    contactLasName: "Sharifjon",
+    contactName: "Muminov",
+    isOnline: false,
+    imageUrl: "https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg",
+    lastOnlineTime: DateTime.now(),
+  ),
 ];
