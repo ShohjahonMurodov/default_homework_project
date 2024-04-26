@@ -97,50 +97,32 @@ class _MessageScreenState extends State<MessageScreen> {
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          DeleteButton(
-                            onTabDelete: () {
-                              context
-                                  .read<MessageCubit>()
-                                  .removeMessages(messageModel: messageModel);
-                              Navigator.pop(context);
-                            },
-                            onTabCopy: () {
-                              Navigator.pop(context);
-                            },
-                          );
+                      DeleteButton(
+                        onTabDelete: () {
+                          context
+                              .read<MessageCubit>()
+                              .removeMessages(messageModel: messageModel);
+                          Navigator.pop(context);
                         },
-                        icon: Icon(
-                          Icons.more_horiz,
-                          color: Colors.grey,
-                          size: 25.sp,
-                        ),
+                        onTabCopy: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   );
                 }
                 return Row(
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        DeleteButton(
-                          onTabDelete: () {
-                            context
-                                .read<MessageCubit>()
-                                .removeMessages(messageModel: messageModel);
-                            Navigator.pop(context);
-                          },
-                          onTabCopy: () {
-                            Navigator.pop(context);
-                          },
-                        );
+                    DeleteButton(
+                      onTabDelete: () {
+                        context
+                            .read<MessageCubit>()
+                            .removeMessages(messageModel: messageModel);
+                        Navigator.pop(context);
                       },
-                      icon: Icon(
-                        Icons.more_horiz,
-                        color: Colors.grey,
-                        size: 25.sp,
-                      ),
+                      onTabCopy: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     Container(
                       margin: EdgeInsets.symmetric(
