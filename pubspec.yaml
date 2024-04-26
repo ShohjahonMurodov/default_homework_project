@@ -38,6 +38,12 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_svg: ^2.0.10+1
   flutter_bloc: ^8.1.5
+  firebase_storage: ^11.6.11
+  cloud_firestore: ^4.15.9
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.17.9
+  provider: ^6.1.2
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
