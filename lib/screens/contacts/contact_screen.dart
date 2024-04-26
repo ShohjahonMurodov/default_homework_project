@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/data/local/local_variables.dart';
+import 'package:homework/data/models/message_model.dart';
 import 'package:homework/screens/contacts/widgets/contact_items.dart';
 import 'package:homework/screens/contacts/widgets/history_items.dart';
+import 'package:homework/screens/messages/message_screen.dart';
 import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/size_utils.dart';
 
@@ -110,7 +112,16 @@ class _ContactScreenState extends State<ContactScreen> {
                   allContacts.length,
                   (index) => ContactItems(
                     contactModel: allContacts[index],
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MessageScreen(
+                            contactModel: allContacts[index],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
