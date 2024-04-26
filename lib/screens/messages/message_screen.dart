@@ -78,36 +78,225 @@ class _MessageScreenState extends State<MessageScreen> {
               itemBuilder: (BuildContext context, int index) {
                 MessageModel messageModel = messages[index];
                 if (messageModel.contactId != 111) {
-                  return Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 10.h),
-                        padding: const EdgeInsets.all(20),
-                        width: width - 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: const Color(0xFFD84D4D),
-                        ),
-                        child: Text(
-                          messageModel.messageText,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
+                  if (!messageModel.isFile) {
+                    return Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 10.h),
+                          padding: const EdgeInsets.all(20),
+                          width: width - 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: const Color(0xFFD84D4D),
+                          ),
+                          child: Text(
+                            messageModel.messageText,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.sp,
+                            ),
                           ),
                         ),
+                        DeleteButton(
+                          onTabDelete: () {
+                            context
+                                .read<MessageCubit>()
+                                .removeMessages(messageModel: messageModel);
+                            Navigator.pop(context);
+                          },
+                          onTabCopy: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            DeleteButton(
+                              onTabDelete: () {
+                                context
+                                    .read<MessageCubit>()
+                                    .removeMessages(messageModel: messageModel);
+                              },
+                              onTabCopy: () {},
+                            ),
+                            const Spacer(),
+                            Stack(
+                              children: [
+                                Container(
+                                    width: 250.w,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 20.h, horizontal: 16.w),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red.withOpacity(.3),
+                                      borderRadius: BorderRadius.circular(12.w),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Description.docx",
+                                          style: TextStyle(
+                                            fontSize: 15.w,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        10.getH(),
+                                        Text(
+                                          "Description.docx",
+                                          style: TextStyle(
+                                            fontSize: 15.w,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        50.getH(),
+                                      ],
+                                    )),
+                                Positioned(
+                                  bottom: 0,
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      width: 250.w,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(12.w),
+                                          bottomRight: Radius.circular(12.w),
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Download",
+                                            style: TextStyle(
+                                              fontSize: 15.w,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.download,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            16.getW(),
+                          ],
+                        ),
+                        20.getH(),
+                      ],
+                    );
+                  }
+                }
+                if (messageModel.isFile) {
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          DeleteButton(
+                            onTabDelete: () {
+                              context
+                                  .read<MessageCubit>()
+                                  .removeMessages(messageModel: messageModel);
+                            },
+                            onTabCopy: () {},
+                          ),
+                          const Spacer(),
+                          Stack(
+                            children: [
+                              Container(
+                                  width: 250.w,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 20.h, horizontal: 16.w),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.withOpacity(.3),
+                                    borderRadius: BorderRadius.circular(12.w),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Description.docx",
+                                        style: TextStyle(
+                                          fontSize: 15.w,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      10.getH(),
+                                      Text(
+                                        "Description.docx",
+                                        style: TextStyle(
+                                          fontSize: 15.w,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      50.getH(),
+                                    ],
+                                  )),
+                              Positioned(
+                                bottom: 0,
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: 250.w,
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(12.w),
+                                        bottomRight: Radius.circular(12.w),
+                                      ),
+                                    ),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16.w),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Download",
+                                          style: TextStyle(
+                                            fontSize: 15.w,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.download,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          16.getW(),
+                        ],
                       ),
-                      DeleteButton(
-                        onTabDelete: () {
-                          context
-                              .read<MessageCubit>()
-                              .removeMessages(messageModel: messageModel);
-                          Navigator.pop(context);
-                        },
-                        onTabCopy: () {
-                          Navigator.pop(context);
-                        },
-                      ),
+                      20.getH(),
                     ],
                   );
                 }
@@ -153,7 +342,20 @@ class _MessageScreenState extends State<MessageScreen> {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    MessageModel messageModel = MessageModel(
+                      createdTime: DateTime.now().toString(),
+                      messageText:
+                          "https://bilimlar.uz/wp-content/uploads/2021/02/k100001.pdf",
+                      messageId: widget.contactModel.contactId,
+                      isFile: true,
+                      contactId: 111,
+                      status: true,
+                    );
+                    context
+                        .read<MessageCubit>()
+                        .insertMessages(messageModel: messageModel);
+                  },
                   icon: Icon(
                     Icons.add,
                     size: 25.sp,
