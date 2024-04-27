@@ -16,11 +16,13 @@ class AuthRegisterEvent extends AuthEvent {
     required this.name,
     required this.email,
     required this.password,
+    required this.imageUrl,
   });
 
   final String name;
   final String email;
   final String password;
+  final String imageUrl;
 }
 
 class AuthGoogleEvent extends AuthEvent {

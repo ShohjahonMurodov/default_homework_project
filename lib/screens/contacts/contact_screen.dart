@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -119,8 +117,7 @@ class _ContactScreenState extends State<ContactScreen> {
                           var data = snapshot.data!.docs[index];
                           return HistoryItems(
                             title: data['name'],
-                            image:
-                                "https://cdn-icons-png.flaticon.com/512/4086/4086679.png",
+                            image: data['image_url'],
                           );
                         },
                       ),
@@ -176,6 +173,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         var data = snapshot.data!.docs[index];
                         return ContactItems(
                           name: data['name'],
+                          image: data['image_url'],
                           onTap: () {
                             Navigator.push(
                               context,

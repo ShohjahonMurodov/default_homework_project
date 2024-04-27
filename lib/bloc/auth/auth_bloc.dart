@@ -54,6 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         "uuid": userCredential.user!.uid,
         "email": event.email,
         'name': event.name,
+        'image_url': event.imageUrl,
       });
       emit(AuthSuccessState());
     } catch (e) {

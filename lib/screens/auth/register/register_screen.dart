@@ -3,17 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/auth/auth_bloc.dart';
 import 'package:homework/bloc/auth/auth_state.dart';
+import 'package:homework/data/local/local_variables.dart';
 import 'package:homework/screens/auth/login/login_screen.dart';
 import 'package:homework/screens/auth/widgets/ok_button.dart';
 import 'package:homework/screens/auth/widgets/text_input.dart';
 import 'package:homework/screens/contacts/contact_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../../bloc/auth/auth_event.dart';
-import '../../../data/local/local_variables.dart';
 import '../../../view/image_view_model.dart';
-import '../widgets/dialog_image.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -29,8 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final picker = ImagePicker();
   String storagePath = "";
-  XFile? xFile;
-  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +54,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero)),
                       onPressed: () {
-                        showImageDialog(
-                          context,
-                          onChaneXFile: (ChangeImage changeImage) {
-                            xFile = changeImage.xFile;
-                            setState(() {});
-                          },
-                        );
+                        // showImageDialog(
+                        //   context,
+                        //   onChaneXFile: (ChangeImage changeImage) {
+                        //     xFile = changeImage.xFile;
+                        //     setState(() {});
+                        //   },
+                        // );
                       },
                       child: Container(
                         width: 200.w,
@@ -103,6 +99,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     hitText: 'Enter password',
                     textEditingController: passwordController,
                   ),
+                  OkButton(
+                    title: "Take a image",
+                    onTab: () {
+                      takeAnImage();
+                    },
+                  ),
                   60.getH(),
                   OkButton(
                     title: 'LOGIN',
@@ -112,11 +114,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           passwordController.text.isEmpty) {
                         _showSnackBar();
                       } else {
+                        debugPrint('$imageUrl---------------------');
                         context.read<AuthBloc>().add(
                               AuthRegisterEvent(
                                 name: nameController.text,
                                 email: emailController.text,
                                 password: passwordController.text,
+                                imageUrl: imageUrl,
                               ),
                             );
                       }
@@ -219,38 +223,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   takeAnImage() {
     showModalBottomSheet(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(16),
-        topRight: Radius.circular(16),
-      )),
-      context: context,
-      builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 12.h),
-            ListTile(
-              onTap: () async {
-                await _getImageFromGallery();
-                Navigator.pop(context);
-              },
-              leading: const Icon(Icons.photo_album_outlined),
-              title: const Text("Gallereyadan olish"),
-            ),
-            ListTile(
-              onTap: () async {
-                await _getImageFromCamera();
-                Navigator.pop(context);
-              },
-              leading: const Icon(Icons.camera_alt),
-              title: const Text("Kameradan olish"),
-            ),
-            SizedBox(height: 24.h),
-          ],
-        );
-      },
-    );
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        )),
+        context: context,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 12.h),
+              ListTile(
+                onTap: () async {
+                  _getImageFromGallery();
+                  Navigator.pop(context);
+                },
+                leading: const Icon(Icons.photo_album_outlined),
+                title: const Text("Gallereyadan olish"),
+              ),
+              ListTile(
+                onTap: () async {
+                  _getImageFromCamera();
+                  Navigator.pop(context);
+                },
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Kameradan olish"),
+              ),
+              SizedBox(height: 24.h),
+            ],
+          );
+        });
   }
 
   _showSnackBar({String title = "Empty input"}) {

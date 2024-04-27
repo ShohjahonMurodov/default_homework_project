@@ -3,9 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../utils/size_utils.dart';
 
 class ContactItems extends StatelessWidget {
-  const ContactItems({super.key, required this.name, required this.onTap});
+  const ContactItems(
+      {super.key,
+      required this.name,
+      required this.onTap,
+      required this.image});
 
   final String name;
+  final String image;
   final VoidCallback onTap;
 
   @override
@@ -21,7 +26,7 @@ class ContactItems extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
                 child: Image.network(
-                  "https://cdn-icons-png.flaticon.com/512/4086/4086679.png",
+                  image,
                   width: 48.w,
                   height: 48.h,
                   fit: BoxFit.cover,

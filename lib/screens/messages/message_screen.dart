@@ -143,34 +143,35 @@ class _MessageScreenState extends State<MessageScreen> {
                                 ),
                               ],
                             );
-                          }
-                          return Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: 20.w, vertical: 10.h),
-                                padding: const EdgeInsets.all(20),
-                                width: width - 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  color: const Color(0xFFD84D4D),
-                                ),
-                                child: Text(
-                                  json['message'],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.sp,
+                          } else {
+                            return Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 20.w, vertical: 10.h),
+                                  padding: const EdgeInsets.all(20),
+                                  width: width - 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    color: const Color(0xFFD84D4D),
+                                  ),
+                                  child: Text(
+                                    json['message'],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.sp,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DeleteButton(
-                                onTabDelete: () {},
-                                onTabCopy: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          );
+                                DeleteButton(
+                                  onTabDelete: () {},
+                                  onTabCopy: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          }
                         },
                       ),
                     ),
