@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/auth/auth_bloc.dart';
-import 'package:homework/bloc/auth/auth_event.dart';
 import 'package:homework/bloc/auth/auth_state.dart';
 import 'package:homework/screens/auth/login/login_screen.dart';
-import 'package:homework/screens/auth/register/widgets/register_textfield.dart';
+import 'package:homework/screens/auth/widgets/ok_button.dart';
+import 'package:homework/screens/auth/widgets/text_input.dart';
 import 'package:homework/screens/contacts/contact_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../bloc/auth/auth_event.dart';
 import '../../../data/local/local_variables.dart';
 import '../../../view/image_view_model.dart';
+import '../widgets/dialog_image.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -27,6 +29,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final picker = ImagePicker();
   String storagePath = "";
+  XFile? xFile;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,35 +46,72 @@ class _RegisterScreenState extends State<RegisterScreen> {
             );
           }
           if (state is AuthInitialState) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
+            return SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RegisterTextField(
-                    controller: nameController,
-                    labelText: "Name",
-                  ),
-                  RegisterTextField(
-                    controller: emailController,
-                    labelText: "Email",
-                  ),
-                  RegisterTextField(
-                    controller: passwordController,
-                    labelText: "Password",
-                  ),
-                  10.getH(),
-                  SizedBox(
-                    width: double.infinity,
+                  50.getH(),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100.r),
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey.shade300,
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
+                          padding: EdgeInsets.zero,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero)),
+                      onPressed: () {
+                        showImageDialog(
+                          context,
+                          onChaneXFile: (ChangeImage changeImage) {
+                            xFile = changeImage.xFile;
+                            setState(() {});
+                          },
+                        );
+                      },
+                      child: Container(
+                        width: 200.w,
+                        height: 200.h,
+                        decoration: const BoxDecoration(
+                          color: Colors.grey,
+                          // image: xFile != null
+                          //     ? DecorationImage(
+                          //         image: FileImage(File(xFile!.path)),
+                          //         fit: BoxFit.cover,
+                          //       )
+                          //     : null,
                         ),
                       ),
-                      onPressed: () {
+                    ),
+                  ),
+                  16.getH(),
+                  Text(
+                    "REGISTER",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  50.getH(),
+                  TextInputMyWidget(
+                    hitText: 'Enter name',
+                    textEditingController: nameController,
+                  ),
+                  TextInputMyWidget(
+                    hitText: 'Enter email',
+                    textEditingController: emailController,
+                  ),
+                  TextInputMyWidget(
+                    hitText: 'Enter password',
+                    textEditingController: passwordController,
+                  ),
+                  60.getH(),
+                  OkButton(
+                    title: 'LOGIN',
+                    onTab: () {
+                      if (nameController.text.isEmpty &&
+                          emailController.text.isEmpty &&
+                          passwordController.text.isEmpty) {
+                        _showSnackBar();
+                      } else {
                         context.read<AuthBloc>().add(
                               AuthRegisterEvent(
                                 name: nameController.text,
@@ -78,69 +119,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 password: passwordController.text,
                               ),
                             );
-                      },
-                      child: Text(
-                        "Register",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                      }
+                    },
                   ),
-                  10.getH(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey.shade300,
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                      ),
-                      onPressed: () {
-                        takeAnImage();
-                      },
-                      child: Text(
-                        "Take a images",
+                  50.getH(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account? ",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                    ),
-                  ),
-                  10.getH(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey.shade300,
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.r),
                           ),
-                        );
-                      },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w500,
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -233,6 +250,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ],
         );
       },
+    );
+  }
+
+  _showSnackBar({String title = "Empty input"}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 1),
+        content: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.sp),
+        ),
+      ),
     );
   }
 }

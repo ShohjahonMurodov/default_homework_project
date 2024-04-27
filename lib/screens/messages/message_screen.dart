@@ -83,156 +83,164 @@ class _MessageScreenState extends State<MessageScreen> {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: chatServices.getMessages(
-          widget.receiverUserId,
-          firebaseAuth.currentUser!.uid,
-        ),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                snapshot.error.toString(),
+      body: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder(
+              stream: chatServices.getMessages(
+                widget.receiverUserId,
+                firebaseAuth.currentUser!.uid,
               ),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          var data = snapshot.data!.docs;
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Map<String, dynamic> json =
-                        data[index].data() as Map<String, dynamic>;
-                    if (json['sender_id'] != 111) {
-                      return Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 20.w, vertical: 10.h),
-                            padding: const EdgeInsets.all(20),
-                            width: width - 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.r),
-                              color: const Color(0xFFD84D4D),
-                            ),
-                            child: Text(
-                              json['message'],
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.sp,
-                              ),
-                            ),
-                          ),
-                          DeleteButton(
-                            onTabDelete: () {},
-                            onTabCopy: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      );
-                    }
-                    return Row(
-                      children: [
-                        DeleteButton(
-                          onTabDelete: () {},
-                          onTabCopy: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 10.h),
-                          padding: const EdgeInsets.all(20),
-                          width: width - 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: Colors.grey, width: 2),
-                          ),
-                          child: Text(
-                            json['message'],
-                            style: TextStyle(
-                              color: const Color(0xFF595F69),
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
-                child: Row(
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      snapshot.error.toString(),
+                    ),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                var data = snapshot.data!.docs;
+                return Column(
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.add,
-                        size: 25.sp,
-                        color: const Color(0xFFADB5BD),
-                      ),
-                    ),
                     Expanded(
-                      child: TextField(
-                        maxLines: null,
-                        maxLength: null,
-                        controller: controller,
-                        style: TextStyle(
-                          color: const Color(0xFF0F1828),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: "Type waiting ...",
-                          hintStyle: TextStyle(
-                            color: const Color(0xFFADB5BD),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFF7F7FC),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.r),
-                            borderSide: BorderSide(
-                              width: 0.w,
-                              color: const Color(0xFFF7F7FC),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.r),
-                            borderSide: BorderSide(
-                              width: 0.w,
-                              color: const Color(0xFFF7F7FC),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: sendMessage,
-                      icon: Icon(
-                        Icons.send,
-                        size: 25.sp,
-                        color: const Color(0xFFD84D4D),
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          Map<String, dynamic> json =
+                              data[index].data() as Map<String, dynamic>;
+                          if (json['sender_id'] ==
+                              firebaseAuth.currentUser!.uid) {
+                            return Row(
+                              children: [
+                                DeleteButton(
+                                  onTabDelete: () {},
+                                  onTabCopy: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 20.w, vertical: 10.h),
+                                  padding: const EdgeInsets.all(20),
+                                  width: width - 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    border: Border.all(
+                                        color: Colors.grey, width: 2),
+                                  ),
+                                  child: Text(
+                                    json['message'],
+                                    style: TextStyle(
+                                      color: const Color(0xFF595F69),
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                          return Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 20.w, vertical: 10.h),
+                                padding: const EdgeInsets.all(20),
+                                width: width - 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  color: const Color(0xFFD84D4D),
+                                ),
+                                child: Text(
+                                  json['message'],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                              ),
+                              DeleteButton(
+                                onTabDelete: () {},
+                                onTabCopy: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                   ],
+                );
+              },
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.add,
+                    size: 25.sp,
+                    color: const Color(0xFFADB5BD),
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
+                Expanded(
+                  child: TextField(
+                    maxLines: null,
+                    maxLength: null,
+                    controller: controller,
+                    style: TextStyle(
+                      color: const Color(0xFF0F1828),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: "Type waiting ...",
+                      hintStyle: TextStyle(
+                        color: const Color(0xFFADB5BD),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFFF7F7FC),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.r),
+                        borderSide: BorderSide(
+                          width: 0.w,
+                          color: const Color(0xFFF7F7FC),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.r),
+                        borderSide: BorderSide(
+                          width: 0.w,
+                          color: const Color(0xFFF7F7FC),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: sendMessage,
+                  icon: Icon(
+                    Icons.send,
+                    size: 25.sp,
+                    color: const Color(0xFFD84D4D),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

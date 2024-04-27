@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/auth/auth_bloc.dart';
 import 'package:homework/bloc/auth/auth_state.dart';
 import 'package:homework/screens/auth/register/register_screen.dart';
-import 'package:homework/screens/auth/register/widgets/register_textfield.dart';
+import 'package:homework/screens/auth/widgets/ok_button.dart';
+import 'package:homework/screens/auth/widgets/text_input.dart';
 import 'package:homework/screens/contacts/contact_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 
@@ -35,75 +36,81 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
           if (state is AuthInitialState) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
+            return SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RegisterTextField(
-                    controller: emailController,
-                    labelText: "Email",
+                  50.getH(),
+                  Image.asset("assets/images/img.png", width: 240.w),
+                  Text(
+                    "LOGIN",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  RegisterTextField(
-                    controller: passwordController,
-                    labelText: "Password",
+                  TextInputMyWidget(
+                    hitText: 'Enter email',
+                    textEditingController: emailController,
                   ),
-                  10.getH(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey.shade300,
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                      ),
-                      onPressed: () {
+                  TextInputMyWidget(
+                    hitText: 'Enter password',
+                    textEditingController: passwordController,
+                  ),
+                  30.getH(),
+                  OkButton(
+                    title: 'LOGIN',
+                    onTab: () {
+                      if (emailController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty) {
                         context.read<AuthBloc>().add(
                               AuthLoginEvent(
-                                  email: emailController.text,
-                                  password: passwordController.text,),
+                                email: emailController.text,
+                                password: passwordController.text,
+                              ),
                             );
-                      },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                      } else {
+                        _showSnackBar();
+                      }
+                    },
                   ),
-                  10.getH(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey.shade300,
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Register",
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don’t have an account? ",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                    ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.r),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const RegisterScreen();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Register now",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -123,6 +130,18 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
         },
+      ),
+    );
+  }
+
+  _showSnackBar({String title = "Empty input"}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 1),
+        content: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.sp),
+        ),
       ),
     );
   }

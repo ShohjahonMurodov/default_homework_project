@@ -180,9 +180,11 @@ class _ContactScreenState extends State<ContactScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MessageScreen(
-                                      name: data['name'],
-                                      receiverUserId: data['uuid'])),
+                                builder: (context) => MessageScreen(
+                                  name: data['name'],
+                                  receiverUserId: data['uuid'],
+                                ),
+                              ),
                             );
                           },
                         );
