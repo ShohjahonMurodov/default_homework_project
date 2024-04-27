@@ -57,3 +57,5 @@
 //     status: false,
 //   ),
 // ];
+
+String imageUrl = "";

@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:homework/bloc/auth/auth_event.dart';
 import 'package:homework/bloc/auth/auth_state.dart';
+import 'package:homework/screens/contacts/contact_screen.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitialState()) {
@@ -50,7 +54,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         "uuid": userCredential.user!.uid,
         "email": event.email,
         'name': event.name,
-        "image_url": event.imageUrl,
       });
       emit(AuthSuccessState());
     } catch (e) {
@@ -60,5 +63,31 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _initialState(AuthInitialEvent event, emit) {
     emit(AuthInitialState());
+  }
+
+  Future<void> signInWithGoogle(AuthGoogleEvent event, emit) async {
+    emit(AuthLoadingState());
+
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    emit(AuthSuccessState());
+    if (userCredential.user != null) {
+      Navigator.pushReplacement(
+        event.context,
+        MaterialPageRoute(
+          builder: (context) => const ContactScreen(),
+        ),
+      );
+    }
   }
 }

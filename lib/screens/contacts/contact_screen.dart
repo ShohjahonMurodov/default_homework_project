@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:homework/screens/contacts/widgets/contact_items.dart';
 import 'package:homework/screens/contacts/widgets/history_items.dart';
+import 'package:homework/screens/messages/message_screen.dart';
 import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/size_utils.dart';
 
@@ -115,7 +119,8 @@ class _ContactScreenState extends State<ContactScreen> {
                           var data = snapshot.data!.docs[index];
                           return HistoryItems(
                             title: data['name'],
-                            image: data["image_url"],
+                            image:
+                                "https://cdn-icons-png.flaticon.com/512/4086/4086679.png",
                           );
                         },
                       ),
@@ -163,29 +168,28 @@ class _ContactScreenState extends State<ContactScreen> {
                   ),
                 ),
                 16.getH(),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                //   child: Column(
-                //     children: [
-                //       ...List.generate(
-                //         allContacts.length,
-                //         (index) => ContactItems(
-                //           contactModel: allContacts[index],
-                //           onTap: () {
-                //             Navigator.push(
-                //               context,
-                //               MaterialPageRoute(
-                //                 builder: (context) => MessageScreen(
-                //                   contactModel: allContacts[index],
-                //                 ),
-                //               ),
-                //             );
-                //           },
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: Column(
+                    children: [
+                      ...List.generate(snapshot.data!.docs.length, (index) {
+                        var data = snapshot.data!.docs[index];
+                        return ContactItems(
+                          name: data['name'],
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChatPageScreen(
+                                      receiverUserEmail: data['email'],
+                                      receiverUserId: data['uuid'])),
+                            );
+                          },
+                        );
+                      }),
+                    ],
+                  ),
+                ),
               ],
             );
           }

@@ -1,20 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class MessageModel {
-  final int messageId;
-  final String messageText;
-  final bool isFile;
-  final String createdTime;
-  final int contactId;
-  final bool status;
+  final String senderId;
+  final String senderEmail;
+  final String receiverId;
+  final String message;
+  final Timestamp timestamp;
 
   MessageModel({
-    required this.createdTime,
-    required this.messageText,
-    required this.messageId,
-    required this.isFile,
-    required this.contactId,
-    required this.status,
+    required this.senderId,
+    required this.senderEmail,
+    required this.receiverId,
+    required this.message,
+    required this.timestamp,
   });
-}
 
-// MessageModel SOLID ning 1-siga (S) yani, Single Responsibility ga togri keladi.
-// Chunki har bir klass yoki funksiya faqatgina bitta vazifani bajarishi kerak.
+  Map<String, dynamic> toJson() {
+    return {
+      "sender_id": senderId,
+      "sender_email": senderEmail,
+      "receiver_id": receiverId,
+      "message": message,
+      "timestamp": timestamp,
+    };
+  }
+}

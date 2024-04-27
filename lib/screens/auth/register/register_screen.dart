@@ -10,6 +10,7 @@ import 'package:homework/screens/contacts/contact_screen.dart';
 import 'package:homework/utils/size_utils.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../data/local/local_variables.dart';
 import '../../../view/image_view_model.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -26,7 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final picker = ImagePicker();
   String storagePath = "";
-  String imageUrl = "";
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 name: nameController.text,
                                 email: emailController.text,
                                 password: passwordController.text,
-                                imageUrl: imageUrl,
                               ),
                             );
                       },
@@ -175,9 +174,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       debugPrint("IMAGE PATH:${image.path}");
       storagePath = "files/images/${image.name}";
       imageUrl = await context.read<ImageViewModel>().uploadImage(
-        pickedFile: image,
-        storagePath: storagePath,
-      );
+            pickedFile: image,
+            storagePath: storagePath,
+          );
 
       debugPrint("DOWNLOAD URL:$imageUrl");
     }
@@ -193,9 +192,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       debugPrint("IMAGE PATH:${image.path}");
       storagePath = "files/images/${image.name}";
       imageUrl = await context.read<ImageViewModel>().uploadImage(
-        pickedFile: image,
-        storagePath: storagePath,
-      );
+            pickedFile: image,
+            storagePath: storagePath,
+          );
 
       debugPrint("DOWNLOAD URL:$imageUrl");
     }
@@ -203,36 +202,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   takeAnImage() {
     showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            )),
-        context: context,
-        builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 12.h),
-              ListTile(
-                onTap: () async {
-                  await _getImageFromGallery();
-                  Navigator.pop(context);
-                },
-                leading: const Icon(Icons.photo_album_outlined),
-                title: const Text("Gallereyadan olish"),
-              ),
-              ListTile(
-                onTap: () async {
-                  await _getImageFromCamera();
-                  Navigator.pop(context);
-                },
-                leading: const Icon(Icons.camera_alt),
-                title: const Text("Kameradan olish"),
-              ),
-              SizedBox(height: 24.h),
-            ],
-          );
-        });
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+      )),
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 12.h),
+            ListTile(
+              onTap: () async {
+                await _getImageFromGallery();
+                Navigator.pop(context);
+              },
+              leading: const Icon(Icons.photo_album_outlined),
+              title: const Text("Gallereyadan olish"),
+            ),
+            ListTile(
+              onTap: () async {
+                await _getImageFromCamera();
+                Navigator.pop(context);
+              },
+              leading: const Icon(Icons.camera_alt),
+              title: const Text("Kameradan olish"),
+            ),
+            SizedBox(height: 24.h),
+          ],
+        );
+      },
+    );
   }
 }
