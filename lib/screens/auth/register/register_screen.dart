@@ -46,38 +46,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 children: [
                   50.getH(),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100.r),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero)),
-                      onPressed: () {
-                        // showImageDialog(
-                        //   context,
-                        //   onChaneXFile: (ChangeImage changeImage) {
-                        //     xFile = changeImage.xFile;
-                        //     setState(() {});
-                        //   },
-                        // );
-                      },
-                      child: Container(
-                        width: 200.w,
-                        height: 200.h,
-                        decoration: const BoxDecoration(
-                          color: Colors.grey,
-                          // image: xFile != null
-                          //     ? DecorationImage(
-                          //         image: FileImage(File(xFile!.path)),
-                          //         fit: BoxFit.cover,
-                          //       )
-                          //     : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                  16.getH(),
                   Text(
                     "REGISTER",
                     style: TextStyle(

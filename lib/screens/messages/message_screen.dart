@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:homework/screens/messages/widgets/pop_menu_button.dart';
 import 'package:homework/services/chat_services.dart';
 import 'package:homework/utils/app_colors.dart';
 import '../../utils/size_utils.dart';
@@ -21,6 +20,7 @@ class _MessageScreenState extends State<MessageScreen> {
   final TextEditingController controller = TextEditingController();
   final ChatServices chatServices = ChatServices();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final ScrollController scrollController = ScrollController();
 
   Future<void> sendMessage() async {
     if (controller.text.isNotEmpty) {
@@ -29,6 +29,10 @@ class _MessageScreenState extends State<MessageScreen> {
         message: controller.text,
       );
       controller.clear();
+      scrollController.position.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.linear);
     }
   }
 
@@ -109,69 +113,46 @@ class _MessageScreenState extends State<MessageScreen> {
                   children: [
                     Expanded(
                       child: ListView.builder(
+                        controller: scrollController,
                         itemCount: data.length,
                         itemBuilder: (BuildContext context, int index) {
                           Map<String, dynamic> json =
                               data[index].data() as Map<String, dynamic>;
-                          if (json['sender_id'] ==
-                              firebaseAuth.currentUser!.uid) {
-                            return Row(
-                              children: [
-                                DeleteButton(
-                                  onTabDelete: () {},
-                                  onTabCopy: () {
-                                    Navigator.pop(context);
-                                  },
+                          return Align(
+                            alignment: json['sender_id'] ==
+                                    firebaseAuth.currentUser!.uid
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 20.w, vertical: 10.h),
+                              padding: const EdgeInsets.all(20),
+                              width: width - 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                color: json['sender_id'] ==
+                                        firebaseAuth.currentUser!.uid
+                                    ? Colors.transparent
+                                    : const Color(0xFFD84D4D),
+                                border: json['sender_id'] ==
+                                        firebaseAuth.currentUser!.uid
+                                    ? Border.all(color: Colors.grey, width: 2)
+                                    : Border.all(
+                                        color: const Color(0xFFD84D4D),
+                                        width: 2),
+                              ),
+                              child: Text(
+                                json['message'],
+                                style: TextStyle(
+                                  color: json['sender_id'] ==
+                                          firebaseAuth.currentUser!.uid
+                                      ? const Color(0xFF595F69)
+                                      : Colors.white,
+                                  fontSize: 16.sp,
                                 ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 20.w, vertical: 10.h),
-                                  padding: const EdgeInsets.all(20),
-                                  width: width - 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    border: Border.all(
-                                        color: Colors.grey, width: 2),
-                                  ),
-                                  child: Text(
-                                    json['message'],
-                                    style: TextStyle(
-                                      color: const Color(0xFF595F69),
-                                      fontSize: 16.sp,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          } else {
-                            return Row(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 20.w, vertical: 10.h),
-                                  padding: const EdgeInsets.all(20),
-                                  width: width - 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    color: const Color(0xFFD84D4D),
-                                  ),
-                                  child: Text(
-                                    json['message'],
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.sp,
-                                    ),
-                                  ),
-                                ),
-                                DeleteButton(
-                                  onTabDelete: () {},
-                                  onTabCopy: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            );
-                          }
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -231,7 +212,9 @@ class _MessageScreenState extends State<MessageScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: sendMessage,
+                  onPressed: () async {
+                    await sendMessage();
+                  },
                   icon: Icon(
                     Icons.send,
                     size: 25.sp,
