@@ -38,6 +38,8 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_svg: ^2.0.10+1
   shared_preferences: ^2.2.2
+  http: ^1.2.1
+  flutter_bloc: ^8.1.5
 
 dev_dependencies:
   flutter_test:
