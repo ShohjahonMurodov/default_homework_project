@@ -12,8 +12,6 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
     emit(CurrencyLoadingState());
     var response = await ApiProvider().getAllCurrency();
     if (response.errorText.isNotEmpty) {
-      print('dsd');
-
       emit(CurrencyErrorState(errorText: response.errorText));
     } else {
       emit(CurrencySuccessState(currencies: response.data));
