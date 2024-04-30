@@ -61,6 +61,15 @@ class CurrencyModel extends Equatable {
     };
   }
 
+  spotTheDifference({required CurrencyModel currencyModel}) {
+    return code != currencyModel.code ||
+        title != currencyModel.title ||
+        cbPrice != currencyModel.cbPrice ||
+        nbuBuyPrice != currencyModel.nbuBuyPrice ||
+        nbuSellPrice != currencyModel.nbuSellPrice ||
+        date != currencyModel.date;
+  }
+
   Map<String, dynamic> toUpdateJson() {
     return {
       // AppConstants.id: id,

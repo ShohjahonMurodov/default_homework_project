@@ -76,6 +76,14 @@ class LocalDatabase {
     return networkResponse;
   }
 
+  static updateCurrency({required CurrencyModel currencyModel}) async {
+    final db = await databaseInstance.database;
+    // debugPrint(noteModel.id.toString());
+
+    await db.update("CurrencyTable", currencyModel.toJson(),
+        where: "code = ?", whereArgs: [currencyModel.code]);
+  }
+
 // static Future<CurrencyModel> insertCurrency(CurrencyModel currencyModel) async {
 //   final db = await databaseInstance.database;
 //

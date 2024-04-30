@@ -7,6 +7,32 @@ import 'package:homework/data/my_custom_exception.dart';
 import 'package:http/http.dart' as http;
 
 class ApiProvider {
+  bool updateInfo = true;
+
+  Future<void> solish({required List<CurrencyModel> currencies}) async {
+    for (int i = 0; i < currencies.length; i++) {
+      await LocalDatabase.insertCurrency(currencies[i]);
+      i++;
+    }
+  }
+
+  Future<void> updateData(
+      {required List<CurrencyModel> currencies,
+      required List<CurrencyModel> localCurrencies}) async {
+    if (updateInfo) {
+      for (CurrencyModel currencyModelLocal in localCurrencies) {
+        for (CurrencyModel currencyModel in currencies) {
+          if (currencyModelLocal.spotTheDifference(
+              currencyModel: currencyModel)) {
+            await LocalDatabase.updateCurrency(currencyModel: currencyModel);
+            break;
+          }
+        }
+      }
+      updateInfo = false;
+    }
+  }
+
   Future<NetworkResponse> getAllCurrency() async {
     try {
       http.Response response =
@@ -18,16 +44,19 @@ class ApiProvider {
                 .toList() ??
             [];
         NetworkResponse currency = await LocalDatabase.getAllCurrencies();
+        List<CurrencyModel> c = currency.data;
 
-        if (areListsEqual(currencies, currency.data)) {
-          return await LocalDatabase.getAllCurrencies();
+        if (c.isNotEmpty) {
+          if (areListsEqual(currencies, c)) {
+            return currency;
+          } else {
+            updateData(currencies: currencies, localCurrencies: c);
+            return NetworkResponse(data: currencies);
+          }
+        } else {
+          solish(currencies: currencies);
+          return NetworkResponse(data: currencies);
         }
-
-        for (int i = 0; i < currencies.length; i++) {
-          await LocalDatabase.insertCurrency(currencies[i]);
-          i++;
-        }
-        return NetworkResponse(data: currencies);
       }
       return NetworkResponse(
         errorText: getErrorMessage(response.statusCode),
@@ -53,6 +82,5 @@ bool areListsEqual(List<CurrencyModel> list1, List<CurrencyModel> list2) {
       return false;
     }
   }
-
   return true;
 }
