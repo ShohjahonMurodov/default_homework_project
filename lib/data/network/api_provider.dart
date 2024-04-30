@@ -12,7 +12,6 @@ class ApiProvider {
   Future<void> solish({required List<CurrencyModel> currencies}) async {
     for (int i = 0; i < currencies.length; i++) {
       await LocalDatabase.insertCurrency(currencies[i]);
-      i++;
     }
   }
 
