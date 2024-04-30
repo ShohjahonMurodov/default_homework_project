@@ -17,6 +17,12 @@ class ApiProvider {
                 ?.map((e) => CurrencyModel.fromJson(e))
                 .toList() ??
             [];
+        NetworkResponse currency = await LocalDatabase.getAllCurrencies();
+
+        if (areListsEqual(currencies, currency.data)) {
+          return await LocalDatabase.getAllCurrencies();
+        }
+
         for (int i = 0; i < currencies.length; i++) {
           await LocalDatabase.insertCurrency(currencies[i]);
           i++;
@@ -35,4 +41,18 @@ class ApiProvider {
       return NetworkResponse(errorText: error.toString());
     }
   }
+}
+
+bool areListsEqual(List<CurrencyModel> list1, List<CurrencyModel> list2) {
+  if (list1.length != list2.length) {
+    return false;
+  }
+
+  for (int i = 0; i < list1.length; i++) {
+    if (list1[i] != list2[i]) {
+      return false;
+    }
+  }
+
+  return true;
 }

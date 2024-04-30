@@ -33,12 +33,10 @@ class LocalDatabase {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    const idType = "INTEGER PRIMARY KEY AUTOINCREMENT";
     const textType = "TEXT NOT NULL";
 
     await db.execute('''
     CREATE TABLE ${AppConstants.tableName} (
-    ${AppConstants.id} $idType,
     ${AppConstants.title} $textType,
     ${AppConstants.code} $textType,
     ${AppConstants.cbPrice} $textType,
