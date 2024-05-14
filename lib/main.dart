@@ -7,13 +7,15 @@ import 'package:homework/bloc/auth/auth_bloc.dart';
 import 'package:homework/screens/auth/login/login_screen.dart';
 import 'package:homework/view/image_view_model.dart';
 import 'package:provider/provider.dart';
-import 'services/firebase_options.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 

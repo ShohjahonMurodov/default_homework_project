@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/services/chat_services.dart';
-import 'package:homework/utils/app_colors.dart';
 import '../../utils/size_utils.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -45,26 +44,26 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7FC),
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
         elevation: 1,
-        backgroundColor: Colors.white,
-        centerTitle: false,
+        backgroundColor: Colors.grey.shade800,
+        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
           icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.black,
+            Icons.arrow_back,
+            color: Colors.white,
             size: 25.sp,
           ),
         ),
         title: Text(
           widget.name,
           style: TextStyle(
-            color: Colors.black,
-            fontSize: 18.sp,
+            color: Colors.white,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -72,17 +71,17 @@ class _MessageScreenState extends State<MessageScreen> {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.search,
+              Icons.phone,
               size: 25.sp,
-              color: AppColors.black,
+              color: Colors.white,
             ),
           ),
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.menu,
+              Icons.more_vert,
               size: 25.sp,
-              color: AppColors.black,
+              color: Colors.white,
             ),
           ),
         ],
