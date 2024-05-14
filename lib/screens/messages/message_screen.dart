@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/services/chat_services.dart';
@@ -162,8 +163,8 @@ class _MessageScreenState extends State<MessageScreen> {
           ),
           Container(
             width: double.infinity,
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
+            color: Colors.grey.shade800,
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 1.h),
             child: Row(
               children: [
                 IconButton(
@@ -171,7 +172,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   icon: Icon(
                     Icons.add,
                     size: 25.sp,
-                    color: const Color(0xFFADB5BD),
+                    color: Colors.white,
                   ),
                 ),
                 Expanded(
@@ -180,31 +181,34 @@ class _MessageScreenState extends State<MessageScreen> {
                     maxLength: null,
                     controller: controller,
                     style: TextStyle(
-                      color: const Color(0xFF0F1828),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                     decoration: InputDecoration(
-                      hintText: "Type waiting ...",
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 13.h,
+                      ),
+                      hintText: "Xabar",
                       hintStyle: TextStyle(
                         color: const Color(0xFFADB5BD),
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
                       ),
                       filled: true,
-                      fillColor: const Color(0xFFF7F7FC),
+                      fillColor: Colors.transparent,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.r),
                         borderSide: BorderSide(
-                          width: 0.w,
-                          color: const Color(0xFFF7F7FC),
+                          width: 0,
+                          color: Colors.grey.shade800,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.r),
                         borderSide: BorderSide(
-                          width: 0.w,
-                          color: const Color(0xFFF7F7FC),
+                          width: 0,
+                          color: Colors.grey.shade800,
                         ),
                       ),
                     ),
@@ -217,7 +221,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   icon: Icon(
                     Icons.send,
                     size: 25.sp,
-                    color: const Color(0xFFD84D4D),
+                    color: CupertinoColors.systemBlue,
                   ),
                 ),
               ],
