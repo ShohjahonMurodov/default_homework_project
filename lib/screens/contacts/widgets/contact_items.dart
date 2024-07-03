@@ -3,13 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../utils/size_utils.dart';
 
 class ContactItems extends StatelessWidget {
-  const ContactItems(
-      {super.key,
-      required this.name,
-      required this.onTap,
-      required this.image});
+  const ContactItems({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.onTap,
+    required this.image,
+  });
 
   final String name;
+  final String email;
   final String image;
   final VoidCallback onTap;
 
@@ -24,22 +27,36 @@ class ContactItems extends StatelessWidget {
           child: Row(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(16.r),
+                borderRadius: BorderRadius.circular(100.r),
                 child: Image.network(
                   image,
-                  width: 48.w,
-                  height: 48.h,
+                  width: 51.w,
+                  height: 51.h,
                   fit: BoxFit.cover,
                 ),
               ),
-              16.getW(),
-              Text(
-                name,
-                style: TextStyle(
-                  color: const Color(0xFF0F1828),
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                ),
+              19.getW(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  2.getH(),
+                  Text(
+                    email,
+                    style: TextStyle(
+                      color: const Color(0xFFB3B9C9),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

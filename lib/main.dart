@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/auth/auth_bloc.dart';
 import 'package:homework/screens/auth/login/login_screen.dart';
+import 'package:homework/services/firebase_options.dart';
 import 'package:homework/view/image_view_model.dart';
 import 'package:provider/provider.dart';
-import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => ImageViewModel()),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(375, 812),
+        designSize: const Size(428, 926),
         builder: (context, child) {
           ScreenUtil.init(context);
           return MaterialApp(

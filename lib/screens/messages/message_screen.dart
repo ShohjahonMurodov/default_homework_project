@@ -7,9 +7,13 @@ import '../../utils/size_utils.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen(
-      {super.key, required this.name, required this.receiverUserId});
+      {super.key,
+      required this.name,
+      required this.receiverUserId,
+      required this.image});
 
   final String name;
+  final String image;
   final String receiverUserId;
 
   @override
@@ -45,20 +49,23 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: const Color(0xFF1B202D),
       appBar: AppBar(
-        elevation: 1,
-        backgroundColor: Colors.grey.shade800,
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 25.sp,
-          ),
+        elevation: 0,
+        backgroundColor: const Color(0xFF1B202D),
+        leading: Row(
+          children: [
+            10.getW(),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100.r),
+              child: Image.network(
+                widget.image,
+                width: 40.w,
+                height: 40.h,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
         ),
         title: Text(
           widget.name,
@@ -72,19 +79,12 @@ class _MessageScreenState extends State<MessageScreen> {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.phone,
-              size: 25.sp,
+              Icons.search,
+              size: 28.sp,
               color: Colors.white,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.more_vert,
-              size: 25.sp,
-              color: Colors.white,
-            ),
-          ),
+          26.getW(),
         ],
       ),
       body: Column(
@@ -123,32 +123,27 @@ class _MessageScreenState extends State<MessageScreen> {
                                     firebaseAuth.currentUser!.uid
                                 ? Alignment.centerRight
                                 : Alignment.centerLeft,
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 20.w, vertical: 10.h),
-                              padding: const EdgeInsets.all(20),
-                              width: width - 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: json['sender_id'] ==
-                                        firebaseAuth.currentUser!.uid
-                                    ? Colors.transparent
-                                    : const Color(0xFFD84D4D),
-                                border: json['sender_id'] ==
-                                        firebaseAuth.currentUser!.uid
-                                    ? Border.all(color: Colors.grey, width: 2)
-                                    : Border.all(
-                                        color: const Color(0xFFD84D4D),
-                                        width: 2),
-                              ),
-                              child: Text(
-                                json['message'],
-                                style: TextStyle(
+                            child: Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 10.h,
+                                ),
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
                                   color: json['sender_id'] ==
                                           firebaseAuth.currentUser!.uid
-                                      ? const Color(0xFF595F69)
-                                      : Colors.white,
-                                  fontSize: 16.sp,
+                                      ? const Color(0xFF7A8194)
+                                      : const Color(0xFF373E4E),
+                                  borderRadius: BorderRadius.circular(20.r),
+                                ),
+                                child: Text(
+                                  json['message'],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
                             ),
@@ -162,8 +157,16 @@ class _MessageScreenState extends State<MessageScreen> {
             ),
           ),
           Container(
+            margin: EdgeInsets.only(
+              left: 26.w,
+              right: 26.w,
+              bottom: 37.h,
+            ),
             width: double.infinity,
-            color: Colors.grey.shade800,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.r),
+              color: const Color(0xFF3D4354),
+            ),
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 1.h),
             child: Row(
               children: [

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/screens/contacts/widgets/contact_items.dart';
+import 'package:homework/screens/contacts/widgets/history_items.dart';
 import 'package:homework/screens/messages/message_screen.dart';
-import 'package:homework/utils/app_colors.dart';
 import 'package:homework/utils/size_utils.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -23,28 +24,7 @@ class _ContactScreenState extends State<ContactScreen> {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.transparent,
-        elevation: 0,
-        title: Text(
-          "Conversations",
-          style: TextStyle(
-            color: const Color(0xFF0F1828),
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.message,
-              color: AppColors.black,
-            ),
-          ),
-        ],
-      ),
+      backgroundColor: const Color(0xFF1B202D),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('users').snapshots(),
         builder: (context, snapshot) {
@@ -59,70 +39,110 @@ class _ContactScreenState extends State<ContactScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                16.getH(),
-                Container(
-                  width: double.infinity,
-                  height: 1.h,
-                  color: const Color(0xFFEDEDED),
-                ),
-                16.getH(),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: Color(0xFFADB5BD),
+                  padding: EdgeInsets.symmetric(horizontal: 25.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      66.getH(),
+                      Row(
+                        children: [
+                          Text(
+                            "Messages",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.search,
+                              size: 28.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                      hintText: "Search",
-                      hintStyle: TextStyle(
-                        color: const Color(0xFFADB5BD),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      filled: true,
-                      fillColor: const Color(0xFFF7F7FC),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.r),
-                        borderSide: BorderSide(
-                          width: 0.w,
-                          color: const Color(0xFFF7F7FC),
+                      9.getH(),
+                      Text(
+                        "R E C E N T",
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(.58),
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.r),
-                        borderSide: BorderSide(
-                          width: 0.w,
-                          color: const Color(0xFFF7F7FC),
-                        ),
-                      ),
-                    ),
+                    ],
                   ),
                 ),
-                16.getH(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
+                17.getH(),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
                     children: [
-                      ...List.generate(snapshot.data!.docs.length, (index) {
-                        var data = snapshot.data!.docs[index];
-                        return ContactItems(
-                          name: data['name'],
-                          image: data['image_url'],
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MessageScreen(
-                                  name: data['name'],
-                                  receiverUserId: data['uuid'],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }),
+                      25.getW(),
+                      ...List.generate(
+                        10,
+                        (index) {
+                          return HistoryItems(
+                            title: "Barry",
+                            image: snapshot.data!.docs[0]['image_url'],
+                            onTap: () {},
+                          );
+                        },
+                      ),
                     ],
+                  ),
+                ),
+                25.getH(),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10.h),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF292F3F),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50.r),
+                        topRight: Radius.circular(50.r),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          46.getH(),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24.w),
+                            child: Column(
+                              children: [
+                                ...List.generate(snapshot.data!.docs.length,
+                                    (index) {
+                                  var data = snapshot.data!.docs[index];
+                                  return ContactItems(
+                                    name: data['name'],
+                                    email: data['email'],
+                                    image: data['image_url'],
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MessageScreen(
+                                            name: data['name'],
+                                            image: data['image_url'],
+                                            receiverUserId: data['uuid'],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
