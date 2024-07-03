@@ -17,8 +17,6 @@ class ImageViewModel extends ChangeNotifier {
 // Create a reference to "mountains.jpg"
     final mountainsRef = storageRef.child(filename);
 
-    print(mountainsRef.name);
-
 // Create a reference to 'images/mountains.jpg'
     final mountainImagesRef = storageRef.child("images/$filename");
     try {
@@ -51,7 +49,7 @@ class ImageViewModel extends ChangeNotifier {
 
       _notify(false);
       return downloadUrl;
-    } on FirebaseException catch (error) {
+    } on FirebaseException {
       throw Exception();
     }
   }

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/services/chat_services.dart';
@@ -83,6 +82,7 @@ class _MessageScreenState extends State<MessageScreen> {
               size: 28.sp,
               color: Colors.white,
             ),
+            splashRadius: 20.r,
           ),
           26.getW(),
         ],
@@ -118,31 +118,40 @@ class _MessageScreenState extends State<MessageScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           Map<String, dynamic> json =
                               data[index].data() as Map<String, dynamic>;
-                          return Align(
-                            alignment: json['sender_id'] ==
-                                    firebaseAuth.currentUser!.uid
-                                ? Alignment.centerRight
-                                : Alignment.centerLeft,
-                            child: Expanded(
-                              child: Container(
-                                margin: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
-                                  vertical: 10.h,
-                                ),
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  color: json['sender_id'] ==
-                                          firebaseAuth.currentUser!.uid
-                                      ? const Color(0xFF7A8194)
-                                      : const Color(0xFF373E4E),
-                                  borderRadius: BorderRadius.circular(20.r),
-                                ),
-                                child: Text(
-                                  json['message'],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
+                          return InkWell(
+                            onLongPress: () async {
+                              await chatServices.deleteMessage(
+                                data[index].id,
+                                firebaseAuth.currentUser!.uid,
+                                widget.receiverUserId,
+                              );
+                            },
+                            child: Align(
+                              alignment: json['sender_id'] ==
+                                      firebaseAuth.currentUser!.uid
+                                  ? Alignment.centerRight
+                                  : Alignment.centerLeft,
+                              child: Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: 20.w,
+                                    vertical: 10.h,
+                                  ),
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: json['sender_id'] ==
+                                            firebaseAuth.currentUser!.uid
+                                        ? const Color(0xFF7A8194)
+                                        : const Color(0xFF373E4E),
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  child: Text(
+                                    json['message'],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -170,12 +179,16 @@ class _MessageScreenState extends State<MessageScreen> {
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 1.h),
             child: Row(
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.add,
-                    size: 25.sp,
-                    color: Colors.white,
+                Material(
+                  color: Colors.transparent,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.add,
+                      size: 25.sp,
+                      color: const Color(0xFF9398A7),
+                    ),
+                    splashRadius: 20.r,
                   ),
                 ),
                 Expanded(
@@ -192,9 +205,9 @@ class _MessageScreenState extends State<MessageScreen> {
                       contentPadding: EdgeInsets.symmetric(
                         vertical: 13.h,
                       ),
-                      hintText: "Xabar",
+                      hintText: "Message",
                       hintStyle: TextStyle(
-                        color: const Color(0xFFADB5BD),
+                        color: Colors.white.withOpacity(.45),
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
                       ),
@@ -217,14 +230,18 @@ class _MessageScreenState extends State<MessageScreen> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () async {
-                    await sendMessage();
-                  },
-                  icon: Icon(
-                    Icons.send,
-                    size: 25.sp,
-                    color: CupertinoColors.systemBlue,
+                Material(
+                  color: Colors.transparent,
+                  child: IconButton(
+                    onPressed: () async {
+                      await sendMessage();
+                    },
+                    icon: Icon(
+                      Icons.send,
+                      size: 25.sp,
+                      color: const Color(0xFF9398A7),
+                    ),
+                    splashRadius: 20.r,
                   ),
                 ),
               ],

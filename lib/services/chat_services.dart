@@ -33,6 +33,20 @@ class ChatServices extends ChangeNotifier {
         );
   }
 
+  Future<void> deleteMessage(
+      String messageId, String userId, String otherUserId) async {
+    List<String> ids = [userId, otherUserId];
+    ids.sort();
+    String chatRoomId = ids.join("^");
+
+    await _firebaseFirestore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .doc(messageId)
+        .delete();
+  }
+
   Stream<QuerySnapshot> getMessages(String userId, String otherUserId) {
     List<String> ids = [userId, otherUserId];
     ids.sort();

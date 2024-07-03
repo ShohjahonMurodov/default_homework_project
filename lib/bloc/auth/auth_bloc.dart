@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:homework/bloc/auth/auth_event.dart';
 import 'package:homework/bloc/auth/auth_state.dart';
+import 'package:homework/data/local/storage_repository.dart';
 import 'package:homework/screens/contacts/contact_screen.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -56,6 +57,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         'image_url': event.imageUrl,
       });
       emit(AuthSuccessState());
+      StorageRepository.setString(
+        key: "registered",
+        value: "registered",
+      );
     } catch (e) {
       emit(AuthErrorState(errorText: e.toString()));
     }

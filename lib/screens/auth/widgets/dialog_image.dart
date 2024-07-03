@@ -9,10 +9,9 @@ import 'package:image_picker/image_picker.dart';
 showImageDialog(BuildContext context,
     {required ValueChanged<ChangeImage> onChaneXFile}) async {
   XFile? xFile;
-  Uint8List? _ui8;
   ChangeImage changeImage = ChangeImage();
 
-  Future<void> _pickerImageFromGallery() async {
+  Future<void> pickerImageFromGallery() async {
     xFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxHeight: 1024,
@@ -25,7 +24,7 @@ showImageDialog(BuildContext context,
     onChaneXFile.call(changeImage);
   }
 
-  Future<void> _pickerImageFromCamera() async {
+  Future<void> pickerImageFromCamera() async {
     xFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
       maxHeight: 1024,
@@ -59,14 +58,14 @@ showImageDialog(BuildContext context,
               children: [
                 DialogButtons(
                     onTab: () {
-                      _pickerImageFromGallery();
+                      pickerImageFromGallery();
                       Navigator.pop(context);
                     },
                     iconData: Icons.image),
                 50.getW(),
                 DialogButtons(
                     onTab: () {
-                      _pickerImageFromCamera();
+                      pickerImageFromCamera();
                       Navigator.pop(context);
                     },
                     iconData: Icons.camera_alt),
