@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,15 +6,18 @@ import 'package:homework/services/chat_services.dart';
 import '../../utils/size_utils.dart';
 
 class MessageScreen extends StatefulWidget {
-  const MessageScreen(
-      {super.key,
-      required this.name,
-      required this.receiverUserId,
-      required this.image});
+  const MessageScreen({
+    super.key,
+    required this.name,
+    required this.receiverUserId,
+    required this.image,
+    required this.email,
+  });
 
   final String name;
   final String image;
   final String receiverUserId;
+  final String email;
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
@@ -24,6 +28,9 @@ class _MessageScreenState extends State<MessageScreen> {
   final ChatServices chatServices = ChatServices();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final ScrollController scrollController = ScrollController();
+
+  bool isUpdateMessage = false;
+  String messageId = "";
 
   Future<void> sendMessage() async {
     if (controller.text.isNotEmpty) {
@@ -118,44 +125,70 @@ class _MessageScreenState extends State<MessageScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           Map<String, dynamic> json =
                               data[index].data() as Map<String, dynamic>;
-                          return InkWell(
-                            onLongPress: () async {
-                              await chatServices.deleteMessage(
-                                data[index].id,
-                                firebaseAuth.currentUser!.uid,
-                                widget.receiverUserId,
-                              );
-                            },
-                            child: Align(
-                              alignment: json['sender_id'] ==
-                                      firebaseAuth.currentUser!.uid
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
-                              child: Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 20.w,
-                                    vertical: 10.h,
-                                  ),
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                    color: json['sender_id'] ==
-                                            firebaseAuth.currentUser!.uid
-                                        ? const Color(0xFF7A8194)
-                                        : const Color(0xFF373E4E),
-                                    borderRadius: BorderRadius.circular(20.r),
-                                  ),
-                                  child: Text(
-                                    json['message'],
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                getHourAndMinuteFromTimestamp(
+                                    json['timestamp']),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: json['sender_email'] != widget.email
+                                    ? () {
+                                        controller.text = json['message'];
+                                        messageId = data[index].id;
+                                        isUpdateMessage = true;
+                                        setState(() {});
+                                      }
+                                    : null,
+                                onLongPress:
+                                    json['sender_email'] != widget.email
+                                        ? () async {
+                                            await chatServices.deleteMessage(
+                                              data[index].id,
+                                              firebaseAuth.currentUser!.uid,
+                                              widget.receiverUserId,
+                                            );
+                                          }
+                                        : null,
+                                child: Align(
+                                  alignment: json['sender_id'] ==
+                                          firebaseAuth.currentUser!.uid
+                                      ? Alignment.centerRight
+                                      : Alignment.centerLeft,
+                                  child: Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 20.w,
+                                        vertical: 10.h,
+                                      ),
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                        color: json['sender_id'] ==
+                                                firebaseAuth.currentUser!.uid
+                                            ? const Color(0xFF7A8194)
+                                            : const Color(0xFF373E4E),
+                                        borderRadius:
+                                            BorderRadius.circular(20.r),
+                                      ),
+                                      child: Text(
+                                        json['message'],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           );
                         },
                       ),
@@ -234,7 +267,18 @@ class _MessageScreenState extends State<MessageScreen> {
                   color: Colors.transparent,
                   child: IconButton(
                     onPressed: () async {
-                      await sendMessage();
+                      if (isUpdateMessage) {
+                        await chatServices.updateMessage(
+                          messageId,
+                          firebaseAuth.currentUser!.uid,
+                          widget.receiverUserId,
+                          controller.text,
+                        );
+                        controller.clear();
+                        isUpdateMessage = false;
+                      } else {
+                        await sendMessage();
+                      }
                     },
                     icon: Icon(
                       Icons.send,
@@ -251,4 +295,11 @@ class _MessageScreenState extends State<MessageScreen> {
       ),
     );
   }
+}
+
+String getHourAndMinuteFromTimestamp(Timestamp timestamp) {
+  final dateTime = timestamp.toDate();
+  final hours = dateTime.hour.toString().padLeft(2, '0');
+  final minutes = dateTime.minute.toString().padLeft(2, '0');
+  return '$hours:$minutes';
 }

@@ -55,6 +55,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         "email": event.email,
         'name': event.name,
         'image_url': event.imageUrl,
+        'isOnline': event.isOnline,
+        'lastSeen': event.lastSeen,
       });
       emit(AuthSuccessState());
       StorageRepository.setString(

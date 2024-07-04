@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class AuthEvent {}
@@ -17,12 +18,16 @@ class AuthRegisterEvent extends AuthEvent {
     required this.email,
     required this.password,
     required this.imageUrl,
+    required this.isOnline,
+    required this.lastSeen,
   });
 
   final String name;
   final String email;
   final String password;
   final String imageUrl;
+  final bool isOnline;
+  final Timestamp lastSeen;
 }
 
 class AuthGoogleEvent extends AuthEvent {

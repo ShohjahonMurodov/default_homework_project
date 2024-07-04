@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,6 +90,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 email: emailController.text,
                                 password: passwordController.text,
                                 imageUrl: imageUrl,
+                                isOnline: false,
+                                lastSeen: Timestamp.now(),
                               ),
                             );
                       }

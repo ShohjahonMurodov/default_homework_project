@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/screens/contacts/widgets/contact_items.dart';
@@ -15,8 +14,6 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -130,6 +127,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                             name: data['name'],
                                             image: data['image_url'],
                                             receiverUserId: data['uuid'],
+                                            email: data['email'],
                                           ),
                                         ),
                                       );

@@ -15,6 +15,3 @@ class ContactModel {
     required this.lastOnlineTime,
   });
 }
-
-// ContactModel SOLID ning 1-siga (S) yani, Single Responsibility ga togri keladi.
-// Chunki har bir klass yoki funksiya faqatgina bitta vazifani bajarishi kerak.
