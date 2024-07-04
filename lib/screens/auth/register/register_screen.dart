@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/auth/auth_bloc.dart';
 import 'package:homework/bloc/auth/auth_state.dart';
 import 'package:homework/data/local/local_variables.dart';
+import 'package:homework/data/local/storage_repository.dart';
 import 'package:homework/screens/auth/login/login_screen.dart';
 import 'package:homework/screens/auth/widgets/ok_button.dart';
 import 'package:homework/screens/auth/widgets/text_input.dart';
@@ -94,6 +95,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 lastSeen: Timestamp.now(),
                               ),
                             );
+                        StorageRepository.setString(
+                          key: "registered",
+                          value: "logged",
+                        );
                       }
                     },
                   ),

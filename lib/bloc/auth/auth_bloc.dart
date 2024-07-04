@@ -59,10 +59,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         'lastSeen': event.lastSeen,
       });
       emit(AuthSuccessState());
-      StorageRepository.setString(
-        key: "registered",
-        value: "registered",
-      );
     } catch (e) {
       emit(AuthErrorState(errorText: e.toString()));
     }

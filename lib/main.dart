@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/auth/auth_bloc.dart';
-import 'package:homework/screens/auth/login/login_screen.dart';
+import 'package:homework/data/local/storage_repository.dart';
+import 'package:homework/screens/splash/splash_screen.dart';
 import 'package:homework/services/firebase_options.dart';
 import 'package:homework/view/image_view_model.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  StorageRepository.instance;
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -44,7 +46,7 @@ class _MyAppState extends State<MyApp> {
             home: child,
           );
         },
-        child: const LoginScreen(),
+        child: const SplashScreen(),
       ),
     );
   }

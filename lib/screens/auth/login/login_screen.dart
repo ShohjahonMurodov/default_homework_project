@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homework/bloc/auth/auth_bloc.dart';
 import 'package:homework/bloc/auth/auth_state.dart';
+import 'package:homework/data/local/storage_repository.dart';
 import 'package:homework/screens/auth/register/register_screen.dart';
 import 'package:homework/screens/auth/widgets/ok_button.dart';
 import 'package:homework/screens/auth/widgets/text_input.dart';
@@ -69,6 +70,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 password: passwordController.text,
                               ),
                             );
+                        StorageRepository.setString(
+                          key: "registered",
+                          value: "logged",
+                        );
                       } else {
                         _showSnackBar();
                       }
