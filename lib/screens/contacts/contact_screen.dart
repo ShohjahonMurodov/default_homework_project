@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:homework/screens/auth/login/login_screen.dart';
 import 'package:homework/screens/contacts/widgets/contact_items.dart';
 import 'package:homework/screens/contacts/widgets/history_items.dart';
 import 'package:homework/screens/messages/message_screen.dart';
+import 'package:homework/screens/search/search_screen.dart';
+import 'package:homework/services/chat_services.dart';
 import 'package:homework/utils/size_utils.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -53,9 +56,34 @@ class _ContactScreenState extends State<ContactScreen> {
                           ),
                           const Spacer(),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchScreen(
+                                    contacts: snapshot.data!.docs,
+                                  ),
+                                ),
+                              );
+                            },
                             icon: Icon(
                               Icons.search,
+                              size: 28.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              await ChatServices().logOut();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.login,
                               size: 28.sp,
                               color: Colors.white,
                             ),

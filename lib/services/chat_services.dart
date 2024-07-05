@@ -77,4 +77,8 @@ class ChatServices extends ChangeNotifier {
         )
         .snapshots();
   }
+
+  Future<void> logOut() async {
+    await _firebaseAuth.signOut();
+  }
 }

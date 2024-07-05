@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../utils/size_utils.dart';
@@ -28,11 +29,18 @@ class ContactItems extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(100.r),
-                child: Image.network(
-                  image,
+                child: CachedNetworkImage(
+                  imageUrl: image,
                   width: 51.w,
                   height: 51.h,
                   fit: BoxFit.cover,
+                  progressIndicatorBuilder: (_, url, download) {
+                    if (download.progress != null) {
+                      final percent = download.progress! * 100;
+                      return Text('$percent done loading');
+                    }
+                    return Text('Loading $url');
+                  },
                 ),
               ),
               19.getW(),
