@@ -7,13 +7,13 @@ class ContactItems extends StatelessWidget {
   const ContactItems({
     super.key,
     required this.name,
-    required this.email,
+    required this.isOnline,
     required this.onTap,
     required this.image,
   });
 
   final String name;
-  final String email;
+  final bool isOnline;
   final String image;
   final VoidCallback onTap;
 
@@ -57,9 +57,9 @@ class ContactItems extends StatelessWidget {
                   ),
                   2.getH(),
                   Text(
-                    email,
+                    isOnline ? "ONLINE" : "OFFLINE",
                     style: TextStyle(
-                      color: const Color(0xFFB3B9C9),
+                      color: isOnline ? Colors.green : const Color(0xFFB3B9C9),
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                     ),

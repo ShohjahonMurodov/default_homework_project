@@ -102,7 +102,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 var data = list[index];
                 return ContactItems(
                   name: data['name'],
-                  email: data['email'],
+                  isOnline: data['isOnline'],
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
