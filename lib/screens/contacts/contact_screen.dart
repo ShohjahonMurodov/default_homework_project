@@ -204,11 +204,13 @@ class _ContactScreenState extends State<ContactScreen> {
   }
 
   Future<bool> _onBackButtonPressed(BuildContext context) async {
-    await firebaseFirestore
-        .collection('users')
-        .doc(firebaseAuth.currentUser!.uid)
-        .update({
-      'isOnline': false,
+    Future.microtask(() {
+      firebaseFirestore
+          .collection('users')
+          .doc(firebaseAuth.currentUser!.uid)
+          .update({
+        'isOnline': false,
+      });
     });
 
     return true;
