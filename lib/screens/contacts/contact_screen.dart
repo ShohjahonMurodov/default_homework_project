@@ -23,8 +23,8 @@ class _ContactScreenState extends State<ContactScreen> {
 
   @override
   void initState() {
-    updateIsOnline();
     super.initState();
+    updateIsOnline();
   }
 
   Future<void> updateIsOnline() async {
@@ -41,178 +41,162 @@ class _ContactScreenState extends State<ContactScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
-    return WillPopScope(
-      onWillPop: () => _onBackButtonPressed(context),
-      child: Scaffold(
-        backgroundColor: const Color(0xFF1B202D),
-        body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('users').snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  snapshot.error.toString(),
-                ),
-              );
-            }
-            if (snapshot.hasData) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        66.getH(),
-                        Row(
-                          children: [
-                            Text(
-                              "Messages",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SearchScreen(
-                                      contacts: snapshot.data!.docs,
-                                    ),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.search,
-                                size: 28.sp,
-                                color: Colors.white,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () async {
-                                await ChatServices().logOut();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginScreen(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.login,
-                                size: 28.sp,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        9.getH(),
-                        Text(
-                          "R E C E N T",
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(.58),
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  17.getH(),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        25.getW(),
-                        ...List.generate(
-                          10,
-                          (index) {
-                            return HistoryItems(
-                              title: "Barry",
-                              image: snapshot.data!.docs[0]['image_url'],
-                              onTap: () {},
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  25.getH(),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 10.h),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF292F3F),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50.r),
-                          topRight: Radius.circular(50.r),
-                        ),
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            46.getH(),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 24.w),
-                              child: Column(
-                                children: [
-                                  ...List.generate(snapshot.data!.docs.length,
-                                      (index) {
-                                    var data = snapshot.data!.docs[index];
-                                    return ContactItems(
-                                      name: data['name'],
-                                      isOnline: data['isOnline'],
-                                      image: data['image_url'],
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => MessageScreen(
-                                              name: data['name'],
-                                              image: data['image_url'],
-                                              receiverUserId: data['uuid'],
-                                              email: data['email'],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  }),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
+    return Scaffold(
+      backgroundColor: const Color(0xFF1B202D),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('users').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                snapshot.error.toString(),
+              ),
             );
-          },
-        ),
+          }
+          if (snapshot.hasData) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      66.getH(),
+                      Row(
+                        children: [
+                          Text(
+                            "Messages",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchScreen(
+                                    contacts: snapshot.data!.docs,
+                                  ),
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.search,
+                              size: 28.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              await ChatServices().logOut();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.login,
+                              size: 28.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      9.getH(),
+                      Text(
+                        "R E C E N T",
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(.58),
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                17.getH(),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      25.getW(),
+                      ...List.generate(
+                        10,
+                        (index) {
+                          return HistoryItems(
+                            title: "Barry",
+                            image: snapshot.data!.docs[0]['image_url'],
+                            onTap: () {},
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                25.getH(),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10.h),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF292F3F),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50.r),
+                        topRight: Radius.circular(50.r),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          46.getH(),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24.w),
+                            child: Column(
+                              children: [
+                                ...List.generate(snapshot.data!.docs.length,
+                                    (index) {
+                                  var data = snapshot.data!.docs[index];
+                                  return ContactItems(
+                                    name: data['name'],
+                                    isOnline: data['isOnline'],
+                                    image: data['image_url'],
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MessageScreen(
+                                            name: data['name'],
+                                            image: data['image_url'],
+                                            receiverUserId: data['uuid'],
+                                            email: data['email'],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
-  }
-
-  Future<bool> _onBackButtonPressed(BuildContext context) async {
-    Future.microtask(() {
-      firebaseFirestore
-          .collection('users')
-          .doc(firebaseAuth.currentUser!.uid)
-          .update({
-        'isOnline': false,
-      });
-    });
-
-    return true;
   }
 }

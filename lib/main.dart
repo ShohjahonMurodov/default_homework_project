@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +30,25 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    Future.microtask(
+      () {
+        firebaseFirestore
+            .collection('users')
+            .doc(firebaseAuth.currentUser!.uid)
+            .update({
+          'isOnline': false,
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -49,5 +69,21 @@ class _MyAppState extends State<MyApp> {
         child: const SplashScreen(),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateIsOnline();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  Future<void> updateIsOnline() async {
+    await firebaseFirestore
+        .collection('users')
+        .doc(firebaseAuth.currentUser!.uid)
+        .update({
+      'isOnline': true,
+    });
   }
 }
